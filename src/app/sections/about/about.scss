@@ -271,9 +271,12 @@
         content: '';
         position: absolute;
         inset: 0;
-        background:
-          linear-gradient(180deg, rgba(246, 251, 253, 0.82), rgba(246, 251, 253, 0.94)),
-          linear-gradient(90deg, rgba(246, 251, 253, 0.48), rgba(246, 251, 253, 0.88));
+        background: linear-gradient(
+          180deg,
+          rgba(246, 251, 253, 0.7) 0%,
+          rgba(246, 251, 253, 0.79) 48%,
+          rgba(246, 251, 253, 0.88) 100%
+        );
       }
 
       img {
@@ -281,7 +284,7 @@
         height: 100%;
         aspect-ratio: auto;
         object-position: center 8%;
-        filter: saturate(0.72) contrast(0.9);
+        filter: saturate(0.86) contrast(0.96);
       }
     }
 
@@ -295,6 +298,10 @@
     z-index: 1;
     padding: 1.5rem 1.1rem 1.75rem;
 
+    .eyebrow {
+      color: var(--brand-900);
+    }
+
     &__title {
       max-width: 15ch;
     }
@@ -302,6 +309,11 @@
     &__body p {
       font-size: 0.94rem;
       line-height: 1.68;
+      color: var(--ink-700);
+    }
+
+    &__body p:first-child {
+      color: var(--ink-900);
     }
   }
 }

@@ -280,12 +280,13 @@
     img {
       position: absolute;
       top: -8.5rem;
-      left: -5.25rem;
+      left: -21.25rem;
       width: 35rem;
       max-width: none;
       height: auto;
       margin: 0;
-      transform: none;
+      transform: scaleX(-1);
+      transform-origin: center;
       filter: drop-shadow(0 18px 24px rgba(10, 73, 96, 0.14));
     }
   }
@@ -325,7 +326,7 @@
 
   .portrait img {
     top: -7rem;
-    left: -4.7rem;
+    left: -18.75rem;
     width: 31rem;
   }
 }
