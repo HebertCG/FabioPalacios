@@ -39,6 +39,7 @@ testem.log
 /typings
 __screenshots__/
 /.edge-*
+/.chrome-*
 
 # System files
 .DS_Store
