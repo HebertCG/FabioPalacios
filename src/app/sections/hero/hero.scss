@@ -224,22 +224,26 @@
 
 /* ============================================================
    COMPOSICION MOVIL
-   El titulo conserva todo el ancho. Debajo, el texto y el CTA
-   comparten la primera vista con el retrato para evitar que la
-   figura quede relegada al final del bloque.
+   Copia breve a la izquierda y retrato a altura completa a la
+   derecha. La variante editorial extensa se conserva en escritorio.
    ============================================================ */
+.copy__mobile-title,
+.copy__mobile-lead {
+  display: none;
+}
+
 @include m.down(md) {
   :host {
     min-height: auto;
-    padding-top: calc(var(--nav-h) + 1rem);
-    padding-bottom: 1.25rem;
+    padding-top: calc(var(--nav-h) + 0.85rem);
+    padding-bottom: 1rem;
   }
 
   .hero__grid {
-    grid-template-columns: minmax(0, 1.12fr) minmax(8.75rem, 0.88fr);
-    grid-template-rows: auto auto minmax(10rem, auto) auto;
+    grid-template-columns: minmax(0, 1.15fr) minmax(9rem, 0.85fr);
+    grid-template-rows: auto auto auto;
     column-gap: 0.35rem;
-    row-gap: 0.9rem;
+    row-gap: 0.85rem;
     align-items: start;
   }
 
@@ -247,35 +251,53 @@
     display: contents;
 
     .eyebrow {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      max-width: 34ch;
+      display: none;
     }
 
     &__title {
-      grid-column: 1 / -1;
-      grid-row: 2;
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      z-index: 3;
       width: 100%;
       max-width: 100%;
       min-width: 0;
       margin-top: 0;
-      font-size: 2.2rem;
-      line-height: 1.06;
+      font-size: 2rem;
+      line-height: 1.04;
       overflow-wrap: normal;
+    }
+
+    &__desktop-title,
+    &__desktop-lead {
+      display: none;
+    }
+
+    &__mobile-title,
+    &__mobile-lead {
+      display: inline;
+    }
+
+    &__mobile-title .accent-word {
+      display: block;
+      margin-top: 0.18rem;
     }
 
     &__lead {
       grid-column: 1;
-      grid-row: 3;
+      grid-row: 2;
+      position: relative;
+      z-index: 3;
       align-self: start;
       margin-top: 0;
-      font-size: 0.94rem;
-      line-height: 1.62;
+      max-width: 21ch;
+      font-size: 0.9rem;
+      line-height: 1.58;
     }
 
     &__actions {
       grid-column: 1;
-      grid-row: 4;
+      grid-row: 3;
       position: relative;
       z-index: 3;
       align-self: start;
@@ -296,32 +318,36 @@
 
   .portrait {
     grid-column: 2;
-    grid-row: 3 / 5;
+    grid-row: 1 / 4;
+    z-index: 1;
     align-self: stretch;
-    min-height: 15.5rem;
-    place-items: end center;
+    min-height: 19rem;
+    place-items: start center;
 
     &__img {
       position: absolute;
-      right: -2rem;
-      bottom: -1.25rem;
-      width: 13.75rem;
+      top: 0.4rem;
+      right: -2.25rem;
+      bottom: auto;
+      width: 14.5rem;
       max-width: none;
     }
 
     &__disc {
-      right: -2rem;
-      bottom: -1.5rem;
+      top: 0.1rem;
+      right: -2.35rem;
+      bottom: auto;
       left: auto;
-      width: 14rem;
+      width: 14.75rem;
       transform: none;
     }
 
     &__ring {
-      right: -1.7rem;
-      bottom: -1.1rem;
+      top: 0.5rem;
+      right: -2rem;
+      bottom: auto;
       left: auto;
-      width: 13.25rem;
+      width: 13.75rem;
       transform: none;
     }
   }
@@ -329,12 +355,12 @@
 
 @include m.down(xs) {
   .hero__grid {
-    grid-template-columns: minmax(0, 1.08fr) minmax(7.25rem, 0.92fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(7.75rem, 0.9fr);
   }
 
   .copy {
     &__title {
-      font-size: 2.2rem;
+      font-size: 1.85rem;
     }
 
     &__lead {
@@ -348,21 +374,22 @@
   }
 
   .portrait {
-    min-height: 14.25rem;
+    min-height: 18rem;
 
     &__img {
-      right: -2rem;
-      width: 12rem;
+      top: 0.55rem;
+      right: -2.8rem;
+      width: 12.75rem;
     }
 
     &__disc {
-      right: -2.25rem;
-      width: 12.5rem;
+      right: -2.15rem;
+      width: 13rem;
     }
 
     &__ring {
-      right: -2rem;
-      width: 11.75rem;
+      right: -1.9rem;
+      width: 12.2rem;
     }
   }
 }

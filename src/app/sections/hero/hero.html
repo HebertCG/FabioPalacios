@@ -12,12 +12,23 @@
     <p class="eyebrow eyebrow--light">{{ hero.eyebrow }}</p>
 
     <h1 class="display copy__title">
-      {{ hero.titleStart }}
-      <span class="accent-word">{{ hero.titleAccent }}</span>
-      {{ hero.titleEnd }}
+      <span class="copy__desktop-title">
+        {{ hero.titleStart }}
+        <span class="accent-word">{{ hero.titleAccent }}</span>
+        {{ hero.titleEnd }}
+      </span>
+      <span class="copy__mobile-title">
+        Cirugía oncológica
+        <span class="accent-word">en Piura</span>
+      </span>
     </h1>
 
-    <p class="lead lead--light copy__lead">{{ hero.lead }}</p>
+    <p class="lead lead--light copy__lead">
+      <span class="copy__desktop-lead">{{ hero.lead }}</span>
+      <span class="copy__mobile-lead">
+        Alta complejidad, atención especializada y cercana.
+      </span>
+    </p>
 
     <div class="copy__actions">
       <a
