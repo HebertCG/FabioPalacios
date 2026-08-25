@@ -118,6 +118,15 @@
 
   &__cta {
     margin-top: 1.9rem;
+
+    &.btn--primary {
+      background: var(--brand-700);
+
+      &:hover {
+        background: var(--brand-600);
+        box-shadow: 0 16px 38px rgba(13, 100, 136, 0.32);
+      }
+    }
   }
 }
 
