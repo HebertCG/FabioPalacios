@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Universidad Peruana Cayetano Heredia">
+  <title>Universidad Peruana Cayetano Heredia</title>
+  <rect width="64" height="64" rx="16" fill="#EAF5FA"/>
+  <g fill="none" stroke="#11536E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 22.5C27.5 19 22.5 18 17.5 18v25c5 0 10 1 14.5 4.5C36.5 44 41.5 43 46.5 43V18c-5 0-10 1-14.5 4.5z"/><path d="M32 22.5v25"/></g>
+  <path d="M32 13.5 35.5 17H28.5z" fill="#159BC3"/>
+</svg>

@@ -1,0 +1,9 @@
+/* ============================================================
+   HOJA DE ESTILOS GLOBAL — punto de entrada
+   Orden: tokens → reset → tipografía y primitivas.
+   Los mixins se importan con @use dentro de cada componente.
+   ============================================================ */
+
+@use './styles/tokens';
+@use './styles/reset';
+@use './styles/typography';

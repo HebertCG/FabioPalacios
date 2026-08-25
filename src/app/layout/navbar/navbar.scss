@@ -1,0 +1,429 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-nav);
+  display: block;
+  pointer-events: none;
+}
+
+/* ============================================================
+   CONTENEDOR — solo ajusta el relleno.
+   Mantener el wrapper a ancho completo evita que el resto de
+   la página reflowe cuando la barra cambia de forma.
+   ============================================================ */
+.nav-wrap {
+  pointer-events: auto;
+  padding: 0;
+  transition: padding var(--dur-slow) var(--ease-out);
+
+  &.is-morphed {
+    padding: 0.7rem var(--gutter);
+  }
+}
+
+/* ============================================================
+   LA BARRA — el elemento que muta
+   Estado inicial: ancho completo, transparente, sin radio.
+   Estado contraído: contenida, redondeada, vidrio translúcido.
+   ============================================================ */
+.bar {
+  --bar-fg: #fff;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  height: var(--nav-h);
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+
+  transition:
+    height var(--dur-slow) var(--ease-out),
+    max-width var(--dur-slow) var(--ease-out),
+    padding var(--dur-slow) var(--ease-out),
+    border-radius var(--dur-slow) var(--ease-out),
+    background-color var(--dur-slow) var(--ease-out),
+    border-color var(--dur-slow) var(--ease-out),
+    box-shadow var(--dur-slow) var(--ease-out),
+    color var(--dur-slow) var(--ease-out);
+
+  /* Línea de contacto tenue mientras está en el tope */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: auto var(--gutter) 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.22),
+      transparent
+    );
+    opacity: 1;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+
+  &.is-morphed {
+    --bar-fg: var(--ink-900);
+
+    height: var(--nav-h-scrolled);
+    max-width: var(--shell);
+    padding-inline: clamp(0.9rem, 2vw, 1.5rem);
+    border-radius: var(--r-pill);
+    border-color: rgba(255, 255, 255, 0.55);
+    /* "Un poco más transparente": vidrio, no sólido */
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 8px 28px rgba(7, 38, 52, 0.1),
+      0 2px 8px rgba(7, 38, 52, 0.06);
+
+    &::after {
+      opacity: 0;
+    }
+  }
+}
+
+/* ============================================================
+   MARCA
+   ============================================================ */
+.brand {
+  @include m.focus-ring(var(--brand-400));
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  color: var(--bar-fg);
+  transition: color var(--dur-slow) var(--ease-out);
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+
+    strong {
+      font-size: 1.06rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    small {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      opacity: 0.62;
+    }
+  }
+
+  @include m.down(sm) {
+    &__text small {
+      display: none;
+    }
+  }
+}
+
+/* ============================================================
+   ENLACES
+   ============================================================ */
+.links {
+  display: none;
+  align-items: center;
+  gap: 0.15rem;
+
+  @include m.up(lg) {
+    display: flex;
+  }
+
+  a {
+    @include m.focus-ring(var(--brand-400));
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--r-pill);
+    font-size: 0.895rem;
+    font-weight: 600;
+    color: var(--bar-fg);
+    opacity: 0.78;
+    transition:
+      opacity var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-slow) var(--ease-out);
+
+    /* Punto indicador de sección activa */
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 1px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+      transform: translate(-50%, 6px) scale(0);
+      opacity: 0;
+      transition: transform var(--dur) var(--ease-spring), opacity var(--dur);
+    }
+
+    &:hover {
+      opacity: 1;
+      background: color-mix(in oklab, currentColor 10%, transparent);
+    }
+
+    &.is-active {
+      opacity: 1;
+      font-weight: 700;
+
+      &::after {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+/* ============================================================
+   ACCIONES
+   ============================================================ */
+.actions {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+
+  @include m.up(md) {
+    display: flex;
+  }
+}
+
+.phone {
+  @include m.focus-ring(var(--brand-400));
+  display: none;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--r-pill);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--bar-fg);
+  opacity: 0.85;
+  --icon-size: 1.05rem;
+  transition:
+    opacity var(--dur-fast),
+    background-color var(--dur-fast),
+    color var(--dur-slow) var(--ease-out);
+
+  @include m.up(xl) {
+    display: flex;
+  }
+
+  &:hover {
+    opacity: 1;
+    background: color-mix(in oklab, currentColor 10%, transparent);
+  }
+}
+
+.cta {
+  @include m.focus-ring;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.68rem 1.15rem;
+  border-radius: var(--r-pill);
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--brand-600);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(21, 155, 195, 0.32);
+  --icon-size: 0.95rem;
+  transition:
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+
+  app-icon {
+    transition: transform var(--dur) var(--ease-spring);
+  }
+
+  &:hover {
+    background: var(--brand-700);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(21, 155, 195, 0.42);
+
+    app-icon {
+      transform: translateX(3px);
+    }
+  }
+}
+
+/* ============================================================
+   HAMBURGUESA
+   ============================================================ */
+.burger {
+  @include m.focus-ring(var(--brand-400));
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 12px;
+  color: var(--bar-fg);
+  transition:
+    background-color var(--dur-fast),
+    color var(--dur-slow) var(--ease-out);
+
+  @include m.up(lg) {
+    display: none;
+  }
+
+  &:hover {
+    background: color-mix(in oklab, currentColor 12%, transparent);
+  }
+
+  &__line {
+    position: absolute;
+    width: 19px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform var(--dur) var(--ease-spring);
+
+    &--top {
+      transform: translateY(-4px);
+    }
+
+    &--bottom {
+      transform: translateY(4px);
+    }
+  }
+
+  &.is-open &__line {
+    &--top {
+      transform: rotate(45deg);
+    }
+
+    &--bottom {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+/* ============================================================
+   PANEL MÓVIL
+   ============================================================ */
+.sheet {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  padding: calc(var(--nav-h) + 2rem) var(--gutter) 3rem;
+  overflow-y: auto;
+  background: linear-gradient(165deg, #072634 0%, #0f4f6b 100%);
+  opacity: 0;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    visibility var(--dur);
+  visibility: hidden;
+
+  @include m.up(lg) {
+    display: none;
+  }
+
+  &.is-open {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+
+    li {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.5s var(--ease-out),
+        transform 0.5s var(--ease-out);
+      transition-delay: calc(var(--i) * 55ms + 80ms);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    a {
+      @include m.focus-ring(var(--brand-300));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.05rem 0.25rem;
+      font-size: 1.42rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: #fff;
+
+      app-icon {
+        color: var(--brand-300);
+        opacity: 0.55;
+        --icon-size: 1.3rem;
+        transition: transform var(--dur) var(--ease-spring);
+      }
+
+      &:hover app-icon {
+        transform: translateX(5px);
+        opacity: 1;
+      }
+    }
+  }
+
+  &.is-open &__links li {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__cta {
+    width: 100%;
+    padding-block: 1.05rem;
+    --icon-size: 1.15rem;
+  }
+
+  &__legal {
+    margin-bottom: auto;
+    text-align: center;
+    font-size: var(--t-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+  }
+}
+
+/* ============================================================
+   MOVIMIENTO REDUCIDO
+   Se conserva el cambio de forma (es informativo: indica que
+   la página está desplazada), pero sin recorrido animado.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .nav-wrap,
+  .bar,
+  .brand,
+  .cta,
+  .burger__line,
+  .sheet,
+  .sheet__links li {
+    transition-duration: 1ms !important;
+  }
+}

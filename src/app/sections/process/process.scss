@@ -1,0 +1,203 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  position: relative;
+  display: block;
+  padding-block: clamp(4rem, 7vw, 7rem) 0;
+  background: linear-gradient(90deg, rgba(232, 247, 251, 0.72), transparent 42%), var(--surface);
+  overflow: hidden;
+}
+
+.process-layout {
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    'content'
+    'portrait';
+  gap: 2.5rem;
+
+  @include m.up(lg) {
+    grid-template-columns: minmax(350px, 0.82fr) minmax(0, 1.18fr);
+    grid-template-areas: 'portrait content';
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: stretch;
+    min-height: 720px;
+  }
+}
+
+.process-content {
+  grid-area: content;
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(4rem, 7vw, 7rem);
+
+  @include m.up(lg) {
+    max-width: 680px;
+  }
+}
+
+.head {
+  max-width: 54ch;
+
+  &__title {
+    font-size: var(--t-h2);
+    max-width: 13ch;
+
+    .accent-word {
+      display: block;
+    }
+  }
+
+  &__lead {
+    margin-top: 1.15rem;
+    max-width: 50ch;
+  }
+}
+
+/* ============================================================
+   LÍNEA TEMPORAL
+   ============================================================ */
+.timeline {
+  display: grid;
+  margin-top: clamp(2.25rem, 4vw, 3.25rem);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 1rem;
+  padding-bottom: 1.65rem;
+
+  &:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 44px;
+    bottom: 0;
+    left: 23px;
+    width: 1px;
+    background: linear-gradient(var(--brand-300), var(--brand-100));
+  }
+
+  &:hover .step__num {
+    background: var(--brand-600);
+    border-color: var(--brand-600);
+    color: #fff;
+  }
+
+  &__num {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brand-300);
+    background: var(--surface);
+    color: var(--brand-700);
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    transition:
+      background-color var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out);
+  }
+
+  &__content {
+    padding-top: 0.1rem;
+  }
+
+  &__title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: var(--ink-900);
+  }
+
+  &__body {
+    margin-top: 0.35rem;
+    max-width: 54ch;
+    font-size: 0.9rem;
+    line-height: 1.62;
+    color: var(--ink-500);
+  }
+}
+
+.chat-link {
+  --icon-size: 1.15rem;
+  margin-top: 0.35rem;
+  padding-inline: 1.55rem;
+}
+
+/* La composición entra desde sus dos lados cuando alcanza el viewport. */
+.head.reveal,
+.step.reveal,
+.chat-link.reveal {
+  transform: translate3d(42px, 0, 0);
+  transition-duration: 0.9s;
+}
+
+.portrait.reveal {
+  transform: translate3d(-72px, 24px, 0) scale(0.96);
+  transition-duration: 1.05s;
+}
+
+.head.reveal.is-visible,
+.step.reveal.is-visible,
+.chat-link.reveal.is-visible,
+.portrait.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   RETRATO TRANSPARENTE
+   La fuente cuadrada contiene mucho espacio transparente. El ancho
+   ampliado recorta ese espacio dentro del contenedor sin alterar el PNG.
+   ============================================================ */
+.portrait {
+  grid-area: portrait;
+  position: relative;
+  z-index: 1;
+  min-height: 520px;
+  overflow: hidden;
+  pointer-events: none;
+
+  img {
+    display: block;
+    width: min(100%, 354px);
+    max-width: none;
+    height: auto;
+    margin-top: calc(520px - min(100%, 354px));
+    margin-left: max(1.5rem, calc(50% - 145px));
+    transform: scale(1.75);
+    transform-origin: left bottom;
+  }
+
+  @include m.up(lg) {
+    min-height: 720px;
+
+    img {
+      position: absolute;
+      left: -13%;
+      bottom: 0;
+      margin: 0;
+      width: min(266%, 1180px);
+      transform: none;
+      filter: drop-shadow(0 24px 34px rgba(10, 73, 96, 0.16));
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head.reveal,
+  .step.reveal,
+  .chat-link.reveal,
+  .portrait.reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

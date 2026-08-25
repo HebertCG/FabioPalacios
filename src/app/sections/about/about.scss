@@ -1,0 +1,246 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  position: relative;
+  display: block;
+  padding-block: clamp(2.5rem, 3vw, 3rem);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+/* Marca de agua tipográfica: da profundidad al fondo sin ruido */
+:host::before {
+  content: 'Oncología';
+  position: absolute;
+  top: -0.1em;
+  right: -0.04em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(6rem, 16vw, 15rem);
+  font-weight: 300;
+  line-height: 0.8;
+  color: var(--brand-500);
+  opacity: 0.045;
+  pointer-events: none;
+  user-select: none;
+}
+
+.about__grid {
+  position: relative;
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+
+  @include m.up(lg) {
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  }
+}
+
+/* ============================================================
+   RETRATO
+   ============================================================ */
+.figure {
+  position: relative;
+  max-width: 460px;
+  margin-inline: auto;
+  width: 100%;
+
+  @include m.up(lg) {
+    margin-inline: 0;
+    max-width: none;
+  }
+
+  &__frame {
+    position: relative;
+    overflow: hidden;
+    /* Radio asimétrico: rompe la uniformidad del rectángulo */
+    border-radius: var(--r-xl) var(--r-xl) var(--r-lg) 96px;
+    box-shadow: var(--sh-lg);
+    background: var(--brand-900);
+
+    img {
+      /* El recorte es muy vertical (659x1568). Se encuadra en 3:4 y se
+         ancla arriba: así entra la figura completa sin que el bloque
+         crezca a lo alto y desequilibre la retícula. */
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center 5%;
+    }
+  }
+
+  /* Velo en el borde derecho. El recorte deja una franja de la barra
+     turquesa del gráfico original: este degradado la absorbe y de paso
+     asienta el color del lado donde se apoya el sello. */
+  &__scrim {
+    position: absolute;
+    inset: 0 0 auto auto;
+    width: 16%;
+    height: 100%;
+    background: linear-gradient(
+      to left,
+      rgba(8, 56, 76, 0.97) 0%,
+      rgba(8, 56, 76, 0.7) 45%,
+      transparent 100%
+    );
+  }
+}
+
+/* ============================================================
+   TEXTO
+   ============================================================ */
+.copy {
+  &__title {
+    margin-top: 0.9rem;
+    font-size: var(--t-h2);
+    max-width: 18ch;
+  }
+
+  &__body {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1.05rem;
+
+    p {
+      font-size: var(--t-lead);
+      line-height: 1.7;
+      color: var(--ink-500);
+      max-width: 60ch;
+    }
+
+    /* Entradilla: el primer párrafo pesa más */
+    p:first-child {
+      color: var(--ink-800);
+      font-weight: 500;
+    }
+  }
+
+  &__cta {
+    margin-top: 1.9rem;
+  }
+}
+
+/* ============================================================
+   VENTAJAS
+   ============================================================ */
+.why {
+  margin-top: clamp(1.5rem, 2vw, 2rem);
+  padding-top: clamp(1rem, 1.5vw, 1.5rem);
+  border-top: 1px solid var(--hairline);
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: var(--t-h3);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+  }
+
+  &__rule {
+    flex: 1;
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+
+    @include m.up(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include m.up(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.perk {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 1.4rem 1.6rem;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+
+  /* Filo de color que crece al pasar el cursor */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--grad-brand);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--brand-200);
+    box-shadow: var(--sh-md);
+
+    &::before {
+      transform: scaleY(1);
+    }
+
+    .perk__icon {
+      background: var(--brand-500);
+      color: #fff;
+      transform: rotate(-6deg);
+    }
+  }
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: var(--brand-50);
+    color: var(--brand-600);
+    --icon-size: 1.4rem;
+    transition:
+      background-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-spring);
+  }
+
+  &__title {
+    margin-top: 1.05rem;
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink-900);
+  }
+
+  &__body {
+    margin-top: 0.45rem;
+    font-size: 0.895rem;
+    line-height: 1.6;
+    color: var(--ink-500);
+  }
+
+  /* Numeral tenue en la esquina: jerarquía sin ruido */
+  &__index {
+    position: absolute;
+    top: 1.15rem;
+    right: 1.25rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-200);
+  }
+}

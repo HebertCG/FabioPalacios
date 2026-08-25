@@ -1,0 +1,123 @@
+/* ============================================================
+   TOKENS DE DISEÑO — Dr. Fabio Palacios
+   Dirección visual: "editorial clínico".
+   Autoridad médica (azules profundos, tipografía firme)
+   + calidez humana (serif itálica, curvas suaves).
+   ============================================================ */
+
+:root {
+  /* ---------- CELESTE CIRUJANO · escala primaria ----------
+     Anclada en el celeste del campo quirúrgico (--brand-500).
+     Los tonos 800-950 son los que dan contraste al héroe. */
+  --brand-50: #eff9fd;
+  --brand-100: #d7f1fa;
+  --brand-200: #ade4f5;
+  --brand-300: #76d1ec;
+  --brand-400: #37b7dd;
+  --brand-500: #159bc3; /* PRIMARIO — celeste cirujano */
+  --brand-600: #0b7ca6;
+  --brand-700: #0d6488;
+  --brand-800: #11536e;
+  --brand-900: #12455c;
+  --brand-950: #072634;
+
+  /* ---------- Tinta (textos y superficies oscuras) ---------- */
+  --ink-950: #04161f;
+  --ink-900: #071d2a;
+  --ink-800: #0d2e3d;
+  --ink-700: #1e3c4c;
+  --ink-500: #4a6675;
+  --ink-400: #6b8593;
+  --ink-300: #93a9b5;
+  --ink-200: #c3d3db;
+
+  /* ---------- Superficies claras ---------- */
+  --surface: #ffffff;
+  --surface-2: #f6fbfd;
+  --surface-3: #e9f4f9;
+  --hairline: #dbe9ef;
+
+  /* ---------- Acentos (uso escaso y semántico) ----------
+     Menta quirúrgica: estados interactivos y detalles vivos.
+     Arena: solo para el sello de credenciales (CMP/RNE). */
+  --accent: #3fd9c0;
+  --accent-deep: #17a897;
+  --seal: #e8b768;
+
+  /* ---------- Gradientes compuestos ---------- */
+  --grad-hero:
+    radial-gradient(120% 90% at 78% 18%, #1a6f92 0%, transparent 58%),
+    radial-gradient(90% 70% at 8% 92%, #0e5c7d 0%, transparent 55%),
+    linear-gradient(158deg, #072634 0%, #0c3f56 52%, #114f69 100%);
+  --grad-brand: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+  --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+
+  /* ---------- Tipografía ----------
+     Plus Jakarta Sans: estructura, títulos, interfaz.
+     Newsreader itálica: el registro humano (antetítulos, citas). */
+  --font-sans:
+    'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+    sans-serif;
+  --font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+
+  /* Escala fluida — contraste marcado entre display y cuerpo */
+  --t-display: clamp(2.55rem, 1.35rem + 4.6vw, 5.1rem);
+  --t-h2: clamp(1.95rem, 1.25rem + 2.3vw, 3.15rem);
+  --t-h3: clamp(1.28rem, 1.05rem + 0.75vw, 1.6rem);
+  --t-lead: clamp(1.03rem, 0.96rem + 0.42vw, 1.22rem);
+  --t-body: 1rem;
+  --t-sm: 0.9rem;
+  --t-xs: 0.795rem;
+  --t-eyebrow: 0.775rem;
+
+  --lh-display: 1.03;
+  --lh-tight: 1.14;
+  --lh-body: 1.62;
+  --tr-display: -0.035em;
+  --tr-tight: -0.02em;
+  --tr-eyebrow: 0.17em;
+
+  /* ---------- Ritmo espacial (deliberadamente no uniforme) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-section: clamp(3.25rem, 2.5rem + 2vw, 4rem);
+  --shell: 1240px;
+  --shell-narrow: 940px;
+  --gutter: clamp(1.15rem, 0.6rem + 2.4vw, 2.75rem);
+
+  /* ---------- Radios (variados a propósito) ---------- */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 34px;
+  --r-pill: 999px;
+
+  /* ---------- Elevación: sombras teñidas de celeste, nunca gris neutro ---------- */
+  --sh-sm: 0 1px 2px rgba(7, 38, 52, 0.06), 0 2px 6px rgba(7, 38, 52, 0.05);
+  --sh-md: 0 4px 10px rgba(7, 38, 52, 0.06), 0 14px 30px rgba(7, 38, 52, 0.08);
+  --sh-lg: 0 10px 24px rgba(7, 38, 52, 0.09), 0 30px 64px rgba(7, 38, 52, 0.13);
+  --sh-brand: 0 12px 30px rgba(21, 155, 195, 0.32);
+  --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* ---------- Movimiento ---------- */
+  --dur-fast: 160ms;
+  --dur: 320ms;
+  --dur-slow: 620ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.46, 0.64, 1);
+
+  /* ---------- Navbar (leído por el componente y por el shell) ---------- */
+  --nav-h: 82px;
+  --nav-h-scrolled: 66px;
+  --z-nav: 100;
+  --z-fab: 90;
+  --z-modal: 200;
+}

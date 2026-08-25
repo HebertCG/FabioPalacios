@@ -1,0 +1,139 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  display: block;
+  padding-block: var(--space-section) clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--surface-2);
+}
+
+.faq__grid {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+
+  @include m.up(lg) {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+}
+
+/* ============================================================
+   CABECERA
+   ============================================================ */
+.head {
+  @include m.up(lg) {
+    position: sticky;
+    top: calc(var(--nav-h-scrolled) + 2.5rem);
+  }
+
+  &__title {
+    margin-top: 0.9rem;
+    font-size: var(--t-h2);
+    max-width: 14ch;
+  }
+
+  &__lead {
+    margin-top: 1rem;
+    max-width: 34ch;
+  }
+
+  &__cta {
+    margin-top: 1.6rem;
+    --icon-size: 1.15rem;
+  }
+}
+
+/* ============================================================
+   ACORDEÓN
+   ============================================================ */
+.list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.item {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  overflow: hidden;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+
+  &.is-open {
+    border-color: var(--brand-200);
+    box-shadow: var(--sh-md);
+  }
+
+  details {
+    /* El marcador nativo se reemplaza por el signo propio */
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::marker {
+      content: '';
+    }
+  }
+
+  summary {
+    @include m.focus-ring;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.2rem 1.35rem;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color var(--dur-fast);
+
+    &:hover {
+      background: var(--brand-50);
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.018em;
+      color: var(--ink-900);
+      text-wrap: pretty;
+    }
+  }
+
+  &__sign {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--brand-50);
+    color: var(--brand-600);
+    --icon-size: 0.95rem;
+    transition:
+      transform var(--dur) var(--ease-spring),
+      background-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out);
+  }
+
+  &.is-open &__sign {
+    /* El "+" gira hasta convertirse en "×" */
+    transform: rotate(135deg);
+    background: var(--brand-500);
+    color: #fff;
+  }
+
+  &__panel {
+    padding: 0 1.35rem 1.35rem;
+
+    p {
+      max-width: 64ch;
+      font-size: 0.935rem;
+      line-height: 1.68;
+      color: var(--ink-500);
+      /* Sangría marcada con una línea: separa respuesta de pregunta */
+      padding-left: 0.95rem;
+      border-left: 2px solid var(--brand-200);
+    }
+  }
+}

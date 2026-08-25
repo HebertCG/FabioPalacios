@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="EsSalud Red Asistencial Piura">
+  <title>EsSalud Red Asistencial Piura</title>
+  <rect width="64" height="64" rx="16" fill="#EAF5FA"/>
+  <g fill="none" stroke="#11536E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 47s-14-8.6-14-18.4A7.8 7.8 0 0 1 32 23a7.8 7.8 0 0 1 14 5.6C46 38.4 32 47 32 47z"/></g>
+  <path d="M23.5 32.5h5l2.5-4 3 7 2.5-3h4" stroke="#159BC3" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

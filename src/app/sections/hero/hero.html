@@ -1,0 +1,68 @@
+<!-- Atmósfera: halo de luz quirúrgica, retícula técnica y grano.
+     Todo decorativo, todo fuera del árbol de accesibilidad. -->
+<div class="atmosphere" aria-hidden="true">
+  <span class="glow glow--main"></span>
+  <span class="glow glow--rim"></span>
+  <span class="grid"></span>
+</div>
+
+<div class="shell hero__grid">
+  <!-- ---------------- Columna de texto ---------------- -->
+  <div class="copy">
+    <p class="eyebrow eyebrow--light">{{ hero.eyebrow }}</p>
+
+    <h1 class="display copy__title">
+      {{ hero.titleStart }}
+      <span class="accent-word">{{ hero.titleAccent }}</span>
+      {{ hero.titleEnd }}
+    </h1>
+
+    <p class="lead lead--light copy__lead">{{ hero.lead }}</p>
+
+    <div class="copy__actions">
+      <a
+        class="btn btn--primary"
+        [href]="waLink"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ hero.primaryCta }}
+        <app-icon name="arrow-right" [strokeWidth]="2" />
+      </a>
+      <a class="btn btn--ghost-light" href="#especialidades">
+        {{ hero.secondaryCta }}
+      </a>
+    </div>
+
+  </div>
+
+  <!-- ---------------- Columna del retrato ---------------- -->
+  <div class="portrait">
+    <span class="portrait__disc" aria-hidden="true"></span>
+    <span class="portrait__ring" aria-hidden="true"></span>
+
+    <img
+      class="portrait__img"
+      src="foto-principal.png"
+      width="430"
+      height="497"
+      fetchpriority="high"
+      decoding="async"
+      [alt]="
+        doctor.displayName +
+        ', ' +
+        doctor.specialty +
+        ' en Piura, revisando estudios de imágenes'
+      "
+    />
+
+  </div>
+</div>
+
+<!-- Indicador de desplazamiento -->
+<a class="scroll-hint" href="#formacion" aria-label="Ver más">
+  <span class="scroll-hint__track" aria-hidden="true">
+    <span class="scroll-hint__dot"></span>
+  </span>
+  <span class="scroll-hint__text">Desplácese</span>
+</a>

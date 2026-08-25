@@ -1,0 +1,80 @@
+<div class="shell">
+  <!-- ============ Contenido principal del pie ============ -->
+  <div class="top">
+    <div class="brand">
+      <p class="brand__tagline">{{ footer.tagline }}</p>
+
+      <!-- Redes -->
+      <ul class="social">
+        @for (social of socials(); track social.id) {
+          <li>
+            <a
+              [href]="social.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="social.label"
+            >
+              <app-icon [name]="social.id" />
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Columnas -->
+    <nav class="cols" aria-label="Enlaces del pie de página">
+      <div class="col">
+        <h3>Navegación</h3>
+        <ul>
+          @for (link of links; track link.id) {
+            <li>
+              <a [href]="link.href">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="col">
+        <h3>Especialidades</h3>
+        <ul>
+          @for (item of specialties; track item.id) {
+            <li>
+              <a href="#especialidades">{{ item.title }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="col col--contact">
+        <h3>Contacto</h3>
+        <ul>
+          <li>
+            <a [href]="waLink" target="_blank" rel="noopener noreferrer">
+              <app-icon name="whatsapp" />
+              {{ contact.whatsappDisplay }}
+            </a>
+          </li>
+          <li>
+            <a [href]="contact.mapsUrl" target="_blank" rel="noopener noreferrer">
+              <app-icon name="pin" [strokeWidth]="1.7" />
+              {{ doctor.district }} — {{ doctor.city }}
+            </a>
+          </li>
+        </ul>
+        <address class="col__address">
+          {{ contact.address }}<br />
+          {{ contact.addressLine2 }}
+        </address>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ============ Aviso legal ============ -->
+  <p class="disclaimer">{{ footer.disclaimer }}</p>
+
+  <!-- ============ Línea final ============ -->
+  <div class="bottom">
+    <p>© {{ year }} {{ doctor.displayName }}. Todos los derechos reservados.</p>
+    <p class="bottom__place">Piura, Perú</p>
+  </div>
+</div>

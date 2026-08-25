@@ -1,0 +1,92 @@
+@let isMorphed = morphed();
+@let isOpen = menuOpen();
+
+<!-- El wrapper fijo nunca cambia de tamaño: solo ajusta su relleno.
+     La barra interior es la que se contrae y se redondea. -->
+<div class="nav-wrap" [class.is-morphed]="isMorphed">
+  <nav class="bar" [class.is-morphed]="isMorphed" aria-label="Navegación principal">
+    <!-- Marca: el nombre del doctor es el logo -->
+    <a class="brand" href="#inicio" (click)="closeMenu()">
+      <span class="brand__text">
+        <strong>{{ doctor.displayName }}</strong>
+        <small>{{ doctor.specialty }}</small>
+      </span>
+    </a>
+
+    <!-- Enlaces en escritorio -->
+    <ul class="links">
+      @for (link of links; track link.id) {
+        <li>
+          <a
+            [href]="link.href"
+            [class.is-active]="activeSection() === link.id"
+            >{{ link.label }}</a
+          >
+        </li>
+      }
+    </ul>
+
+    <!-- Acciones -->
+    <div class="actions">
+      <a class="phone" [href]="waLink" target="_blank" rel="noopener noreferrer">
+        <app-icon name="whatsapp" />
+        <span>{{ phoneDisplay }}</span>
+      </a>
+      <a class="cta" [href]="waLink" target="_blank" rel="noopener noreferrer">
+        Agendar cita
+        <app-icon name="arrow-right" [strokeWidth]="2" />
+      </a>
+    </div>
+
+    <!-- Botón hamburguesa (móvil) -->
+    <button
+      class="burger"
+      type="button"
+      [class.is-open]="isOpen"
+      [attr.aria-expanded]="isOpen"
+      aria-controls="menu-movil"
+      (click)="toggleMenu($event)"
+    >
+      <span class="sr-only">{{ isOpen ? 'Cerrar menú' : 'Abrir menú' }}</span>
+      <span class="burger__line burger__line--top"></span>
+      <span class="burger__line burger__line--bottom"></span>
+    </button>
+  </nav>
+</div>
+
+<!-- Panel móvil -->
+<div
+  #sheet
+  id="menu-movil"
+  class="sheet"
+  [class.is-open]="isOpen"
+  [attr.aria-hidden]="!isOpen"
+  [attr.inert]="isOpen ? null : ''"
+  (keydown)="trapMenuFocus($event)"
+>
+  <ul class="sheet__links">
+    @for (link of links; track link.id; let i = $index) {
+      <li [style.--i]="i">
+        <a [href]="link.href" (click)="closeMenu()">
+          <span>{{ link.label }}</span>
+          <app-icon name="arrow-right" [strokeWidth]="1.6" />
+        </a>
+      </li>
+    }
+  </ul>
+
+  <a
+    class="btn btn--wa sheet__cta"
+    [href]="waLink"
+    target="_blank"
+    rel="noopener noreferrer"
+    (click)="closeMenu()"
+  >
+    <app-icon name="whatsapp" />
+    Escribir al {{ phoneDisplay }}
+  </a>
+
+  <p class="sheet__legal">
+    CMP {{ doctor.cmp }} · RNE {{ doctor.rne }}
+  </p>
+</div>

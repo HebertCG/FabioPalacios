@@ -1,0 +1,254 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  position: relative;
+  display: block;
+  padding-block: var(--space-section);
+  background:
+    radial-gradient(90% 70% at 85% 0%, #12546f 0%, transparent 58%),
+    linear-gradient(170deg, #072634 0%, #0b3f56 100%);
+  color: #fff;
+  overflow: hidden;
+}
+
+:host::after {
+  @include m.grain(0.05);
+}
+
+/* ============================================================
+   CABECERA
+   ============================================================ */
+.head {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  align-items: end;
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+
+  @include m.up(lg) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    gap: 3rem;
+  }
+
+  &__title {
+    margin-top: 0.9rem;
+    font-size: var(--t-h2);
+    max-width: 16ch;
+  }
+
+  &__lead {
+    max-width: 46ch;
+  }
+}
+
+/* ============================================================
+   RETÍCULA IRREGULAR
+   ============================================================ */
+.grid {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+
+  @include m.up(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include m.up(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.6rem 1.5rem 1.5rem;
+  border-radius: var(--r-lg);
+  @include m.glass(0.055);
+  transition:
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+
+  &__media,
+  &__veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &__media {
+    z-index: 0;
+    opacity: 0.46;
+    transition:
+      opacity 500ms var(--ease-out),
+      transform 700ms var(--ease-out);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(0.82) contrast(1.04);
+    }
+  }
+
+  &__veil {
+    z-index: 1;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(4, 34, 47, 0.94) 0%,
+        rgba(5, 40, 55, 0.82) 54%,
+        rgba(5, 40, 55, 0.56) 100%
+      ),
+      linear-gradient(0deg, rgba(3, 25, 36, 0.42), transparent 58%);
+  }
+
+  /* Las dos áreas de mayor volumen ocupan el doble de ancho */
+  @include m.up(lg) {
+    grid-column: span 2;
+
+    &:not(.tile--featured) {
+      grid-column: span 1;
+    }
+  }
+
+  /* Resplandor que sigue al cursor, discreto */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -40% -40% auto auto;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(55, 183, 221, 0.35) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .tile__media {
+      opacity: 0.58;
+      transform: scale(1.035);
+    }
+
+    .tile__icon {
+      color: var(--brand-950);
+      background: var(--brand-300);
+      transform: rotate(-7deg);
+    }
+
+    .tile__link {
+      color: #fff;
+
+      app-icon {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  &__icon {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--brand-200);
+    --icon-size: 1.45rem;
+    transition:
+      background-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-spring);
+  }
+
+  &__title {
+    position: relative;
+    z-index: 3;
+    margin-top: 1.1rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  /* Los órganos como etiquetas: escaneable y buen material para SEO */
+  &__organs {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.9rem;
+
+    li {
+      padding: 0.24rem 0.6rem;
+      border-radius: var(--r-pill);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 0.735rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.82);
+    }
+  }
+
+  &__link {
+    @include m.focus-ring(var(--brand-300));
+    position: relative;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 1.3rem;
+    font-size: 0.795rem;
+    font-weight: 700;
+    color: var(--brand-300);
+    --icon-size: 0.9rem;
+    transition: color var(--dur) var(--ease-out);
+
+    app-icon {
+      transition: transform var(--dur) var(--ease-spring);
+    }
+  }
+}
+
+/* ============================================================
+   AVISO LEGAL DE LA SECCIÓN
+   ============================================================ */
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  max-width: 62ch;
+  margin-top: 2rem;
+  font-size: var(--t-xs);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.52);
+  --icon-size: 1.05rem;
+
+  app-icon {
+    margin-top: 0.1rem;
+    color: var(--brand-300);
+    opacity: 0.8;
+  }
+}

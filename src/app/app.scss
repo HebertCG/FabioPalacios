@@ -1,0 +1,10 @@
+/* El shell no aporta estilos propios: cada sección es autónoma.
+   Se declara aquí para que el bloque principal no herede márgenes
+   y para dejar el punto de extensión si más adelante hace falta. */
+:host {
+  display: block;
+}
+
+main {
+  display: block;
+}

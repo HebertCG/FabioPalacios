@@ -1,0 +1,221 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  position: fixed;
+  right: clamp(0.7rem, 1.6vw, 1.4rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: var(--z-fab);
+  display: block;
+  pointer-events: none;
+}
+
+.dock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  pointer-events: auto;
+
+  &__socials {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  &__item {
+    /* Entrada escalonada de abajo hacia arriba */
+    animation: pop 0.5s var(--ease-spring) backwards;
+    animation-delay: calc(600ms + var(--i) * 70ms);
+  }
+}
+
+/* ============================================================
+   BOTÓN
+   ============================================================ */
+.pill {
+  @include m.focus-ring(var(--brand-500));
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink-800);
+  --icon-size: 1.32rem;
+  box-shadow:
+    0 2px 6px rgba(7, 38, 52, 0.12),
+    0 8px 20px rgba(7, 38, 52, 0.16);
+  transition:
+    transform var(--dur) var(--ease-spring),
+    box-shadow var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+
+  &:hover {
+    transform: translateY(-3px) scale(1.06);
+    box-shadow:
+      0 4px 10px rgba(7, 38, 52, 0.14),
+      0 14px 30px rgba(7, 38, 52, 0.22);
+  }
+
+  /* Cada red toma su color solo al interactuar: en reposo el dock
+     se mantiene neutro y no compite con el contenido. */
+  &--facebook:hover {
+    background: #1877f2;
+    color: #fff;
+  }
+
+  &--instagram:hover {
+    background: linear-gradient(45deg, #f09433, #dc2743 50%, #bc1888);
+    color: #fff;
+  }
+
+  &--tiktok:hover {
+    background: #010101;
+    color: #fff;
+  }
+
+  &--doctoralia:hover {
+    background: var(--brand-500);
+    color: #fff;
+  }
+
+  /* ---------- WhatsApp: el botón principal ---------- */
+  &--whatsapp {
+    width: 58px;
+    height: 58px;
+    background: #25d366;
+    color: #fff;
+    --icon-size: 1.62rem;
+    box-shadow:
+      0 3px 8px rgba(11, 92, 48, 0.24),
+      0 12px 28px rgba(37, 211, 102, 0.4);
+    animation: pop 0.55s var(--ease-spring) 480ms backwards;
+
+    &:hover {
+      background: #1fbe5b;
+      box-shadow:
+        0 5px 12px rgba(11, 92, 48, 0.28),
+        0 18px 38px rgba(37, 211, 102, 0.5);
+    }
+  }
+
+  /* Pulso: llama la atención sin parpadear */
+  &__pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #25d366;
+    opacity: 0.55;
+    animation: pulse 2.6s var(--ease-out) infinite;
+    z-index: -1;
+  }
+
+  /* ---------- Etiqueta ---------- */
+  &__tip {
+    position: absolute;
+    right: calc(100% + 0.65rem);
+    top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    padding: 0.42rem 0.7rem;
+    border-radius: var(--r-sm);
+    background: var(--ink-900);
+    color: #fff;
+    font-size: 0.735rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: var(--sh-md);
+    transition:
+      opacity var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+
+    /* Punta del globo */
+    &::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      margin-top: -4px;
+      border: 4px solid transparent;
+      border-left-color: var(--ink-900);
+    }
+  }
+
+  &:hover &__tip,
+  &:focus-visible &__tip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  /* Las etiquetas no caben en pantallas chicas */
+  @include m.down(md) {
+    &__tip {
+      display: none;
+    }
+  }
+}
+
+/* ============================================================
+   RESPONSIVO
+   Debajo de 768px queda solo WhatsApp: en el móvil la columna
+   de cuatro botones tapa contenido y estorba al pulgar.
+   ============================================================ */
+@include m.down(md) {
+  .dock__item--mobile-hidden {
+    display: none;
+  }
+
+  /* Sin redes arriba, el hueco del contenedor sobra */
+  .dock__socials:empty {
+    display: none;
+  }
+
+  .pill--whatsapp {
+    width: 54px;
+    height: 54px;
+    --icon-size: 1.5rem;
+  }
+}
+
+/* ============================================================
+   ANIMACIONES
+   ============================================================ */
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock__item,
+  .pill--whatsapp {
+    animation: none;
+  }
+
+  .pill__pulse {
+    display: none;
+  }
+}

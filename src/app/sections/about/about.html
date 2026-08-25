@@ -1,0 +1,80 @@
+<div class="shell about__grid">
+  <!-- ---------------- Retrato ---------------- -->
+  <div class="figure" appReveal>
+    <div class="figure__frame">
+      <picture>
+        <source srcset="retrato-quirofano.webp" type="image/webp" />
+        <img
+          src="retrato-quirofano.jpg"
+          width="659"
+          height="1568"
+          loading="lazy"
+          decoding="async"
+          [alt]="
+            doctor.displayName +
+            ' en sala de operaciones, ' +
+            doctor.specialty +
+            ' en ' +
+            doctor.city
+          "
+        />
+      </picture>
+      <span class="figure__scrim" aria-hidden="true"></span>
+    </div>
+
+  </div>
+
+  <!-- ---------------- Texto ---------------- -->
+  <div class="copy">
+    <header appReveal>
+      <p class="eyebrow">{{ about.eyebrow }}</p>
+      <h2 class="copy__title">
+        {{ about.titleStart }}
+        <span class="accent-word accent-word--dark">{{ about.titleAccent }}</span>
+      </h2>
+    </header>
+
+    <div class="copy__body" appReveal [revealDelay]="90">
+      @for (paragraph of about.paragraphs; track $index) {
+        <p>{{ paragraph }}</p>
+      }
+    </div>
+
+    <a
+      class="btn btn--outline copy__cta"
+      [href]="waLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      appReveal
+      [revealDelay]="150"
+    >
+      Conversemos sobre su caso
+      <app-icon name="arrow-right" [strokeWidth]="2" />
+    </a>
+  </div>
+</div>
+
+<!-- ---------------- Ventajas ---------------- -->
+<div class="shell">
+  <div class="why">
+    <header class="why__head" appReveal>
+      <h3 class="why__title">Por qué elegirme</h3>
+      <span class="rule why__rule"></span>
+    </header>
+
+    <ul class="why__grid">
+      @for (item of advantages; track item.id; let i = $index) {
+        <li class="perk" appReveal [revealDelay]="i * 70">
+          <span class="perk__icon" aria-hidden="true">
+            <app-icon [name]="item.icon" [strokeWidth]="1.65" />
+          </span>
+          <h4 class="perk__title">{{ item.title }}</h4>
+          <p class="perk__body">{{ item.body }}</p>
+          <span class="perk__index" aria-hidden="true">
+            {{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}
+          </span>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

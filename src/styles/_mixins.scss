@@ -1,0 +1,112 @@
+/* ============================================================
+   MIXINS Y HELPERS COMPARTIDOS
+   ============================================================ */
+
+@use 'sass:map';
+
+/* ---------- Breakpoints ---------- */
+$bp: (
+  xs: 380px,
+  sm: 560px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1480px,
+);
+
+@mixin up($key) {
+  @media (min-width: map.get($bp, $key)) {
+    @content;
+  }
+}
+
+@mixin down($key) {
+  @media (max-width: (map.get($bp, $key) - 0.02px)) {
+    @content;
+  }
+}
+
+/* ---------- Contenedor ---------- */
+@mixin shell($max: var(--shell)) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Antetítulo (eyebrow) ---------- */
+@mixin eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-sans);
+  font-size: var(--t-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+}
+
+/* ---------- Superficie de tarjeta clara ---------- */
+@mixin card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-sm);
+}
+
+/* ---------- Vidrio sobre fondo oscuro ---------- */
+@mixin glass($alpha: 0.1) {
+  background: rgba(255, 255, 255, $alpha);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* ---------- Anillo de foco accesible y visible en ambos fondos ---------- */
+@mixin focus-ring($color: var(--brand-500)) {
+  outline: none;
+
+  &:focus-visible {
+    outline: 3px solid $color;
+    outline-offset: 3px;
+    border-radius: var(--r-sm);
+  }
+}
+
+/* ---------- Degradado de máscara para marquesinas ---------- */
+@mixin fade-mask($dir: to bottom, $size: 14%) {
+  mask-image: linear-gradient(
+    $dir,
+    transparent 0,
+    #000 $size,
+    #000 (100% - $size),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    $dir,
+    transparent 0,
+    #000 $size,
+    #000 (100% - $size),
+    transparent 100%
+  );
+}
+
+/* ---------- Recorte de líneas ---------- */
+@mixin clamp-lines($n: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $n;
+  line-clamp: $n;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Textura de grano fino: da atmósfera a los bloques oscuros ---------- */
+@mixin grain($opacity: 0.05) {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: $opacity;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}

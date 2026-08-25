@@ -1,0 +1,178 @@
+@use '../../../styles/mixins' as m;
+
+:host {
+  position: relative;
+  display: block;
+  /* El bloque de contacto monta sobre este relleno superior */
+  padding-block: clamp(4.5rem, 5vw, 7rem) clamp(1.5rem, 2vw, 2.25rem);
+  margin-top: calc(clamp(2rem, 4vw, 3.5rem) * -1);
+  background: var(--ink-950);
+  color: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+}
+
+/* Halo tenue en la base: evita el negro plano */
+:host::before {
+  content: '';
+  position: absolute;
+  bottom: -40%;
+  left: 50%;
+  width: 120%;
+  aspect-ratio: 3 / 1;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(21, 155, 195, 0.14) 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.shell {
+  position: relative;
+}
+
+/* ============================================================
+   PARTE SUPERIOR
+   ============================================================ */
+.top {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3.5rem);
+  padding-bottom: clamp(2rem, 3vw, 3rem);
+
+  @include m.up(lg) {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+  }
+}
+
+/* ---------- Presentación ---------- */
+.brand {
+  &__tagline {
+    max-width: 40ch;
+    font-size: 0.925rem;
+    line-height: 1.68;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* ---------- Redes ---------- */
+.social {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.6rem;
+
+  a {
+    @include m.focus-ring(var(--brand-400));
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.72);
+    --icon-size: 1.1rem;
+    transition:
+      background-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+
+    &:hover {
+      background: var(--brand-500);
+      border-color: var(--brand-500);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+  }
+}
+
+/* ---------- Columnas ---------- */
+.cols {
+  display: grid;
+  gap: 2rem 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  @include m.up(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.col {
+  h3 {
+    font-size: 0.685rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.9;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1.05rem;
+  }
+
+  a {
+    @include m.focus-ring(var(--brand-400));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.62);
+    --icon-size: 1rem;
+    transition:
+      color var(--dur-fast),
+      transform var(--dur-fast);
+
+    app-icon {
+      color: var(--brand-400);
+      opacity: 0.8;
+    }
+
+    &:hover {
+      color: #fff;
+      transform: translateX(3px);
+    }
+  }
+
+  &__address {
+    margin-top: 1rem;
+    font-style: normal;
+    font-size: 0.815rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.45);
+  }
+}
+
+/* ============================================================
+   AVISO LEGAL
+   ============================================================ */
+.disclaimer {
+  max-width: 78ch;
+  margin-top: 1.5rem;
+  font-size: 0.755rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* ============================================================
+   LÍNEA FINAL
+   ============================================================ */
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.75rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.755rem;
+  color: rgba(255, 255, 255, 0.55);
+
+  &__place {
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.68rem;
+  }
+}

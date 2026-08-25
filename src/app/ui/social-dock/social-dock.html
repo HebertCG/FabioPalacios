@@ -1,0 +1,43 @@
+@let wa = whatsapp();
+
+<nav class="dock" aria-label="Redes sociales y contacto directo">
+  <!-- Redes: se ocultan en móvil -->
+  <ul class="dock__socials">
+    @for (link of links(); track link.id; let i = $index) {
+      <li
+        class="dock__item"
+        [class.dock__item--mobile-hidden]="!link.keepOnMobile"
+        [style.--i]="i"
+      >
+        <a
+          class="pill"
+          [class]="'pill--' + link.id"
+          [href]="link.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="link.label"
+        >
+          <app-icon [name]="link.id" />
+          <span class="pill__tip" aria-hidden="true">{{ link.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <!-- WhatsApp: permanece siempre, en todas las pantallas -->
+  @if (wa) {
+    <a
+      class="pill pill--whatsapp"
+      [href]="wa.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      [attr.aria-label]="wa.label + ' al ' + phone"
+    >
+      <span class="pill__pulse" aria-hidden="true"></span>
+      <app-icon name="whatsapp" />
+      <span class="pill__tip" aria-hidden="true">
+        Escríbame al {{ phone }}
+      </span>
+    </a>
+  }
+</nav>
