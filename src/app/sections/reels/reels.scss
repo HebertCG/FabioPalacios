@@ -284,7 +284,7 @@
     font-size: 0.85rem;
     font-weight: 700;
     line-height: 1.32;
-    letter-spacing: -0.012em;
+    letter-spacing: 0;
     color: #fff;
     @include m.clamp-lines(2);
   }

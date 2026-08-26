@@ -89,11 +89,10 @@ export function whatsappLink(message: string = CONTACT.whatsappMessage): string 
    ============================================================ */
 
 export const HERO = {
-  eyebrow: `${DOCTOR.specialty} · ${DOCTOR.subSpecialty}`,
   /** El título se arma en tres partes para resaltar la del medio */
   titleStart: 'Cirugía oncológica',
   titleAccent: 'de alta complejidad',
-  titleEnd: 'sin salir de Piura',
+  titleEnd: 'para el norte del Perú',
   lead:
     'Cirugía especializada en cáncer digestivo, de mama, cabeza y cuello, ' +
     'urológico y ginecológico, con atención cercana en Piura.',

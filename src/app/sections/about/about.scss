@@ -14,10 +14,10 @@
   position: absolute;
   top: -0.1em;
   right: -0.04em;
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-display);
+  font-style: normal;
   font-size: clamp(6rem, 16vw, 15rem);
-  font-weight: 300;
+  font-weight: 500;
   line-height: 0.8;
   color: var(--brand-500);
   opacity: 0.045;
@@ -148,7 +148,7 @@
   &__title {
     font-size: var(--t-h3);
     font-weight: 800;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     white-space: nowrap;
   }
 
@@ -230,7 +230,7 @@
     margin-top: 1.05rem;
     font-size: 1.02rem;
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     color: var(--ink-900);
   }
 

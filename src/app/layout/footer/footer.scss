@@ -61,6 +61,7 @@
   }
 
   &__name {
+    font-family: var(--font-display);
     font-size: clamp(1.35rem, 1.1rem + 0.5vw, 1.65rem);
     line-height: 1.15;
     font-weight: 800;

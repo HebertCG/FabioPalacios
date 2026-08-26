@@ -53,12 +53,13 @@
   --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
 
   /* ---------- Tipografía ----------
-     Plus Jakarta Sans: estructura, títulos, interfaz.
-     Newsreader itálica: el registro humano (antetítulos, citas). */
+     Open Sans: cuerpo y lectura prolongada.
+     Poppins: títulos, marca y acciones. */
   --font-sans:
-    'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+    'Open Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
     sans-serif;
-  --font-serif: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-display: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial,
+    sans-serif;
 
   /* Escala fluida — contraste marcado entre display y cuerpo */
   --t-display: clamp(2.55rem, 1.35rem + 4.6vw, 5.1rem);
@@ -73,8 +74,8 @@
   --lh-display: 1.03;
   --lh-tight: 1.14;
   --lh-body: 1.62;
-  --tr-display: -0.035em;
-  --tr-tight: -0.02em;
+  --tr-display: 0;
+  --tr-tight: 0;
   --tr-eyebrow: 0.17em;
 
   /* ---------- Ritmo espacial (deliberadamente no uniforme) ---------- */
