@@ -8,7 +8,7 @@
  * PROCEDENCIA DE LOS DATOS
  *  · Nombre, especialidad, CMP 066389, RNE 046335, las seis áreas
  *    quirúrgicas y el WhatsApp 906 418 375 provienen del material
- *    gráfico oficial del doctor (public/foto-secundaria.jpg).
+ *    gráfico oficial del doctor (public/dr-fabio-palacios-cirujano-oncologo-piura-perfil.jpg).
  *  · Formación (UPCH, INEN, IRCAD), Sociedad Peruana de Cancerología,
  *    el consultorio de Castilla y su labor en EsSalud provienen de
  *    fuentes públicas: Doctoralia, su Facebook oficial, la cuenta del
@@ -252,7 +252,9 @@ export const SPECIALTIES: readonly Specialty[] = [
     title: 'Cáncer digestivo',
     organs: ['Esófago', 'Estómago', 'Hígado', 'Páncreas', 'Colon', 'Recto'],
     icon: 'digestive',
-    image: 'specialties/digestive.jpg',
+    image: 'specialties/cirugia-cancer-digestivo.jpg',
+    imageAlt:
+      'Ilustración del aparato digestivo humano: esófago, estómago, hígado, páncreas, colon y recto',
     featured: true,
   },
   {
@@ -260,21 +262,27 @@ export const SPECIALTIES: readonly Specialty[] = [
     title: 'Cáncer de cabeza y cuello',
     organs: ['Tiroides', 'Lengua', 'Mucosas', 'Piel'],
     icon: 'head-neck',
-    image: 'specialties/head-neck.jpg',
+    image: 'specialties/cirugia-cancer-cabeza-cuello.jpg',
+    imageAlt:
+      'Ilustración anatómica de la región de cabeza y cuello, con la glándula tiroides y las vías aerodigestivas',
   },
   {
     id: 'retroperitoneal',
     title: 'Tumores retroperitoneales',
     organs: ['Retroperitoneo'],
     icon: 'retroperitoneal',
-    image: 'specialties/retroperitoneal.jpg',
+    image: 'specialties/cirugia-tumores-retroperitoneales.jpg',
+    imageAlt:
+      'Ilustración del espacio retroperitoneal, detrás de la cavidad abdominal',
   },
   {
     id: 'breast',
     title: 'Cáncer de mama, piel y partes blandas',
     organs: ['Mama', 'Piel', 'Partes blandas'],
     icon: 'breast',
-    image: 'specialties/breast-soft-tissue.jpg',
+    image: 'specialties/cirugia-cancer-mama-partes-blandas.jpg',
+    imageAlt:
+      'Ilustración anatómica de la glándula mamaria y los tejidos blandos que la rodean',
     featured: true,
   },
   {
@@ -282,14 +290,18 @@ export const SPECIALTIES: readonly Specialty[] = [
     title: 'Cáncer urológico',
     organs: ['Próstata', 'Vejiga', 'Riñón', 'Testículo', 'Pene'],
     icon: 'urologic',
-    image: 'specialties/urologic.jpg',
+    image: 'specialties/cirugia-cancer-urologico.jpg',
+    imageAlt:
+      'Ilustración del aparato urinario y genital masculino: riñones, vejiga y próstata',
   },
   {
     id: 'gynecologic',
     title: 'Cáncer ginecológico',
     organs: ['Cérvix', 'Útero', 'Ovario', 'Vulva', 'Vagina'],
     icon: 'gynecologic',
-    image: 'specialties/gynecologic.jpg',
+    image: 'specialties/cirugia-cancer-ginecologico.jpg',
+    imageAlt:
+      'Ilustración del aparato reproductor femenino: útero, cérvix y ovarios',
   },
 ];
 

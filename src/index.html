@@ -5,157 +5,82 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- ============ SEO ============ -->
-    <title>
-      Dr. Fabio Palacios | Cirujano Oncólogo en Piura — Cavidad Abdominal
-    </title>
-    <meta
-      name="description"
-      content="Cirujano Oncólogo General en Piura. Cirugía de alta complejidad en cáncer digestivo, mama, cabeza y cuello, urológico y ginecológico. Formación en el INEN de Lima e IRCAD América Latina. CMP 066389 · RNE 046335."
-    />
-    <meta
-      name="keywords"
-      content="cirujano oncólogo Piura, oncólogo Piura, cáncer de colon Piura, cáncer de mama Piura, cirugía oncológica Piura, segunda opinión oncológica Piura"
-    />
-    <meta name="author" content="Dr. Fabio Palacios" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#072634" />
-    <link rel="canonical" href="https://drfabiopalacios.pe/" />
+    <!-- ============================================================
+         DÓNDE ESTÁ EL SEO DE ESTA PÁGINA
+         ------------------------------------------------------------
+         Aquí no hay título, descripción, Open Graph ni datos
+         estructurados, y es intencional. Todo eso se genera desde
+         `src/app/core/seo/` a partir del contenido real del doctor, y
+         el prerender lo deja escrito en el HTML publicado antes de que
+         ningún navegador ejecute nada.
 
-    <!-- ============ Open Graph / redes ============ -->
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_PE" />
-    <meta property="og:site_name" content="Dr. Fabio Palacios" />
-    <meta
-      property="og:title"
-      content="Dr. Fabio Palacios | Cirujano Oncólogo en Piura"
-    />
-    <meta
-      property="og:description"
-      content="Cirugía oncológica de alta complejidad en Piura. Formación en el INEN de Lima e IRCAD América Latina."
-    />
-    <meta property="og:url" content="https://drfabiopalacios.pe/" />
-    <meta property="og:image" content="https://drfabiopalacios.pe/foto-secundaria.jpg" />
-    <meta property="og:image:width" content="1772" />
-    <meta property="og:image:height" content="1772" />
-    <meta name="twitter:card" content="summary_large_image" />
+         Motivo: escrito a mano aquí, se desincroniza. El día que el
+         doctor corrija una especialidad o un número, la etiqueta meta
+         seguiría diciendo lo viejo y nadie lo notaría, porque una meta
+         desfasada no rompe ninguna pantalla.
+
+         Para cambiar título, descripción o palabras clave:
+             src/app/core/seo/site.config.ts
+         Para cambiar el JSON-LD de Schema.org:
+             src/app/core/seo/structured-data.ts
+
+         Verificar el resultado tras `npm run build`:
+             dist/landing/browser/index.html
+         ============================================================ -->
+
+    <!-- Solo queda aquí lo que debe llegar al navegador antes que el
+         JavaScript: iconos, tipografías y la precarga del LCP. -->
 
     <!-- ============ Iconos ============ -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="alternate icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="favicon.svg" />
+    <link rel="manifest" href="site.webmanifest" />
 
     <!-- ============ Tipografías ============
          Poppins construye la jerarquía visual y Open Sans mantiene
-         cómoda la lectura de los textos informativos. -->
+         cómoda la lectura de los textos informativos.
+
+         `preconnect` abre la conexión TLS con Google Fonts mientras el
+         navegador todavía lee el HTML, de modo que la petición de la
+         hoja de estilos no empieza desde cero. Se declara una sola
+         etiqueta `stylesheet`: la combinación anterior de `preload` +
+         `stylesheet` descargaba el mismo archivo por dos caminos.
+
+         MEJORA PENDIENTE: alojar las tipografías en /public elimina dos
+         conexiones a un tercero del camino crítico y quita a Google
+         Fonts del renderizado. Es la mayor mejora de LCP que queda. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
-    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
     />
 
-    <!-- Precarga del retrato del héroe: es el LCP de la página -->
-    <link rel="preload" as="image" href="foto-principal.png" fetchpriority="high" />
+    <!-- ============ Precarga del LCP ============
+         El retrato del héroe es el elemento más grande sobre el
+         pliegue, o sea el que define el LCP. Precargarlo lo saca de la
+         cola: el navegador lo pide mientras todavía está leyendo el
+         `<head>`, sin esperar a descubrirlo en el HTML.
 
-    <!-- ============ Datos estructurados ============
-         Schema.org Physician: hace que Google entienda especialidad,
-         ubicación y credenciales. Actualizar la dirección y el
-         horario cuando el doctor los confirme. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Physician",
-        "@id": "https://drfabiopalacios.pe/#physician",
-        "name": "Dr. Fabio Palacios",
-        "alternateName": "Fabio Palacios",
-        "description": "Cirujano Oncólogo General especializado en cavidad abdominal. Atiende en Piura, Perú.",
-        "medicalSpecialty": ["Oncologic", "Surgical"],
-        "image": "https://drfabiopalacios.pe/foto-secundaria.jpg",
-        "url": "https://drfabiopalacios.pe/",
-        "telephone": "+51906418375",
-        "priceRange": "$$",
-        "areaServed": [
-          { "@type": "City", "name": "Piura" },
-          { "@type": "City", "name": "Sullana" },
-          { "@type": "City", "name": "Talara" },
-          { "@type": "State", "name": "Tumbes" }
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Av. Camino Solar Mz. AU Lt. 11, Urb. Miraflores Country Club",
-          "addressLocality": "Castilla",
-          "addressRegion": "Piura",
-          "postalCode": "20001",
-          "addressCountry": "PE"
-        },
-        "availableService": [
-          {
-            "@type": "MedicalProcedure",
-            "name": "Cirugía oncológica de cáncer digestivo (esófago, estómago, hígado, páncreas, colon y recto)"
-          },
-          {
-            "@type": "MedicalProcedure",
-            "name": "Cirugía oncológica de cabeza y cuello (tiroides, lengua, mucosas, piel)"
-          },
-          {
-            "@type": "MedicalProcedure",
-            "name": "Cirugía oncológica de mama, piel y partes blandas"
-          },
-          {
-            "@type": "MedicalProcedure",
-            "name": "Cirugía de tumores retroperitoneales"
-          },
-          {
-            "@type": "MedicalProcedure",
-            "name": "Cirugía oncológica urológica (pene, testículo, próstata, vejiga, riñón)"
-          },
-          {
-            "@type": "MedicalProcedure",
-            "name": "Cirugía oncológica ginecológica (vulva, vagina, cérvix, útero, ovario)"
-          },
-          { "@type": "MedicalProcedure", "name": "Segunda opinión oncológica" }
-        ],
-        "alumniOf": [
-          {
-            "@type": "CollegeOrUniversity",
-            "name": "Universidad Peruana Cayetano Heredia"
-          },
-          {
-            "@type": "MedicalOrganization",
-            "name": "Instituto Nacional de Enfermedades Neoplásicas (INEN)"
-          }
-        ],
-        "memberOf": {
-          "@type": "MedicalOrganization",
-          "name": "Sociedad Peruana de Cancerología"
-        },
-        "identifier": [
-          {
-            "@type": "PropertyValue",
-            "propertyID": "CMP",
-            "value": "066389"
-          },
-          {
-            "@type": "PropertyValue",
-            "propertyID": "RNE",
-            "value": "046335"
-          }
-        ]
-      }
-    </script>
+         Apunta al AVIF, que es exactamente lo que el `<picture>` del
+         héroe elegirá en cualquier navegador moderno; si apuntara al
+         PNG se descargarían los dos. `type` hace que un navegador sin
+         soporte AVIF ignore esta línea y descargue por la vía normal,
+         en lugar de precargar un archivo que no va a usar. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href="dr-fabio-palacios-cirujano-oncologo-piura-430w.avif"
+      fetchpriority="high"
+    />
   </head>
   <body>
     <app-root></app-root>
     <noscript>
-      Esta página necesita JavaScript activado. Si no puede verla, escriba al
-      WhatsApp +51 906 418 375 para agendar una consulta con el Dr. Fabio
-      Palacios, cirujano oncólogo en Piura.
+      Esta página necesita JavaScript activado. Si no puede verla, escriba al WhatsApp +51 906 418
+      375 para agendar una consulta con el Dr. Fabio Palacios, cirujano oncólogo en Piura.
     </noscript>
   </body>
 </html>

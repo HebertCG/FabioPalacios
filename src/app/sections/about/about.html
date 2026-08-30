@@ -3,9 +3,10 @@
   <div class="figure" appReveal>
     <div class="figure__frame">
       <picture>
-        <source srcset="retrato-quirofano.webp" type="image/webp" />
+        <source [srcset]="portrait.avif" type="image/avif" />
+        <source [srcset]="portrait.webp" type="image/webp" />
         <img
-          src="retrato-quirofano.jpg"
+          [src]="portrait.fallback"
           width="659"
           height="1568"
           loading="lazy"
@@ -21,14 +22,13 @@
       </picture>
       <span class="figure__scrim" aria-hidden="true"></span>
     </div>
-
   </div>
 
   <!-- ---------------- Texto ---------------- -->
   <div class="copy">
     <header appReveal>
       <p class="eyebrow">{{ about.eyebrow }}</p>
-      <h2 class="copy__title">
+      <h2 id="titulo-sobre-mi" class="copy__title">
         {{ about.titleStart }}
         <span class="accent-word accent-word--dark">{{ about.titleAccent }}</span>
       </h2>

@@ -69,6 +69,19 @@ const CAROUSEL_ITEMS: readonly CarouselItem[] = [
  */
 @Component({
   selector: 'app-reels',
+  /**
+   * La sección se anuncia como región con nombre propio.
+   *
+   * `<app-reels>` es un elemento inventado: para un lector de
+   * pantalla y para un rastreador no significa nada por sí solo. Con
+   * `role="region"` pasa a ser un punto de referencia de la página, y
+   * `aria-labelledby` le da como nombre el encabezado que ya está
+   * visible, sin duplicar texto.
+   */
+  host: {
+    role: 'region',
+    'aria-labelledby': 'titulo-reels',
+  },
   imports: [Icon, Reveal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './reels.html',
@@ -87,14 +100,11 @@ export class Reels {
     return i === null ? null : this.reels[i];
   });
 
-  private readonly rail =
-    viewChild.required<ElementRef<HTMLDivElement>>('rail');
-  private readonly previews =
-    viewChildren<ElementRef<HTMLVideoElement>>('preview');
+  private readonly rail = viewChild.required<ElementRef<HTMLDivElement>>('rail');
+  private readonly previews = viewChildren<ElementRef<HTMLVideoElement>>('preview');
   private readonly player = viewChild<ElementRef<HTMLVideoElement>>('player');
   private readonly viewer = viewChild<ElementRef<HTMLElement>>('viewer');
-  private readonly closeButton =
-    viewChild<ElementRef<HTMLButtonElement>>('closeButton');
+  private readonly closeButton = viewChild<ElementRef<HTMLButtonElement>>('closeButton');
 
   private readonly destroyRef = inject(DestroyRef);
   private autoplayTimer: ReturnType<typeof setInterval> | undefined;
@@ -105,8 +115,7 @@ export class Reels {
   private restoreFocusTo: HTMLElement | null = null;
   private focusTimer: ReturnType<typeof setTimeout> | undefined;
   private readonly prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor() {
     afterNextRender(() => {
@@ -149,10 +158,9 @@ export class Reels {
     this.stopAllPreviews();
     this.stopAutoplay();
     this.restoreFocusTo =
-      this.rail().nativeElement.querySelectorAll<HTMLButtonElement>(
-        '.card__btn',
-      )[LOOP_CLONE_COUNT + index] ??
-      (event?.currentTarget as HTMLElement | null);
+      this.rail().nativeElement.querySelectorAll<HTMLButtonElement>('.card__btn')[
+        LOOP_CLONE_COUNT + index
+      ] ?? (event?.currentTarget as HTMLElement | null);
     this.openIndex.set(index);
     this.isMuted.set(false);
     this.lockBodyScroll();
@@ -241,21 +249,14 @@ export class Reels {
 
   private moveRail(direction: -1 | 1): void {
     const current = this.closestCarouselIndex();
-    const target = Math.max(
-      0,
-      Math.min(this.carouselItems.length - 1, current + direction),
-    );
+    const target = Math.max(0, Math.min(this.carouselItems.length - 1, current + direction));
 
-    this.scrollToCarouselIndex(
-      target,
-      this.prefersReducedMotion ? 'auto' : 'smooth',
-    );
+    this.scrollToCarouselIndex(target, this.prefersReducedMotion ? 'auto' : 'smooth');
 
     if (this.prefersReducedMotion) {
       this.normalizeRailPosition();
       return;
     }
-
   }
 
   private initializeRail(): void {
@@ -263,10 +264,7 @@ export class Reels {
     const onScrollEnd = (): void => this.normalizeRailPosition();
     const onScroll = (): void => {
       if (this.railResetTimer) clearTimeout(this.railResetTimer);
-      this.railResetTimer = setTimeout(
-        () => this.normalizeRailPosition(),
-        180,
-      );
+      this.railResetTimer = setTimeout(() => this.normalizeRailPosition(), 180);
     };
 
     this.initialRailFrame = requestAnimationFrame(() => {
@@ -289,19 +287,14 @@ export class Reels {
 
     return cards.reduce(
       (closest, card, index) => {
-        const distance = Math.abs(
-          card.getBoundingClientRect().left - railLeft - paddingLeft,
-        );
+        const distance = Math.abs(card.getBoundingClientRect().left - railLeft - paddingLeft);
         return distance < closest.distance ? { index, distance } : closest;
       },
       { index: LOOP_CLONE_COUNT, distance: Number.POSITIVE_INFINITY },
     ).index;
   }
 
-  private scrollToCarouselIndex(
-    index: number,
-    behavior: ScrollBehavior,
-  ): void {
+  private scrollToCarouselIndex(index: number, behavior: ScrollBehavior): void {
     const el = this.rail().nativeElement;
     const card = el.querySelectorAll<HTMLElement>('.card')[index];
     if (!card) return;
@@ -388,8 +381,6 @@ export class Reels {
     };
 
     window.addEventListener('keydown', onKey);
-    this.destroyRef.onDestroy(() =>
-      window.removeEventListener('keydown', onKey),
-    );
+    this.destroyRef.onDestroy(() => window.removeEventListener('keydown', onKey));
   }
 }

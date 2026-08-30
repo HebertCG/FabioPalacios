@@ -1,0 +1,13 @@
+# robots.txt — generado por scripts/generate-seo-files.mjs
+# No editar a mano: se sobrescribe en cada build.
+
+User-agent: *
+Allow: /
+
+# URLs con parámetros de campaña: mismo contenido, otra dirección.
+Disallow: /*?
+
+# Los videos pesan; que el rastreador no los descargue completos.
+Disallow: /*.mp4$
+
+Sitemap: https://drfabiopalacios.pe/sitemap.xml

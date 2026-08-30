@@ -4,13 +4,13 @@
   <header class="head" appReveal>
     <div class="head__text">
       <p class="eyebrow eyebrow--light">Consultorio abierto</p>
-      <h2 class="head__title">
+      <h2 id="titulo-reels" class="head__title">
         El cáncer explicado
         <span class="accent-word">en un minuto</span>
       </h2>
       <p class="lead lead--light head__lead">
-        Videos cortos donde respondo lo que más me preguntan en consulta. Sin
-        tecnicismos y sin alarmismo.
+        Videos cortos donde respondo lo que más me preguntan en consulta. Sin tecnicismos y sin
+        alarmismo.
       </p>
     </div>
 
@@ -26,19 +26,11 @@
       </a>
 
       <div class="arrows">
-        <button
-          type="button"
-          class="arrow"
-          (click)="scrollRail(-1)"
-        >
+        <button type="button" class="arrow" (click)="scrollRail(-1)">
           <span class="sr-only">Videos anteriores</span>
           <app-icon name="chevron" [strokeWidth]="2" />
         </button>
-        <button
-          type="button"
-          class="arrow arrow--next"
-          (click)="scrollRail(1)"
-        >
+        <button type="button" class="arrow arrow--next" (click)="scrollRail(1)">
           <span class="sr-only">Videos siguientes</span>
           <app-icon name="chevron" [strokeWidth]="2" />
         </button>
@@ -59,50 +51,55 @@
     (touchcancel)="resumeAutoplay()"
   >
     <div class="rail" #rail aria-label="Carrusel de videos del doctor">
-
-    @for (item of carouselItems; track item.key; let i = $index) {
-      <article
-        class="card"
-        [attr.aria-hidden]="item.isClone ? 'true' : null"
-        (mouseenter)="previewPlay(i)"
-        (mouseleave)="previewStop(i)"
-      >
-        <button
-          class="card__btn"
-          type="button"
-          [attr.tabindex]="item.isClone ? -1 : null"
-          (click)="open(item.reelIndex, $event)"
+      @for (item of carouselItems; track item.key; let i = $index) {
+        <article
+          class="card"
+          [attr.aria-hidden]="item.isClone ? 'true' : null"
+          (mouseenter)="previewPlay(i)"
+          (mouseleave)="previewStop(i)"
         >
-          <span class="sr-only">Reproducir: {{ item.reel.title }}</span>
+          <button
+            class="card__btn"
+            type="button"
+            [attr.tabindex]="item.isClone ? -1 : null"
+            (click)="open(item.reelIndex, $event)"
+          >
+            <span class="sr-only">Reproducir: {{ item.reel.title }}</span>
 
-          <span class="card__phone">
-            <video
-              #preview
-              class="card__video"
-              [src]="item.reel.src + '#t=0.1'"
-              preload="metadata"
-              muted
-              loop
-              playsinline
-              disablepictureinpicture
-              [attr.aria-label]="item.reel.title"
-            ></video>
+            <span class="card__phone">
+              <!-- Con miniatura, la tarjeta pinta una imagen de ~15 KB y
+                 el MP4 no se toca hasta que alguien pulse reproducir.
+                 Sin ella hay que caer en `preload="metadata"`, que abre
+                 una conexión contra cada uno de los seis videos —58 MB
+                 en total— solo para obtener el primer fotograma.
+                 Genere las miniaturas con `npm run media:posters`. -->
+              <video
+                #preview
+                class="card__video"
+                [src]="item.reel.poster ? item.reel.src : item.reel.src + '#t=0.1'"
+                [attr.poster]="item.reel.poster ?? null"
+                [attr.preload]="item.reel.poster ? 'none' : 'metadata'"
+                muted
+                loop
+                playsinline
+                disablepictureinpicture
+                [attr.aria-label]="item.reel.title"
+              ></video>
 
-            <span class="card__veil" aria-hidden="true"></span>
+              <span class="card__veil" aria-hidden="true"></span>
 
-            <span class="card__play" aria-hidden="true">
-              <app-icon name="play" />
+              <span class="card__play" aria-hidden="true">
+                <app-icon name="play" />
+              </span>
+
+              <span class="card__meta">
+                <span class="card__topic">{{ item.reel.topic }}</span>
+                <span class="card__title">{{ item.reel.title }}</span>
+              </span>
             </span>
-
-            <span class="card__meta">
-              <span class="card__topic">{{ item.reel.topic }}</span>
-              <span class="card__title">{{ item.reel.title }}</span>
-            </span>
-          </span>
-        </button>
-      </article>
-    }
-
+          </button>
+        </article>
+      }
     </div>
   </div>
 </div>
@@ -119,12 +116,7 @@
     [attr.aria-label]="current.title"
     (keydown)="trapFocus($event)"
   >
-    <button
-      class="viewer__backdrop"
-      type="button"
-      tabindex="-1"
-      (click)="close()"
-    >
+    <button class="viewer__backdrop" type="button" tabindex="-1" (click)="close()">
       <span class="sr-only">Cerrar</span>
     </button>
 
@@ -162,12 +154,7 @@
         <span class="sr-only">Video siguiente</span>
         <app-icon name="chevron" [strokeWidth]="2" />
       </button>
-      <button
-        #closeButton
-        class="tool tool--close"
-        type="button"
-        (click)="close()"
-      >
+      <button #closeButton class="tool tool--close" type="button" (click)="close()">
         <span class="sr-only">Cerrar visor</span>
         <app-icon name="close" [strokeWidth]="2" />
       </button>

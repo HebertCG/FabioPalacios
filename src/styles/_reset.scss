@@ -41,6 +41,30 @@ svg {
   max-width: 100%;
 }
 
+/**
+ * `<picture>` no debe existir para la maquetación.
+ *
+ * Solo sirve para que el navegador elija entre AVIF, WebP y el
+ * original; no aporta nada visual. Pero al envolver una `<img>` se
+ * interpone como caja intermedia y rompe cualquier regla que dependa
+ * de la relación directa con el contenedor. El caso concreto que
+ * apareció aquí: las tarjetas de especialidad hacen
+ * `.tile__media img { height: 100% }`, y con un `<picture>` de altura
+ * automática en medio ese 100% se vuelve circular y la imagen colapsa.
+ *
+ * `display: contents` saca la caja del árbol de maquetación y deja que
+ * la `<img>` participe como si fuera hija directa. Es seguro: el
+ * elemento no tiene semántica propia que se pierda al no generar caja,
+ * a diferencia de una lista o una tabla.
+ *
+ * Sin esto, cada `<picture>` obligaría a repetir en su sección un
+ * `picture { width: 100%; height: 100% }` a mano, y el día que alguien
+ * lo olvide la imagen desaparece sin más explicación.
+ */
+picture {
+  display: contents;
+}
+
 button,
 input,
 select,

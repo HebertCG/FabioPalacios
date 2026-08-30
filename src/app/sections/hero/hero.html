@@ -9,7 +9,7 @@
 <div class="shell hero__grid">
   <!-- ---------------- Columna de texto ---------------- -->
   <div class="copy">
-    <h1 class="display copy__title">
+    <h1 id="titulo-inicio" class="display copy__title">
       <span class="copy__desktop-title">
         <span class="copy__title-line">{{ hero.titleStart }}</span>
         <span class="accent-word copy__title-line">{{ hero.titleAccent }}</span>
@@ -23,18 +23,11 @@
 
     <p class="lead lead--light copy__lead">
       <span class="copy__desktop-lead">{{ hero.lead }}</span>
-      <span class="copy__mobile-lead">
-        Alta complejidad, atención especializada y cercana.
-      </span>
+      <span class="copy__mobile-lead"> Alta complejidad, atención especializada y cercana. </span>
     </p>
 
     <div class="copy__actions">
-      <a
-        class="btn btn--primary"
-        [href]="waLink"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a class="btn btn--primary" [href]="waLink" target="_blank" rel="noopener noreferrer">
         {{ hero.primaryCta }}
         <app-icon name="arrow-right" [strokeWidth]="2" />
       </a>
@@ -42,7 +35,6 @@
         {{ hero.secondaryCta }}
       </a>
     </div>
-
   </div>
 
   <!-- ---------------- Columna del retrato ---------------- -->
@@ -50,21 +42,27 @@
     <span class="portrait__disc" aria-hidden="true"></span>
     <span class="portrait__ring" aria-hidden="true"></span>
 
-    <img
-      class="portrait__img"
-      src="foto-principal.png"
-      width="430"
-      height="497"
-      fetchpriority="high"
-      decoding="async"
-      [alt]="
-        doctor.displayName +
-        ', ' +
-        doctor.specialty +
-        ' en Piura, revisando estudios de imágenes'
-      "
-    />
-
+    <!-- El navegador se queda con el primer formato que entienda.
+         `fetchpriority="high"` y la ausencia de `loading="lazy"` son
+         deliberadas: esta es la imagen más grande sobre el pliegue y
+         debe empezar a descargarse de inmediato. La precarga de
+         `index.html` apunta al mismo AVIF, así que no se descarga dos
+         veces. -->
+    <picture>
+      <source [srcset]="portrait.avif" type="image/avif" />
+      <source [srcset]="portrait.webp" type="image/webp" />
+      <img
+        class="portrait__img"
+        [src]="portrait.fallback"
+        width="430"
+        height="497"
+        fetchpriority="high"
+        decoding="async"
+        [alt]="
+          doctor.displayName + ', ' + doctor.specialty + ' en Piura, revisando estudios de imágenes'
+        "
+      />
+    </picture>
   </div>
 </div>
 

@@ -1,14 +1,13 @@
 <div class="shell process-layout">
   <div class="process-content">
     <header class="head" appReveal>
-      <h2 class="head__title">
+      <h2 id="titulo-atencion" class="head__title">
         Del primer mensaje
         <span class="accent-word accent-word--dark">al alta</span>
       </h2>
       <p class="lead head__lead">
-        No necesita tener todo resuelto para dar el primer paso. Escríbame por
-        WhatsApp y cuénteme qué está pasando; desde ahí ordenamos sus estudios
-        y definimos juntos qué sigue.
+        No necesita tener todo resuelto para dar el primer paso. Escríbame por WhatsApp y cuénteme
+        qué está pasando; desde ahí ordenamos sus estudios y definimos juntos qué sigue.
       </p>
     </header>
 
@@ -38,13 +37,21 @@
   </div>
 
   <figure class="portrait" appReveal [revealDelay]="80">
-    <img
-      src="foto-tercearia.png"
-      width="1772"
-      height="1772"
-      loading="lazy"
-      decoding="async"
-      alt="Dr. Fabio Palacios, cirujano oncólogo"
-    />
+    <!-- `sizes` describe el hueco que ocupa la imagen en la
+         maquetación, no su tamaño de archivo. Es lo que permite al
+         navegador escoger la variante correcta del `srcset` antes
+         siquiera de haber calculado el diseño. -->
+    <picture>
+      <source [srcset]="portrait.avif" sizes="(max-width: 900px) 90vw, 40vw" type="image/avif" />
+      <source [srcset]="portrait.webp" sizes="(max-width: 900px) 90vw, 40vw" type="image/webp" />
+      <img
+        [src]="portrait.fallback"
+        width="1772"
+        height="1772"
+        loading="lazy"
+        decoding="async"
+        alt="El Dr. Fabio Palacios durante una consulta oncológica en su consultorio de Castilla, Piura"
+      />
+    </picture>
   </figure>
 </div>

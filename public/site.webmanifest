@@ -1,0 +1,20 @@
+{
+  "name": "Dr. Fabio Palacios — Cirujano Oncólogo General en Piura",
+  "short_name": "Dr. Fabio Palacios",
+  "description": "Cirujano oncólogo en Piura. Cirugía de alta complejidad en cáncer digestivo, mama, cabeza y cuello, urológico y ginecológico. Formado en el INEN.",
+  "lang": "es-PE",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#072634",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

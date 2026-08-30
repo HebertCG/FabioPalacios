@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generado por scripts/generate-seo-files.mjs. No editar a mano. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://drfabiopalacios.pe/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/dr-fabio-palacios-cirujano-oncologo-piura.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/dr-fabio-palacios-cirujano-oncologo-piura-perfil.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/retrato-quirofano.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/specialties/cirugia-cancer-digestivo.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/specialties/cirugia-cancer-cabeza-cuello.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/specialties/cirugia-tumores-retroperitoneales.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/specialties/cirugia-cancer-mama-partes-blandas.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/specialties/cirugia-cancer-urologico.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://drfabiopalacios.pe/specialties/cirugia-cancer-ginecologico.jpg</image:loc>
+    </image:image>
+  </url>
+</urlset>

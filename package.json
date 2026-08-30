@@ -4,9 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run media:images && npm run seo:files && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "seo:files": "node --import ./scripts/lib/register-ts-imports.mjs scripts/generate-seo-files.mjs",
+    "seo:check": "node --import ./scripts/lib/register-ts-imports.mjs scripts/check-seo.mjs",
+    "media:images": "node --import ./scripts/lib/register-ts-imports.mjs scripts/optimize-images.mjs",
+    "media:posters": "node --import ./scripts/lib/register-ts-imports.mjs scripts/generate-video-posters.mjs",
+    "verify": "npm run build && npm run seo:check"
   },
   "private": true,
   "packageManager": "npm@11.17.0",
@@ -16,7 +21,9 @@
     "@angular/core": "^22.1.0",
     "@angular/forms": "^22.1.0",
     "@angular/platform-browser": "^22.1.0",
+    "@angular/platform-server": "^22.1.3",
     "@angular/router": "^22.1.0",
+    "@angular/ssr": "^22.1.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -26,6 +33,7 @@
     "@angular/compiler-cli": "^22.1.0",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
+    "sharp": "^0.35.3",
     "typescript": "~6.0.2",
     "vitest": "^4.0.8"
   }

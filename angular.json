@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "990423f3-0195-45fa-aff3-538b86f54745"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -29,7 +30,14 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ],
+            "server": "src/main.server.ts",
+            "prerender": {
+              "discoverRoutes": false,
+              "routesFile": "prerender-routes.txt"
+            }
           },
           "configurations": {
             "production": {

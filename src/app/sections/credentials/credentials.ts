@@ -16,6 +16,19 @@ import type { Credential } from '../../core/models/content.models';
  */
 @Component({
   selector: 'app-credentials',
+  /**
+   * La sección se anuncia como región con nombre propio.
+   *
+   * `<app-credentials>` es un elemento inventado: para un lector de
+   * pantalla y para un rastreador no significa nada por sí solo. Con
+   * `role="region"` pasa a ser un punto de referencia de la página, y
+   * `aria-labelledby` le da como nombre el encabezado que ya está
+   * visible, sin duplicar texto.
+   */
+  host: {
+    role: 'region',
+    'aria-labelledby': 'titulo-formacion',
+  },
   imports: [Reveal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './credentials.html',
@@ -23,14 +36,10 @@ import type { Credential } from '../../core/models/content.models';
 })
 export class Credentials {
   /** Primera columna: sube */
-  protected readonly columnA = computed(() =>
-    this.loop(CREDENTIALS.filter((_, i) => i % 2 === 0)),
-  );
+  protected readonly columnA = computed(() => this.loop(CREDENTIALS.filter((_, i) => i % 2 === 0)));
 
   /** Segunda columna: baja */
-  protected readonly columnB = computed(() =>
-    this.loop(CREDENTIALS.filter((_, i) => i % 2 === 1)),
-  );
+  protected readonly columnB = computed(() => this.loop(CREDENTIALS.filter((_, i) => i % 2 === 1)));
 
   /** Lista completa para el fallback horizontal en móvil */
   protected readonly all = CREDENTIALS;

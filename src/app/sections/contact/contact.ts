@@ -18,6 +18,19 @@ import { CONTACT, DOCTOR, whatsappLink } from '../../core/data/doctor.data';
  */
 @Component({
   selector: 'app-contact',
+  /**
+   * La sección se anuncia como región con nombre propio.
+   *
+   * `<app-contact>` es un elemento inventado: para un lector de
+   * pantalla y para un rastreador no significa nada por sí solo. Con
+   * `role="region"` pasa a ser un punto de referencia de la página, y
+   * `aria-labelledby` le da como nombre el encabezado que ya está
+   * visible, sin duplicar texto.
+   */
+  host: {
+    role: 'region',
+    'aria-labelledby': 'titulo-contacto',
+  },
   imports: [Icon, Reveal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './contact.html',
