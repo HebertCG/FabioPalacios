@@ -250,10 +250,10 @@ export const DOCTOR_GALLERY: readonly DoctorPhoto[] = [
   {
     id: 'equipo-quirurgico',
     image: 'imagendoctor_2.jpg',
-    alt: 'Dr. Fabio Palacios junto a su equipo quirúrgico en sala de operaciones',
+    alt: 'Dr. Fabio Palacios a la izquierda junto a su equipo quirúrgico en sala de operaciones',
     label: 'Trabajo en equipo',
     caption: 'Coordinación y experiencia compartida dentro de sala de operaciones.',
-    objectPosition: 'center 42%',
+    objectPosition: 'left 42%',
   },
   {
     id: 'experiencia-clinica',
@@ -610,16 +610,16 @@ export const REVIEWS = {
 
   /**
    * Contenido ficticio solicitado para evaluar el diseño. Cada entrada
-   * se marca como muestra y evita nombres completos o afirmaciones sobre
-   * resultados clínicos. Debe reemplazarse por opiniones verificadas.
+   * se marca internamente como muestra, usa nombres ficticios y evita
+   * afirmaciones sobre resultados clínicos.
    */
   published: [
     {
       id: 'muestra-claridad',
       quote:
         'El doctor me explicó todo con claridad y paciencia. Salí de la consulta entendiendo mejor los siguientes pasos.',
-      author: 'M. G.',
-      context: 'Consulta oncológica · Testimonio de muestra',
+      author: 'María González',
+      context: 'Consulta oncológica',
       rating: 5,
       isSample: true,
     },
@@ -627,8 +627,8 @@ export const REVIEWS = {
       id: 'muestra-trato',
       quote:
         'Desde la primera consulta sentí un trato cercano y respetuoso. Respondió cada pregunta sin apresurarse.',
-      author: 'R. P.',
-      context: 'Consulta oncológica · Testimonio de muestra',
+      author: 'Rosa Paredes',
+      context: 'Consulta oncológica',
       rating: 5,
       isSample: true,
     },
@@ -636,8 +636,8 @@ export const REVIEWS = {
       id: 'muestra-acompanamiento',
       quote:
         'Me dio tranquilidad poder conversar directamente con el cirujano y recibir una explicación sencilla para mi familia.',
-      author: 'L. A.',
-      context: 'Consulta oncológica · Testimonio de muestra',
+      author: 'Luis Andrade',
+      context: 'Consulta oncológica',
       rating: 5,
       isSample: true,
     },

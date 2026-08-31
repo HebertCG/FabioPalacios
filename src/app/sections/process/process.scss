@@ -153,11 +153,6 @@
   transform: none;
 }
 
-/* ============================================================
-   RETRATO TRANSPARENTE
-   La fuente cuadrada contiene mucho espacio transparente. El ancho
-   ampliado recorta ese espacio dentro del contenedor sin alterar el PNG.
-   ============================================================ */
 .portrait {
   grid-area: portrait;
   position: relative;
@@ -184,37 +179,33 @@
       position: absolute;
       left: -13%;
       bottom: 0;
-      margin: 0;
       width: min(266%, 1180px);
+      height: auto;
+      margin: 0;
       transform: none;
       filter: drop-shadow(0 24px 34px rgba(10, 73, 96, 0.16));
     }
   }
 }
 
-/* La version movil integra el PNG transparente al costado de la
-   linea temporal. La cabecera conserva todo el ancho para respirar. */
 @include m.down(md) {
   :host {
-    padding-top: 3.25rem;
+    padding-block: 3.25rem 4rem;
   }
 
   .process-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(7.75rem, 0.58fr);
-    grid-template-areas: none;
-    column-gap: 0.45rem;
-    row-gap: 1.6rem;
-    align-items: stretch;
+    display: block;
   }
 
   .process-content {
-    display: contents;
+    padding-bottom: 0;
+  }
+
+  .portrait {
+    display: none;
   }
 
   .head {
-    grid-column: 1 / -1;
-    grid-row: 1;
-
     &__title {
       max-width: 12ch;
     }
@@ -227,10 +218,7 @@
   }
 
   .timeline {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: start;
-    margin-top: 0;
+    margin-top: 2rem;
   }
 
   .step {
@@ -261,73 +249,8 @@
   }
 
   .chat-link {
-    grid-column: 1;
-    grid-row: 3;
-    justify-self: start;
-    margin-top: -0.65rem;
-    margin-bottom: 3rem;
-    padding-inline: 1rem;
-    font-size: 0.8rem;
-  }
-
-  .portrait {
-    grid-column: 2;
-    grid-row: 2 / 4;
-    align-self: stretch;
-    min-height: 100%;
-    overflow: hidden;
-
-    img {
-      position: absolute;
-      top: -8.5rem;
-      left: -21.25rem;
-      width: 35rem;
-      max-width: none;
-      height: auto;
-      margin: 0;
-      transform: scaleX(-1);
-      transform-origin: center;
-      filter: drop-shadow(0 18px 24px rgba(10, 73, 96, 0.14));
-    }
-  }
-}
-
-@include m.down(xs) {
-  .process-layout {
-    grid-template-columns: minmax(0, 1fr) 6.4rem;
-  }
-
-  .head__lead {
-    font-size: 0.88rem;
-  }
-
-  .step {
-    grid-template-columns: 36px minmax(0, 1fr);
-    gap: 0.55rem;
-
-    &:not(:last-child)::before {
-      top: 35px;
-      left: 17px;
-    }
-
-    &__num {
-      width: 36px;
-      height: 36px;
-    }
-
-    &__title {
-      font-size: 0.86rem;
-    }
-
-    &__body {
-      font-size: 0.875rem;
-    }
-  }
-
-  .portrait img {
-    top: -7rem;
-    left: -18.75rem;
-    width: 31rem;
+    margin-top: 0;
+    padding-inline: 1.2rem;
   }
 }
 

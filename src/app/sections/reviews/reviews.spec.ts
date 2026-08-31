@@ -15,7 +15,10 @@ describe('Reviews', () => {
     expect(REVIEWS.published).toHaveLength(3);
     expect(REVIEWS.published.every((review) => review.isSample)).toBe(true);
     expect(root.querySelectorAll('.review-card')).toHaveLength(3);
-    expect(root.textContent).toContain('Testimonios de muestra');
+    expect(root.textContent).toContain('Testimonios');
+    expect(root.textContent).toContain('María González');
+    expect(root.textContent).toContain('Rosa Paredes');
+    expect(root.textContent).toContain('Luis Andrade');
     expect(root.textContent).not.toContain('Contenido demostrativo y ficticio');
     expect(root.querySelector('.review-actions')).toBeNull();
   });

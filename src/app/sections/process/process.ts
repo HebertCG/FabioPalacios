@@ -33,12 +33,6 @@ import { PROCESS_IMAGE, srcsetFor } from '../../core/media/image-variants';
 })
 export class Process {
   protected readonly steps = PROCESS;
-
-  /**
-   * Retrato de la sección. El original mide 1772 px y nunca se muestra
-   * por encima de unos 700: era la imagen con más peso desperdiciado de
-   * la página. En AVIF a 700 px pasa de 786 KB a 12 KB.
-   */
   protected readonly portrait = {
     fallback: PROCESS_IMAGE.file,
     avif: srcsetFor(PROCESS_IMAGE.file, PROCESS_IMAGE.widths, 'avif'),
