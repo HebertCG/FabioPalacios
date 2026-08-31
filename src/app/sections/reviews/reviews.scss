@@ -126,58 +126,6 @@
   }
 }
 
-.review-disclaimer {
-  max-width: 62ch;
-  margin: 1.5rem auto 0;
-  color: var(--ink-400);
-  font-size: 0.76rem;
-  line-height: 1.55;
-  text-align: center;
-}
-
-.review-empty {
-  max-width: 52ch;
-  margin: clamp(1.75rem, 3vw, 2.5rem) auto 0;
-  color: var(--ink-500);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  text-align: center;
-}
-
-.review-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem 1.35rem;
-  margin-top: 1.75rem;
-
-  &__profile {
-    color: var(--ink-700);
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-color: var(--brand-200);
-    text-underline-offset: 0.3rem;
-  }
-}
-
-@include m.down(sm) {
-  .review-actions {
-    align-items: stretch;
-    flex-direction: column;
-
-    .btn {
-      width: 100%;
-    }
-
-    &__profile {
-      padding: 0.5rem;
-      text-align: center;
-    }
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .review-card {
     transition: none;

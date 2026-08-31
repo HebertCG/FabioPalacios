@@ -4,76 +4,43 @@
     <p class="head__eyebrow">Testimonios de muestra</p>
   </header>
 
-  @if (hasReviews()) {
-    <ul class="review-grid">
-      @for (review of published(); track review.id; let i = $index) {
-        <li>
-          <article class="review-card" appReveal [revealDelay]="i * 80">
-            <p class="review-card__rating">
-              <span class="sr-only">{{ review.rating }} de 5 estrellas</span>
-              @for (step of scale; track step) {
-                <app-icon name="star" [class.is-off]="step > review.rating" aria-hidden="true" />
+  <ul class="review-grid">
+    @for (review of published; track review.id; let i = $index) {
+      <li>
+        <article class="review-card" appReveal [revealDelay]="i * 80">
+          <p class="review-card__rating">
+            <span class="sr-only">{{ review.rating }} de 5 estrellas</span>
+            @for (step of scale; track step) {
+              <app-icon name="star" [class.is-off]="step > review.rating" aria-hidden="true" />
+            }
+          </p>
+
+          <blockquote class="review-card__quote">
+            <p>{{ review.quote }}</p>
+          </blockquote>
+
+          <footer class="review-card__author">
+            <span class="review-card__avatar" aria-hidden="true">
+              {{ initial(review.author) }}
+            </span>
+            <span>
+              @if (review.sourceUrl) {
+                <a
+                  class="review-card__name"
+                  [href]="review.sourceUrl"
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
+                  {{ review.author }}
+                </a>
+              } @else {
+                <span class="review-card__name">{{ review.author }}</span>
               }
-            </p>
-
-            <blockquote class="review-card__quote">
-              <p>{{ review.quote }}</p>
-            </blockquote>
-
-            <footer class="review-card__author">
-              <span class="review-card__avatar" aria-hidden="true">
-                {{ initial(review.author) }}
-              </span>
-              <span>
-                @if (review.sourceUrl) {
-                  <a
-                    class="review-card__name"
-                    [href]="review.sourceUrl"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
-                    {{ review.author }}
-                  </a>
-                } @else {
-                  <span class="review-card__name">{{ review.author }}</span>
-                }
-                <span class="review-card__context">{{ review.context }}</span>
-              </span>
-            </footer>
-          </article>
-        </li>
-      }
-    </ul>
-  } @else {
-    <p class="review-empty" appReveal>
-      El perfil del doctor en {{ reviews.platform }} todavía no registra opiniones. Las de pacientes
-      reales aparecerán aquí en cuanto se publiquen.
-    </p>
-  }
-
-  @if (hasReviews()) {
-    <p class="review-disclaimer" appReveal [revealDelay]="200">
-      Contenido demostrativo y ficticio; será reemplazado por opiniones verificadas de pacientes.
-    </p>
-  }
-
-  <div class="review-actions" appReveal [revealDelay]="220">
-    <a
-      class="btn btn--primary"
-      [href]="reviews.submitUrl"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Escribir una reseña
-      <span aria-hidden="true">↗</span>
-    </a>
-    <a
-      class="review-actions__profile"
-      [href]="reviews.profileUrl"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Ver perfil público en {{ reviews.platform }}
-    </a>
-  </div>
+              <span class="review-card__context">{{ review.context }}</span>
+            </span>
+          </footer>
+        </article>
+      </li>
+    }
+  </ul>
 </div>
