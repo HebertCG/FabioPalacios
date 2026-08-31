@@ -1,8 +1,11 @@
 # ============================================================
-# CABECERAS HTTP — Cloudflare Pages
+# CABECERAS HTTP — Cloudflare Workers (recursos estáticos)
 # Cloudflare lee este archivo desde la raíz del directorio publicado.
 # Angular copia /public tal cual, así que basta con que viva aquí.
 # Sustituye a la sección "headers" del antiguo vercel.json.
+#
+# El fallback de la SPA NO está aquí: lo resuelve `not_found_handling`
+# en wrangler.jsonc.
 # ============================================================
 
 /*

@@ -1,0 +1,42 @@
+{
+  // ============================================================
+  // CLOUDFLARE WORKERS — configuración de despliegue
+  //
+  // Este proyecto no tiene código de servidor: es una landing que
+  // Angular prerenderiza a HTML durante el build. El Worker existe
+  // solamente para servir esos archivos desde la red de Cloudflare,
+  // que es el modo "Workers con recursos estáticos".
+  //
+  // Con el repositorio conectado por GitHub, Cloudflare lee este
+  // archivo en cada push y republica. El comando de build se define
+  // en el panel del Worker (Ajustes → Compilaciones):
+  //
+  //     Comando de compilación:  npm run build
+  //     Variable de entorno:     NODE_VERSION = 22
+  // ============================================================
+
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fabiopalacios",
+
+  // Fija el conjunto de APIs del runtime. Subirla es una decisión
+  // deliberada, no algo que deba moverse al azar: cambia el
+  // comportamiento del entorno bajo el que corre el Worker.
+  "compatibility_date": "2026-08-31",
+
+  "assets": {
+    // Salida del build de Angular. `browser` es lo que va al
+    // navegador; `dist/landing/server` es el bundle de prerender y no
+    // se publica.
+    "directory": "./dist/landing/browser",
+
+    // La landing es una sola página con anclas, pero Angular arranca
+    // en el navegador: cualquier ruta desconocida debe devolver el
+    // index con código 200 para que la aplicación resuelva, en lugar
+    // de un 404 del servidor.
+    //
+    // Esto reemplaza al `_redirects` que usaba Pages: son dos formas
+    // de hacer lo mismo y tener las dos solo confunde a quien venga
+    // después. Las cabeceras sí siguen en `public/_headers`.
+    "not_found_handling": "single-page-application"
+  }
+}
