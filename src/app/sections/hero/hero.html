@@ -1,72 +1,145 @@
-<!-- Atmósfera: halo de luz quirúrgica, retícula técnica y grano.
-     Todo decorativo, todo fuera del árbol de accesibilidad. -->
+<!-- Atmósfera quirúrgica común a los tres banners. -->
 <div class="atmosphere" aria-hidden="true">
   <span class="glow glow--main"></span>
   <span class="glow glow--rim"></span>
   <span class="grid"></span>
 </div>
 
-<div class="shell hero__grid">
-  <!-- ---------------- Columna de texto ---------------- -->
-  <div class="copy">
-    <h1 id="titulo-inicio" class="display copy__title">
-      <span class="copy__desktop-title">
-        <span class="copy__title-line">{{ hero.titleStart }}</span>
-        <span class="accent-word copy__title-line">{{ hero.titleAccent }}</span>
-        <span class="copy__title-line">{{ hero.titleEnd }}</span>
-      </span>
-      <span class="copy__mobile-title">
-        Cirugía oncológica
-        <span class="accent-word">en el norte del Perú</span>
-      </span>
-    </h1>
+<span id="titulo-inicio" class="sr-only"> Dr. Fabio Palacios, cirujano oncólogo en Piura </span>
 
-    <p class="lead lead--light copy__lead">
-      <span class="copy__desktop-lead">{{ hero.lead }}</span>
-      <span class="copy__mobile-lead"> Alta complejidad, atención especializada y cercana. </span>
-    </p>
+<div
+  class="hero__viewport"
+  tabindex="0"
+  aria-roledescription="carrusel"
+  aria-label="Presentación del Dr. Fabio Palacios"
+  (keydown)="handleKeydown($event)"
+  (mouseenter)="pauseAutoplay()"
+  (mouseleave)="resumeAutoplay()"
+  (focusin)="pauseAutoplay()"
+  (focusout)="resumeAutoplay($event)"
+  (pointerdown)="pointerDown($event)"
+  (pointerup)="pointerUp($event)"
+  (pointercancel)="pointerCancel()"
+>
+  <div class="hero__track" [style.transform]="'translate3d(-' + activeIndex() * 100 + '%, 0, 0)'">
+    @for (slide of slides; track slide.id; let i = $index) {
+      <article
+        class="hero__slide"
+        [attr.aria-hidden]="i === activeIndex() ? null : 'true'"
+        [attr.inert]="i === activeIndex() ? null : ''"
+      >
+        <div class="shell hero__grid">
+          <div class="copy">
+            @if (i === 0) {
+              <h1 class="display copy__title">
+                <span class="copy__desktop-title">
+                  <span class="copy__title-line">{{ slide.titleStart }}</span>
+                  <span class="accent-word copy__title-line">{{ slide.titleAccent }}</span>
+                  <span class="copy__title-line">{{ slide.titleEnd }}</span>
+                </span>
+                <span class="copy__mobile-title">
+                  {{ slide.mobileTitle ?? slide.titleStart }}
+                  <span class="accent-word">{{ slide.mobileAccent ?? slide.titleAccent }}</span>
+                </span>
+              </h1>
+            } @else {
+              <h2 class="display copy__title">
+                <span class="copy__desktop-title">
+                  <span class="copy__title-line">{{ slide.titleStart }}</span>
+                  <span class="accent-word copy__title-line">{{ slide.titleAccent }}</span>
+                  <span class="copy__title-line">{{ slide.titleEnd }}</span>
+                </span>
+                <span class="copy__mobile-title">
+                  {{ slide.mobileTitle ?? slide.titleStart }}
+                  <span class="accent-word">{{ slide.mobileAccent ?? slide.titleAccent }}</span>
+                </span>
+              </h2>
+            }
 
-    <div class="copy__actions">
-      <a class="btn btn--primary" [href]="waLink" target="_blank" rel="noopener noreferrer">
-        {{ hero.primaryCta }}
-        <app-icon name="arrow-right" [strokeWidth]="2" />
-      </a>
-      <a class="btn btn--ghost-light" href="#especialidades">
-        {{ hero.secondaryCta }}
-      </a>
-    </div>
-  </div>
+            <p class="lead lead--light copy__lead">
+              <span class="copy__desktop-lead">{{ slide.lead }}</span>
+              <span class="copy__mobile-lead">{{ slide.lead }}</span>
+            </p>
 
-  <!-- ---------------- Columna del retrato ---------------- -->
-  <div class="portrait">
-    <span class="portrait__disc" aria-hidden="true"></span>
-    <span class="portrait__ring" aria-hidden="true"></span>
+            <div class="copy__actions">
+              <a
+                class="btn btn--primary"
+                [href]="waLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.tabindex]="i === activeIndex() ? null : -1"
+              >
+                {{ slide.primaryCta }}
+                <app-icon name="arrow-right" [strokeWidth]="2" />
+              </a>
+              <a
+                class="btn btn--ghost-light"
+                [href]="slide.secondaryHref"
+                [attr.tabindex]="i === activeIndex() ? null : -1"
+              >
+                {{ slide.secondaryCta }}
+              </a>
+            </div>
+          </div>
 
-    <!-- El navegador se queda con el primer formato que entienda.
-         `fetchpriority="high"` y la ausencia de `loading="lazy"` son
-         deliberadas: esta es la imagen más grande sobre el pliegue y
-         debe empezar a descargarse de inmediato. La precarga de
-         `index.html` apunta al mismo AVIF, así que no se descarga dos
-         veces. -->
-    <picture>
-      <source [srcset]="portrait.avif" type="image/avif" />
-      <source [srcset]="portrait.webp" type="image/webp" />
-      <img
-        class="portrait__img"
-        [src]="portrait.fallback"
-        width="430"
-        height="497"
-        fetchpriority="high"
-        decoding="async"
-        [alt]="
-          doctor.displayName + ', ' + doctor.specialty + ' en Piura, revisando estudios de imágenes'
-        "
-      />
-    </picture>
+          <div
+            class="portrait"
+            [class.portrait--photo]="slide.imageKind === 'photo'"
+            [class.portrait--precision-humana]="slide.id === 'precision-humana'"
+          >
+            <span class="portrait__disc" aria-hidden="true"></span>
+            <span class="portrait__ring" aria-hidden="true"></span>
+            <picture>
+              <source [srcset]="slide.sources.avif" type="image/avif" />
+              <source [srcset]="slide.sources.webp" type="image/webp" />
+              <img
+                class="portrait__img"
+                [src]="slide.sources.fallback"
+                [style.object-position]="slide.objectPosition ?? null"
+                width="500"
+                height="620"
+                [attr.fetchpriority]="i === 0 ? 'high' : null"
+                loading="eager"
+                decoding="async"
+                sizes="(max-width: 767px) 48vw, 500px"
+                [alt]="slide.imageAlt"
+              />
+            </picture>
+          </div>
+        </div>
+      </article>
+    }
   </div>
 </div>
 
-<!-- Indicador de desplazamiento -->
+<div class="hero__controls" aria-label="Cambiar vista principal">
+  <button class="hero__arrow" type="button" (click)="step(-1)" aria-label="Vista anterior">
+    <app-icon name="chevron" [strokeWidth]="2" />
+  </button>
+
+  <div class="hero__dots">
+    @for (slide of slides; track slide.id; let i = $index) {
+      <button
+        type="button"
+        class="hero__dot"
+        [class.is-active]="i === activeIndex()"
+        [attr.aria-current]="i === activeIndex() ? 'true' : null"
+        [attr.aria-label]="'Ver portada ' + (i + 1) + ': ' + slide.titleStart"
+        (click)="select(i)"
+      ></button>
+    }
+  </div>
+
+  <button
+    class="hero__arrow hero__arrow--next"
+    type="button"
+    (click)="step(1)"
+    aria-label="Vista siguiente"
+  >
+    <app-icon name="chevron" [strokeWidth]="2" />
+  </button>
+</div>
+
 <a class="scroll-hint" href="#formacion" aria-label="Ver más">
   <span class="scroll-hint__track" aria-hidden="true">
     <span class="scroll-hint__dot"></span>

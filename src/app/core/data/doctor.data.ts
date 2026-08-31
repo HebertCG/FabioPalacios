@@ -21,8 +21,11 @@
 import type {
   Advantage,
   Credential,
+  DoctorPhoto,
   Faq,
+  HeroSlide,
   NavLink,
+  PatientReview,
   ProcessStep,
   Reel,
   SocialLink,
@@ -88,17 +91,58 @@ export function whatsappLink(message: string = CONTACT.whatsappMessage): string 
    HÉROE
    ============================================================ */
 
-export const HERO = {
-  /** El título se arma en tres partes para resaltar la del medio */
-  titleStart: 'Cirugía oncológica',
-  titleAccent: 'de alta complejidad',
-  titleEnd: 'para el norte del Perú',
-  lead:
-    'Cirugía especializada en cáncer digestivo, de mama, cabeza y cuello, ' +
-    'urológico y ginecológico, con atención cercana en Piura.',
-  primaryCta: 'Agendar consulta',
-  secondaryCta: 'Ver especialidades',
-} as const;
+export const HERO_SLIDES: readonly HeroSlide[] = [
+  {
+    id: 'atencion-cercana',
+    titleStart: 'Cirugía oncológica',
+    titleAccent: 'de alta complejidad',
+    titleEnd: 'para el norte del Perú',
+    mobileTitle: 'Cirugía oncológica',
+    mobileAccent: 'en el norte del Perú',
+    lead:
+      'Cirugía especializada en cáncer digestivo, de mama, cabeza y cuello, ' +
+      'urológico y ginecológico, con atención cercana en Piura.',
+    primaryCta: 'Agendar consulta',
+    secondaryCta: 'Ver especialidades',
+    secondaryHref: '#especialidades',
+    image: 'dr-fabio-palacios-cirujano-oncologo-piura.png',
+    imageAlt: 'Dr. Fabio Palacios sonriendo con mandil blanco mientras revisa estudios de imágenes',
+    imageKind: 'cutout',
+  },
+  {
+    id: 'trayectoria',
+    titleStart: 'Experiencia que inspira',
+    titleAccent: 'confianza',
+    titleEnd: 'antes de decidir',
+    lead:
+      'Formación oncológica, actualización constante y una explicación clara para que usted ' +
+      'y su familia tomen decisiones con tranquilidad.',
+    primaryCta: 'Agendar consulta',
+    secondaryCta: 'Conocer mi trayectoria',
+    secondaryHref: '#formacion',
+    image: 'Imagenprincipal_1.jpg',
+    imageAlt:
+      'Dr. Fabio Palacios sonriendo durante un congreso de la Sociedad Peruana de Oncología Quirúrgica',
+    imageKind: 'photo',
+    objectPosition: 'center 42%',
+  },
+  {
+    id: 'precision-humana',
+    titleStart: 'Precisión quirúrgica',
+    titleAccent: 'con trato humano',
+    titleEnd: 'en cada etapa',
+    lead:
+      'De la primera consulta al seguimiento, el mismo cirujano acompaña su caso y le explica ' +
+      'cada paso sin tecnicismos.',
+    primaryCta: 'Agendar consulta',
+    secondaryCta: 'Cómo es la atención',
+    secondaryHref: '#atencion',
+    image: 'ImagenPrincipal_2.jpg',
+    imageAlt: 'Dr. Fabio Palacios realizando una cirugía mínimamente invasiva en quirófano',
+    imageKind: 'photo',
+    objectPosition: 'center 55%',
+  },
+];
 
 /* ============================================================
    FORMACIÓN — alimenta la marquesina vertical
@@ -186,6 +230,65 @@ export const ABOUT = {
   ],
 } as const;
 
+export const DOCTOR_GALLERY: readonly DoctorPhoto[] = [
+  {
+    id: 'retrato-cercano',
+    image: 'dr-fabio-palacios-cirugia-oncologica-quirofano.jpg',
+    alt: 'Dr. Fabio Palacios sonriendo con uniforme quirúrgico',
+    label: 'El médico detrás de la consulta',
+    caption: 'Experiencia clínica con una atención directa y cercana.',
+    objectPosition: 'center 5%',
+  },
+  {
+    id: 'tecnica-laparoscopica',
+    image: 'imagendoctor_1.jpg',
+    alt: 'Dr. Fabio Palacios utilizando instrumental laparoscópico durante una cirugía',
+    label: 'Precisión en quirófano',
+    caption: 'Técnica mínimamente invasiva y concentración en cada procedimiento.',
+    objectPosition: 'center 48%',
+  },
+  {
+    id: 'equipo-quirurgico',
+    image: 'imagendoctor_2.jpg',
+    alt: 'Dr. Fabio Palacios junto a su equipo quirúrgico en sala de operaciones',
+    label: 'Trabajo en equipo',
+    caption: 'Coordinación y experiencia compartida dentro de sala de operaciones.',
+    objectPosition: 'center 42%',
+  },
+  {
+    id: 'experiencia-clinica',
+    image: 'imagendoctor_3.jpg',
+    alt: 'Dr. Fabio Palacios con uniforme quirúrgico dentro del quirófano',
+    label: 'Experiencia clínica',
+    caption: 'Preparación y criterio ante procedimientos de alta complejidad.',
+    objectPosition: 'center 36%',
+  },
+  {
+    id: 'cirugia-laparoscopica',
+    image: 'imagendoctor_4.jpg',
+    alt: 'Dr. Fabio Palacios trabajando con un equipo durante una cirugía laparoscópica',
+    label: 'Cirugía laparoscópica',
+    caption: 'Tecnología, técnica y coordinación aplicadas al cuidado del paciente.',
+    objectPosition: 'center 48%',
+  },
+  {
+    id: 'comunidad-medica',
+    image: 'imagendoctor_5.jpg',
+    alt: 'Dr. Fabio Palacios en un encuentro de la Sociedad Peruana de Oncología Quirúrgica',
+    label: 'Comunidad médica',
+    caption: 'Actualización constante y participación en la comunidad oncológica.',
+    objectPosition: 'center 24%',
+  },
+  {
+    id: 'formacion-inen',
+    image: 'imagendoctor_6.jpg',
+    alt: 'Dr. Fabio Palacios con mandil blanco frente al Instituto Nacional de Enfermedades Neoplásicas',
+    label: 'Formación en el INEN',
+    caption: 'Trayectoria construida en uno de los centros oncológicos de referencia del Perú.',
+    objectPosition: 'center 46%',
+  },
+];
+
 export const ADVANTAGES: readonly Advantage[] = [
   {
     id: 'inen',
@@ -272,8 +375,7 @@ export const SPECIALTIES: readonly Specialty[] = [
     organs: ['Retroperitoneo'],
     icon: 'retroperitoneal',
     image: 'specialties/cirugia-tumores-retroperitoneales.jpg',
-    imageAlt:
-      'Ilustración del espacio retroperitoneal, detrás de la cavidad abdominal',
+    imageAlt: 'Ilustración del espacio retroperitoneal, detrás de la cavidad abdominal',
   },
   {
     id: 'breast',
@@ -281,8 +383,7 @@ export const SPECIALTIES: readonly Specialty[] = [
     organs: ['Mama', 'Piel', 'Partes blandas'],
     icon: 'breast',
     image: 'specialties/cirugia-cancer-mama-partes-blandas.jpg',
-    imageAlt:
-      'Ilustración anatómica de la glándula mamaria y los tejidos blandos que la rodean',
+    imageAlt: 'Ilustración anatómica de la glándula mamaria y los tejidos blandos que la rodean',
     featured: true,
   },
   {
@@ -291,8 +392,7 @@ export const SPECIALTIES: readonly Specialty[] = [
     organs: ['Próstata', 'Vejiga', 'Riñón', 'Testículo', 'Pene'],
     icon: 'urologic',
     image: 'specialties/cirugia-cancer-urologico.jpg',
-    imageAlt:
-      'Ilustración del aparato urinario y genital masculino: riñones, vejiga y próstata',
+    imageAlt: 'Ilustración del aparato urinario y genital masculino: riñones, vejiga y próstata',
   },
   {
     id: 'gynecologic',
@@ -300,8 +400,7 @@ export const SPECIALTIES: readonly Specialty[] = [
     organs: ['Cérvix', 'Útero', 'Ovario', 'Vulva', 'Vagina'],
     icon: 'gynecologic',
     image: 'specialties/cirugia-cancer-ginecologico.jpg',
-    imageAlt:
-      'Ilustración del aparato reproductor femenino: útero, cérvix y ovarios',
+    imageAlt: 'Ilustración del aparato reproductor femenino: útero, cérvix y ovarios',
   },
 ];
 
@@ -499,8 +598,51 @@ export const NAV_LINKS: readonly NavLink[] = [
   { id: 'especialidades', label: 'Especialidades', href: '#especialidades' },
   { id: 'atencion', label: 'Atención', href: '#atencion' },
   { id: 'reels', label: 'Videos', href: '#reels' },
+  { id: 'resenas', label: 'Reseñas', href: '#resenas' },
   { id: 'contacto', label: 'Contacto', href: '#contacto' },
 ];
+
+/** Reseñas y accesos al perfil público del doctor. */
+export const REVIEWS = {
+  platform: 'Doctoralia',
+  profileUrl: 'https://www.doctoralia.pe/perfil/fabio-palacios',
+  submitUrl: 'https://www.doctoralia.pe/anade-opinion/fabio-palacios',
+
+  /**
+   * Contenido ficticio solicitado para evaluar el diseño. Cada entrada
+   * se marca como muestra y evita nombres completos o afirmaciones sobre
+   * resultados clínicos. Debe reemplazarse por opiniones verificadas.
+   */
+  published: [
+    {
+      id: 'muestra-claridad',
+      quote:
+        'El doctor me explicó todo con claridad y paciencia. Salí de la consulta entendiendo mejor los siguientes pasos.',
+      author: 'M. G.',
+      context: 'Consulta oncológica · Testimonio de muestra',
+      rating: 5,
+      isSample: true,
+    },
+    {
+      id: 'muestra-trato',
+      quote:
+        'Desde la primera consulta sentí un trato cercano y respetuoso. Respondió cada pregunta sin apresurarse.',
+      author: 'R. P.',
+      context: 'Consulta oncológica · Testimonio de muestra',
+      rating: 5,
+      isSample: true,
+    },
+    {
+      id: 'muestra-acompanamiento',
+      quote:
+        'Me dio tranquilidad poder conversar directamente con el cirujano y recibir una explicación sencilla para mi familia.',
+      author: 'L. A.',
+      context: 'Consulta oncológica · Testimonio de muestra',
+      rating: 5,
+      isSample: true,
+    },
+  ] as readonly PatientReview[],
+} as const;
 
 /* ============================================================
    PIE DE PÁGINA

@@ -4,12 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run media:images && npm run seo:files && ng build",
+    "build": "npm run media:images && npm run media:brand && npm run seo:files && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "seo:files": "node --import ./scripts/lib/register-ts-imports.mjs scripts/generate-seo-files.mjs",
     "seo:check": "node --import ./scripts/lib/register-ts-imports.mjs scripts/check-seo.mjs",
     "media:images": "node --import ./scripts/lib/register-ts-imports.mjs scripts/optimize-images.mjs",
+    "media:brand": "node scripts/generate-brand-assets.mjs",
     "media:posters": "node --import ./scripts/lib/register-ts-imports.mjs scripts/generate-video-posters.mjs",
     "verify": "npm run build && npm run seo:check"
   },

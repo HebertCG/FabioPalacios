@@ -51,6 +51,10 @@ const ICONS: Record<IconName, IconDef> = {
   },
 
   /* ---------- Ventajas y utilidades ---------- */
+  star: {
+    filled: true,
+    paths: ['M12 3.4l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.8l6.1-.9z'],
+  },
   scalpel: { paths: ['m4 20 6.4-6.4', 'M10.4 13.6 19.6 4.4a1.2 1.2 0 0 1 1.7 1.7L12 15.4z'] },
   shield: { paths: ['M12 3.2 5 6.2v5.4c0 4.5 2.9 7.9 7 9.4 4.1-1.5 7-4.9 7-9.4V6.2z'] },
   route: {

@@ -9,12 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { Icon } from '../../ui/icon/icon';
-import {
-  CONTACT,
-  DOCTOR,
-  NAV_LINKS,
-  whatsappLink,
-} from '../../core/data/doctor.data';
+import { DOCTOR, NAV_LINKS, whatsappLink } from '../../core/data/doctor.data';
 
 /** Píxeles de scroll a partir de los cuales la barra se contrae. */
 const MORPH_THRESHOLD = 48;
@@ -47,7 +42,6 @@ export class Navbar {
   protected readonly waLink = whatsappLink(
     `Hola doctor, vengo de su página web. Quisiera agendar una consulta.`,
   );
-  protected readonly phoneDisplay = CONTACT.whatsappDisplay;
 
   /** `true` cuando la barra ya adoptó su forma contraída */
   protected readonly morphed = signal(false);
@@ -84,8 +78,8 @@ export class Navbar {
     this.restoreFocusTo = event.currentTarget as HTMLElement;
     this.menuOpen.set(true);
     this.lockBodyScroll();
-    this.menuFocusTimer = setTimeout(() =>
-      this.sheet().nativeElement.querySelector<HTMLElement>('a[href]')?.focus(),
+    this.menuFocusTimer = setTimeout(
+      () => this.sheet().nativeElement.querySelector<HTMLElement>('a[href]')?.focus(),
       50,
     );
   }
@@ -137,9 +131,7 @@ export class Navbar {
 
     onScroll(); // estado correcto si la página carga ya desplazada
     window.addEventListener('scroll', onScroll, { passive: true });
-    this.destroyRef.onDestroy(() =>
-      window.removeEventListener('scroll', onScroll),
-    );
+    this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));
   }
 
   private lockBodyScroll(): void {

@@ -62,12 +62,7 @@
     position: absolute;
     inset: auto var(--gutter) 0;
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.22),
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
     opacity: 1;
     transition: opacity var(--dur) var(--ease-out);
   }
@@ -102,34 +97,56 @@
   @include m.focus-ring(var(--brand-400));
   display: flex;
   align-items: center;
+  gap: 0.65rem;
   margin-right: auto;
   color: var(--bar-fg);
   transition: color var(--dur-slow) var(--ease-out);
 
+  &__logo {
+    display: block;
+    width: clamp(2.65rem, 3.2vw, 3.1rem);
+    height: clamp(2.65rem, 3.2vw, 3.1rem);
+    object-fit: contain;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(2, 25, 37, 0.1);
+  }
+
   &__text {
     display: flex;
     flex-direction: column;
-    line-height: 1.1;
+    min-width: max-content;
+    line-height: 1.08;
 
     strong {
       font-family: var(--font-display);
-      font-size: 1.06rem;
+      font-size: 0.98rem;
       font-weight: 800;
-      letter-spacing: 0;
+      letter-spacing: -0.02em;
     }
 
     small {
-      font-size: 0.66rem;
-      font-weight: 600;
+      margin-top: 0.15rem;
+      font-size: 0.58rem;
+      font-weight: 700;
       letter-spacing: 0.09em;
       text-transform: uppercase;
-      opacity: 0.62;
+      opacity: 0.66;
     }
   }
 
   @include m.down(sm) {
+    &__logo {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    &__text strong {
+      font-size: 0.9rem;
+    }
+
     &__text small {
-      display: none;
+      font-size: 0.51rem;
     }
   }
 }
@@ -173,7 +190,9 @@
       background: currentColor;
       transform: translate(-50%, 6px) scale(0);
       opacity: 0;
-      transition: transform var(--dur) var(--ease-spring), opacity var(--dur);
+      transition:
+        transform var(--dur) var(--ease-spring),
+        opacity var(--dur);
     }
 
     &:hover {
@@ -203,33 +222,6 @@
 
   @include m.up(md) {
     display: flex;
-  }
-}
-
-.phone {
-  @include m.focus-ring(var(--brand-400));
-  display: none;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 0.7rem;
-  border-radius: var(--r-pill);
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: var(--bar-fg);
-  opacity: 0.85;
-  --icon-size: 1.05rem;
-  transition:
-    opacity var(--dur-fast),
-    background-color var(--dur-fast),
-    color var(--dur-slow) var(--ease-out);
-
-  @include m.up(xl) {
-    display: flex;
-  }
-
-  &:hover {
-    opacity: 1;
-    background: color-mix(in oklab, currentColor 10%, transparent);
   }
 }
 
@@ -265,6 +257,40 @@
     app-icon {
       transform: translateX(3px);
     }
+  }
+}
+
+/* En el primer ancho de escritorio todo cabe sin comprimir el nombre. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .bar {
+    gap: 0.35rem;
+  }
+
+  .brand {
+    gap: 0.45rem;
+
+    &__logo {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
+    &__text strong {
+      font-size: 0.8rem;
+    }
+
+    &__text small {
+      font-size: 0.45rem;
+    }
+  }
+
+  .links a {
+    padding-inline: 0.48rem;
+    font-size: 0.76rem;
+  }
+
+  .cta {
+    padding-inline: 0.82rem;
+    font-size: 0.76rem;
   }
 }
 

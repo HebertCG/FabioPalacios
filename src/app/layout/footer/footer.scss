@@ -44,6 +44,17 @@
 
 /* ---------- Presentación ---------- */
 .brand {
+  &__logo {
+    display: block;
+    width: 5.25rem;
+    height: 5.25rem;
+    margin-bottom: 1.1rem;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  }
+
   &__identity {
     position: relative;
     padding-top: 0.9rem;

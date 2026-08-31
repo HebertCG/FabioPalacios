@@ -5,8 +5,20 @@
      La barra interior es la que se contrae y se redondea. -->
 <div class="nav-wrap" [class.is-morphed]="isMorphed">
   <nav class="bar" [class.is-morphed]="isMorphed" aria-label="Navegación principal">
-    <!-- Marca: el nombre del doctor es el logo -->
-    <a class="brand" href="#inicio" (click)="closeMenu()">
+    <!-- Marca compacta: isotipo, nombre y especialidad. -->
+    <a
+      class="brand"
+      href="#inicio"
+      aria-label="Ir al inicio — Dr. Fabio Palacios"
+      (click)="closeMenu()"
+    >
+      <img
+        class="brand__logo"
+        src="logo.png"
+        width="410"
+        height="379"
+        alt="Logo del Dr. Fabio Palacios"
+      />
       <span class="brand__text">
         <strong>{{ doctor.displayName }}</strong>
         <small>{{ doctor.specialty }}</small>
@@ -17,21 +29,13 @@
     <ul class="links">
       @for (link of links; track link.id) {
         <li>
-          <a
-            [href]="link.href"
-            [class.is-active]="activeSection() === link.id"
-            >{{ link.label }}</a
-          >
+          <a [href]="link.href" [class.is-active]="activeSection() === link.id">{{ link.label }}</a>
         </li>
       }
     </ul>
 
     <!-- Acciones -->
     <div class="actions">
-      <a class="phone" [href]="waLink" target="_blank" rel="noopener noreferrer">
-        <app-icon name="whatsapp" />
-        <span>{{ phoneDisplay }}</span>
-      </a>
       <a class="cta" [href]="waLink" target="_blank" rel="noopener noreferrer">
         Agendar cita
         <app-icon name="arrow-right" [strokeWidth]="2" />
@@ -83,10 +87,8 @@
     (click)="closeMenu()"
   >
     <app-icon name="whatsapp" />
-    Escribir al {{ phoneDisplay }}
+    Agendar cita por WhatsApp
   </a>
 
-  <p class="sheet__legal">
-    CMP {{ doctor.cmp }} · RNE {{ doctor.rne }}
-  </p>
+  <p class="sheet__legal">CMP {{ doctor.cmp }} · RNE {{ doctor.rne }}</p>
 </div>

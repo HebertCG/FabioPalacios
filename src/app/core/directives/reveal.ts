@@ -37,7 +37,8 @@ export class Reveal implements OnDestroy {
     el.style.setProperty('--reveal-delay', `${this.revealDelay()}ms`);
 
     // Sin soporte o con movimiento reducido: mostrar de inmediato.
-    const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReduced =
+      typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced || typeof IntersectionObserver === 'undefined') {
       el.classList.add('is-visible');
       return;

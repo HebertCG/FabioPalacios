@@ -7,6 +7,7 @@ import { Credentials } from './sections/credentials/credentials';
 import { About } from './sections/about/about';
 import { Specialties } from './sections/specialties/specialties';
 import { Process } from './sections/process/process';
+import { Reviews } from './sections/reviews/reviews';
 import { Reels } from './sections/reels/reels';
 import { Faq } from './sections/faq/faq';
 import { Contact } from './sections/contact/contact';
@@ -21,8 +22,8 @@ import { Contact } from './sections/contact/contact';
  * El orden responde al recorrido del paciente: primero quién es
  * (héroe y formación), después por qué confiar (sobre mí), luego qué
  * resuelve (especialidades), cómo se atiende (proceso), su voz en
- * primera persona (reels), las dudas que frenan (FAQ) y al final el
- * canal de contacto.
+ * primera persona (reels), las dudas que frenan (FAQ), la experiencia
+ * pública de sus pacientes (reseñas) y al final el canal de contacto.
  */
 @Component({
   selector: 'app-root',
@@ -36,6 +37,7 @@ import { Contact } from './sections/contact/contact';
     About,
     Specialties,
     Process,
+    Reviews,
     Reels,
     Faq,
     Contact,

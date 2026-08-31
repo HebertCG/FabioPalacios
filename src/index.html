@@ -31,10 +31,23 @@
     <!-- Solo queda aquí lo que debe llegar al navegador antes que el
          JavaScript: iconos, tipografías y la precarga del LCP. -->
 
-    <!-- ============ Iconos ============ -->
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="alternate icon" href="favicon.ico" />
-    <link rel="apple-touch-icon" href="favicon.svg" />
+    <!-- ============ Iconos ============
+         Todos salen de `public/logo.png` vía `npm run media:brand`. Van
+         sobre un disco blanco a propósito: el logo es azul oscuro sobre
+         transparente y, sin fondo propio, desaparecía contra la barra de
+         pestañas en tema oscuro y solo se veía un círculo gris. El fondo
+         va recortado en círculo, no en cuadrado, porque la marca ya es
+         circular y el lienzo cuadrado dejaba las esquinas blancas a la
+         vista.
+
+         El `.ico` va primero porque es el que el navegador pide solo
+         (`/favicon.ico`) aunque no se declare; declararlo evita que se
+         quede con una versión vieja en caché. -->
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
 
     <!-- ============ Tipografías ============

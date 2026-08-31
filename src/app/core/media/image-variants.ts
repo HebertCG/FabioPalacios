@@ -46,12 +46,60 @@ export const HERO_IMAGE: ImageVariant = {
   note: 'retrato del héroe (LCP)',
 };
 
+/** Fotografías verticales de las vistas dos y tres del héroe. */
+export const HERO_CAROUSEL_IMAGES: readonly ImageVariant[] = [
+  {
+    file: 'Imagenprincipal_1.jpg',
+    widths: [480, 800, 1200],
+    note: 'héroe: trayectoria y comunidad médica',
+  },
+  {
+    file: 'ImagenPrincipal_2.jpg',
+    widths: [480, 800, 1086],
+    note: 'héroe: experiencia en cirugía',
+  },
+];
+
 /** Retrato vertical en quirófano de la sección "Sobre mí". */
 export const ABOUT_IMAGE: ImageVariant = {
   file: 'dr-fabio-palacios-cirugia-oncologica-quirofano.jpg',
   widths: [659],
   note: 'retrato en quirófano',
 };
+
+/** Fotografías que acompañan el relato de trayectoria en "Sobre mí". */
+export const DOCTOR_GALLERY_IMAGES: readonly ImageVariant[] = [
+  {
+    file: 'imagendoctor_1.jpg',
+    widths: [480, 800, 1200],
+    note: 'galería: técnica laparoscópica',
+  },
+  {
+    file: 'imagendoctor_2.jpg',
+    widths: [480, 800, 1200],
+    note: 'galería: equipo quirúrgico',
+  },
+  {
+    file: 'imagendoctor_3.jpg',
+    widths: [480],
+    note: 'galería: experiencia clínica',
+  },
+  {
+    file: 'imagendoctor_4.jpg',
+    widths: [480, 800],
+    note: 'galería: cirugía laparoscópica',
+  },
+  {
+    file: 'imagendoctor_5.jpg',
+    widths: [480, 800, 1200],
+    note: 'galería: comunidad médica',
+  },
+  {
+    file: 'imagendoctor_6.jpg',
+    widths: [480, 800, 1200],
+    note: 'galería: formación en el INEN',
+  },
+];
 
 /**
  * Retrato de la sección de atención. El original es de 1772 px y nunca
@@ -80,7 +128,9 @@ const SPECIALTY_FILES = [
 /** Todo lo que el optimizador debe procesar. */
 export const IMAGE_VARIANTS: readonly ImageVariant[] = [
   HERO_IMAGE,
+  ...HERO_CAROUSEL_IMAGES,
   ABOUT_IMAGE,
+  ...DOCTOR_GALLERY_IMAGES,
   PROCESS_IMAGE,
   ...SPECIALTY_FILES.map((name) => ({
     file: `specialties/${name}.jpg`,
@@ -122,4 +172,11 @@ export function srcsetFor(file: string, widths: readonly number[], format: Moder
   if (widths.length === 1) return variantPath(file, widths[0], format);
 
   return widths.map((width) => `${variantPath(file, width, format)} ${width}w`).join(', ');
+}
+
+/** Encuentra la configuración responsiva de una imagen declarada. */
+export function imageVariantFor(file: string): ImageVariant {
+  const target = IMAGE_VARIANTS.find((item) => item.file === file);
+  if (!target) throw new Error(`No existe una variante de imagen declarada para: ${file}`);
+  return target;
 }

@@ -1,26 +1,75 @@
 <div class="shell about__grid">
-  <!-- ---------------- Retrato ---------------- -->
+  <!-- ---------------- Trayectoria en imágenes ---------------- -->
   <div class="figure" appReveal>
-    <div class="figure__frame">
-      <picture>
-        <source [srcset]="portrait.avif" type="image/avif" />
-        <source [srcset]="portrait.webp" type="image/webp" />
-        <img
-          [src]="portrait.fallback"
-          width="659"
-          height="1568"
-          loading="lazy"
-          decoding="async"
-          [alt]="
-            doctor.displayName +
-            ' en sala de operaciones, ' +
-            doctor.specialty +
-            ' en ' +
-            doctor.city
-          "
-        />
-      </picture>
-      <span class="figure__scrim" aria-hidden="true"></span>
+    <div
+      class="figure__frame"
+      tabindex="0"
+      aria-roledescription="carrusel"
+      aria-label="Trayectoria del Dr. Fabio Palacios en imágenes"
+      (keydown)="handleKeydown($event)"
+      (mouseenter)="pauseAutoplay()"
+      (mouseleave)="resumeAutoplay()"
+      (focusin)="pauseAutoplay()"
+      (focusout)="resumeAutoplay($event)"
+      (pointerdown)="pointerDown($event)"
+      (pointerup)="pointerUp($event)"
+      (pointercancel)="pointerCancel()"
+    >
+      <div
+        class="figure__track"
+        [style.transform]="'translate3d(-' + activePhotoIndex() * 100 + '%, 0, 0)'"
+      >
+        @for (photo of photos; track photo.id; let i = $index) {
+          <figure
+            class="figure__slide"
+            [attr.aria-hidden]="i === activePhotoIndex() ? null : 'true'"
+            [attr.inert]="i === activePhotoIndex() ? null : ''"
+          >
+            <picture>
+              <source [srcset]="photo.sources.avif" type="image/avif" />
+              <source [srcset]="photo.sources.webp" type="image/webp" />
+              <img
+                [src]="photo.sources.fallback"
+                [style.object-position]="photo.objectPosition ?? null"
+                width="900"
+                height="1200"
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 767px) calc(100vw - 3rem), 520px"
+                [alt]="photo.alt"
+              />
+            </picture>
+            <span class="figure__veil" aria-hidden="true"></span>
+            <figcaption class="figure__caption">
+              <span>{{ photo.label }}</span>
+              <p>{{ photo.caption }}</p>
+            </figcaption>
+          </figure>
+        }
+      </div>
+
+      <div class="figure__arrows">
+        <button type="button" class="figure__arrow" (click)="stepPhoto(-1)">
+          <span class="sr-only">Fotografía anterior</span>
+          <app-icon name="chevron" [strokeWidth]="2" />
+        </button>
+        <button type="button" class="figure__arrow figure__arrow--next" (click)="stepPhoto(1)">
+          <span class="sr-only">Fotografía siguiente</span>
+          <app-icon name="chevron" [strokeWidth]="2" />
+        </button>
+      </div>
+
+      <div class="figure__dots" aria-label="Seleccionar fotografía">
+        @for (photo of photos; track photo.id; let i = $index) {
+          <button
+            type="button"
+            [class.is-active]="i === activePhotoIndex()"
+            [attr.aria-current]="i === activePhotoIndex() ? 'true' : null"
+            [attr.aria-label]="'Ver fotografía ' + (i + 1) + ': ' + photo.label"
+            (click)="selectPhoto(i)"
+          ></button>
+        }
+      </div>
     </div>
   </div>
 
