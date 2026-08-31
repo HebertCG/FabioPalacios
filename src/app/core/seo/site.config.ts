@@ -124,19 +124,17 @@ export const CONTENT_LAST_REVIEWED = '2026-08-25';
  * comparte el enlace por WhatsApp, Facebook o LinkedIn.
  *
  * WhatsApp es el canal principal de este consultorio, así que esta
- * imagen se ve más veces que cualquier resultado de Google. Lo ideal es
- * una horizontal de 1200x630: las cuadradas se recortan arriba y abajo.
+ * imagen se ve más veces que cualquier resultado de Google.
  *
- * TODO: `dr-fabio-palacios-cirujano-oncologo-piura-perfil.jpg` es cuadrada (1772x1772). Producir una
- * versión 1200x630 con el retrato a un lado y nombre y especialidad al
- * otro, guardarla como `og-dr-fabio-palacios-cirujano-oncologo-piura.jpg`
- * y apuntar aquí. Mientras tanto se usa la cuadrada, que funciona pero
- * se recorta.
+ * La genera `npm run media:og` a 1200x630, la proporción 1.91:1 que
+ * recortan todas esas plataformas. Antes se usaba el retrato cuadrado
+ * de 1772x1772, que llegaba recortado por arriba y por abajo y perdía
+ * el nombre y la especialidad justo en el formato donde más se comparte.
  */
 export const SEO_SOCIAL_IMAGE = {
-  path: 'dr-fabio-palacios-cirujano-oncologo-piura-perfil.jpg',
-  width: 1772,
-  height: 1772,
+  path: 'og-dr-fabio-palacios-cirujano-oncologo-piura.jpg',
+  width: 1200,
+  height: 630,
   type: 'image/jpeg',
   alt: `${DOCTOR.displayName}, ${DOCTOR.specialty} en ${DOCTOR.city}`,
 } as const;

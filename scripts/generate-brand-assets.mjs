@@ -2,23 +2,24 @@
  * Genera los iconos de navegador a partir del PNG ya recortado y
  * aprobado por el doctor (`public/logo.png`).
  *
- * POR QUÉ EL DISCO BLANCO
- * -----------------------
- * `logo.png` es un isotipo azul y verde azulado sobre fondo
- * transparente. Servido así como favicon, Chrome lo dibuja directamente
- * sobre la barra de pestañas, que en tema oscuro es casi negra: los
- * trazos oscuros se pierden contra ese fondo y en la pestaña solo queda
- * un círculo grisáceo. El icono necesita llevar su propio fondo.
+ * POR QUÉ SE RECORTA Y SE RELLENA EL CÍRCULO
+ * -------------------------------------------
+ * `logo.png` trae un margen ancho alrededor del aro y su propio fondo
+ * blanco opaco. Escalado tal cual a 32 o 16 píxeles, el aro de texto
+ * ("CIRUGÍA ONCOLÓGICA AVANZADA...") se vuelve una textura ilegible y
+ * la marca queda flotando pequeña dentro del cuadro: en la pestaña se
+ * leía como una bolita gris, no como un logo.
  *
- * Ese fondo se recorta en círculo y no en cuadrado porque la marca ya
- * es circular: un lienzo cuadrado dejaba cuatro esquinas blancas
- * visibles alrededor del aro. Con la máscara, lo único opaco es el
- * disco que la marca realmente ocupa.
+ * El `trim()` quita ese margen para que la marca ocupe todo el lienzo,
+ * y la máscara circular recorta las esquinas, que si no quedaban como
+ * cuatro cuñas blancas alrededor de un logo que ya es redondo. El
+ * `flatten()` fija el blanco por debajo para que el disco sea opaco en
+ * cualquier tema del navegador.
  *
- * La excepción es `apple-touch-icon.png`, que va cuadrado y opaco: iOS
- * aplica su propia máscara al icono y pinta de negro cualquier zona
- * transparente que reciba, así que un PNG circular saldría con las
- * esquinas negras en la pantalla de inicio.
+ * La excepción es `apple-touch-icon.png`, que va cuadrado: iOS aplica
+ * su propia máscara y pinta de negro cualquier zona transparente que
+ * reciba, así que un PNG circular saldría con las esquinas negras en la
+ * pantalla de inicio.
  */
 
 import { existsSync } from 'node:fs';

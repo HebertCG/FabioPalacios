@@ -1,0 +1,13 @@
+# ============================================================
+# REDIRECCIONES Y FALLBACK — Cloudflare Pages
+# Sustituye a la sección "rewrites" del antiguo vercel.json.
+# ============================================================
+
+# La landing es una sola página con anclas, pero Angular arranca en el
+# navegador: cualquier ruta desconocida debe devolver el index con
+# código 200 para que la aplicación resuelva, no un 404 del servidor.
+#
+# Va al final a propósito: Cloudflare aplica la primera regla que
+# coincide, así que una redirección específica debe declararse ANTES de
+# esta línea o quedará tapada por ella.
+/*  /index.html  200

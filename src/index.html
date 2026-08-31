@@ -33,12 +33,10 @@
 
     <!-- ============ Iconos ============
          Todos salen de `public/logo.png` vía `npm run media:brand`. Van
-         sobre un disco blanco a propósito: el logo es azul oscuro sobre
-         transparente y, sin fondo propio, desaparecía contra la barra de
-         pestañas en tema oscuro y solo se veía un círculo gris. El fondo
-         va recortado en círculo, no en cuadrado, porque la marca ya es
-         circular y el lienzo cuadrado dejaba las esquinas blancas a la
-         vista.
+         recortados en círculo y sin el margen del PNG original. Escalada
+         tal cual, la marca quedaba flotando pequeña dentro del cuadro y
+         su aro de texto se volvía ilegible: en la pestaña se leía como
+         una bolita gris. Llenando el disco, el isotipo se distingue.
 
          El `.ico` va primero porque es el que el navegador pide solo
          (`/favicon.ico`) aunque no se declare; declararlo evita que se
@@ -54,20 +52,32 @@
          Poppins construye la jerarquía visual y Open Sans mantiene
          cómoda la lectura de los textos informativos.
 
-         `preconnect` abre la conexión TLS con Google Fonts mientras el
-         navegador todavía lee el HTML, de modo que la petición de la
-         hoja de estilos no empieza desde cero. Se declara una sola
-         etiqueta `stylesheet`: la combinación anterior de `preload` +
-         `stylesheet` descargaba el mismo archivo por dos caminos.
+         Se sirven desde este mismo dominio (`public/fonts`, declaradas
+         en `src/styles/_fonts.scss` y compiladas dentro de styles.css).
+         Antes venían de Google Fonts, que costaba dos conexiones a un
+         tercero en el camino crítico y encadenadas: el navegador no
+         empezaba a bajar la fuente hasta que respondía la hoja de
+         estilos remota. Ahora viajan por la conexión ya abierta.
 
-         MEJORA PENDIENTE: alojar las tipografías en /public elimina dos
-         conexiones a un tercero del camino crítico y quita a Google
-         Fonts del renderizado. Es la mayor mejora de LCP que queda. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+         Regenerar tras cambiar pesos o familias: npm run media:fonts
+
+         Solo se precargan las dos que pinta la primera pantalla —el
+         titular en Poppins 700 y el cuerpo en Open Sans—. Precargar las
+         ocho competiría con la imagen del héroe por el ancho de banda
+         justo cuando se decide el LCP. -->
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="fonts/poppins-latin-4.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="fonts/open-sans-latin-1.woff2"
+      crossorigin
     />
 
     <!-- ============ Precarga del LCP ============

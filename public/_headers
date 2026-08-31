@@ -1,0 +1,66 @@
+# ============================================================
+# CABECERAS HTTP — Cloudflare Pages
+# Cloudflare lee este archivo desde la raíz del directorio publicado.
+# Angular copia /public tal cual, así que basta con que viva aquí.
+# Sustituye a la sección "headers" del antiguo vercel.json.
+# ============================================================
+
+/*
+  # Impide que el navegador adivine el tipo de un archivo y lo ejecute
+  # como algo distinto de lo que declara el Content-Type.
+  X-Content-Type-Options: nosniff
+  # Nadie debe poder incrustar esta página en un iframe: en una web
+  # médica, eso habilita suplantarla dentro de otro sitio.
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  # La página no usa cámara, micrófono ni ubicación. Declararlo cierra
+  # esas API a cualquier script de terceros que llegue a colarse.
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# El HTML nunca se cachea de forma inmutable: es lo único que cambia
+# cuando se publica una versión nueva, y los nombres de los bundles que
+# apunta vienen con hash, así que refrescarlo arrastra todo lo demás.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Recursos con hash o inmutables por naturaleza: un año, sin revalidar.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.mp4
+  Cache-Control: public, max-age=31536000, immutable
+
+# Estos tres los releen los rastreadores: no deben quedarse congelados
+# un año cuando cambie una especialidad o el dominio.
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/site.webmanifest
+  Cache-Control: public, max-age=3600
