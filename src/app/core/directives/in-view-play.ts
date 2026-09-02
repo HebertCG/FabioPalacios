@@ -18,23 +18,34 @@ import {
  *
  * Ningún navegador deja arrancar un vídeo con audio si el usuario todavía no
  * ha tocado la página; `play()` devuelve una promesa rechazada y el vídeo se
- * queda congelado. Aquí se intenta con sonido y, si el navegador lo rechaza,
- * se reintenta en silencio y se avisa por `muted` para que el botón muestre
- * el estado real. En cuanto haya cualquier gesto en la página —el propio
- * botón de volumen, por ejemplo— el sonido ya está permitido.
+ * queda congelado. Por eso el vídeo arranca mudo y solo suena cuando el
+ * usuario pulsa el botón de volumen, que sí es un gesto válido.
+ *
+ * En iOS hay un requisito extra que no se cumple con JavaScript: el atributo
+ * `muted` tiene que estar escrito en el marcado. Poner la propiedad después
+ * de renderizar no vale, WebKit ya decidió. De ahí que la entrada de esta
+ * directiva se llame `silenced` y no `muted`: si se llamara igual, Angular la
+ * trataría como entrada de directiva y el atributo nunca llegaría al HTML.
  *
  * NO ARRANCA SOLO cuando el sistema pide ahorrar datos o reducir el
  * movimiento: un vídeo que se dispara solo consume sin que nadie lo pida.
  *
- * Uso:  <video appInViewPlay [(muted)]="silenciado" playsinline></video>
+ * Uso:  <video appInViewPlay muted playsinline [(silenced)]="silenciado"></video>
  */
 @Directive({
   selector: 'video[appInViewPlay]',
 })
 export class InViewPlay implements OnDestroy {
-  /** Estado real del audio. Bidireccional: lo escribe el botón y lo corrige
-   *  la directiva cuando el navegador rechaza el sonido. */
-  readonly muted = model(true);
+  /**
+   * Estado del audio. Bidireccional: lo escribe el botón y lo corrige la
+   * directiva si el navegador rechaza el sonido.
+   *
+   * NO se llama `muted` a propósito. Ese nombre lo consumiría Angular como
+   * entrada de directiva y nunca escribiría el atributo `muted` en el HTML
+   * —fue justo lo que rompía iOS—, así que la plantilla lo pone literal y
+   * esta entrada solo gobierna el estado en tiempo de ejecución.
+   */
+  readonly silenced = model(true);
 
   private readonly host = inject<ElementRef<HTMLVideoElement>>(ElementRef);
   private observer?: IntersectionObserver;
@@ -42,7 +53,7 @@ export class InViewPlay implements OnDestroy {
 
   constructor() {
     effect(() => {
-      const wantsMuted = this.muted();
+      const wantsMuted = this.silenced();
       const video = this.host.nativeElement;
       video.muted = wantsMuted;
       // Quitar el silencio a mano cuenta como gesto: si estaba pausado por
@@ -78,20 +89,28 @@ export class InViewPlay implements OnDestroy {
     this.observer.observe(video);
   }
 
-  /** Intenta con sonido; si el navegador lo rechaza, cae a silencio. */
+  /**
+   * Arranca con el estado de audio que ya tenga, sin forzar nada.
+   *
+   * La versión anterior ponía `muted = false` para intentar con sonido y caía
+   * a silencio si el navegador lo rechazaba. En iOS eso era peor que inútil:
+   * quitar el silencio antes de un gesto del usuario hace que WebKit abandone
+   * la carga del medio, y el vídeo se quedaba congelado en el póster aunque
+   * el reintento silencioso llegara después.
+   */
   private async start(video: HTMLVideoElement): Promise<void> {
-    video.muted = false;
     try {
       await video.play();
-      this.muted.set(false);
       return;
     } catch {
-      // Sin gesto previo del usuario. Se reintenta en silencio.
+      // Rechazado. Si sonaba, casi seguro es por falta de gesto previo.
     }
 
-    video.muted = true;
-    this.muted.set(true);
-    await video.play().catch(() => undefined);
+    if (!video.muted) {
+      video.muted = true;
+      this.silenced.set(true);
+      await video.play().catch(() => undefined);
+    }
   }
 
   private shouldAutoplay(): boolean {

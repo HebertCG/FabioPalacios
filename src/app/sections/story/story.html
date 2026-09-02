@@ -513,7 +513,8 @@
         <video
           class="coach__video"
           appInViewPlay
-          [(muted)]="coachMuted"
+          muted
+          [(silenced)]="coachMuted"
           [src]="coachVideo.src"
           [attr.poster]="coachVideo.poster"
           [attr.aria-label]="coachVideo.title"
