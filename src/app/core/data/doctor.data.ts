@@ -209,33 +209,41 @@ export const SPECIALTIES: readonly Specialty[] = [
    ============================================================ */
 
 /**
- * ORIGEN DEL VIDEO — y por qué no se sirve desde /public
+ * ORIGEN DEL VIDEO — y por qué no sale de /public
  *
  * `npm run media:video` reencoda el máster a 720x1280 y 1 Mbps: de 167 MB a
  * 11.3 MB. Eso resolvió el bitrate, pero no la reproducción en Safari.
  *
  * Safari en iOS exige respuestas parciales (HTTP 206) para arrancar un
- * <video>, y los recursos estáticos de Cloudflare Workers ignoran la
- * cabecera `Range`: ante `bytes=0-1023` devuelven 200 con el archivo entero.
- * Se probó un Worker que armaba el 206 a mano; funcionaba, pero relee el
- * archivo del almacén en cada rango y añadía ~200 ms por petición. Un video
- * hace decenas mientras almacena, así que Safari seguía trabándose y Chrome
- * se volvió más lento. Está revertido.
+ * <video>, y los recursos estáticos de Cloudflare Workers ignoran la cabecera
+ * `Range`: ante `bytes=0-1023` devuelven 200 con el archivo entero. Se probó
+ * un Worker que armaba el 206 a mano; funcionaba, pero relee el archivo del
+ * almacén en cada rango y añadía ~200 ms por petición, así que Safari seguía
+ * trabándose y Chrome se volvió más lento. Está revertido.
  *
- * De momento se sirve desde /public: en Chrome funciona y en Safari al menos
- * queda el póster en lugar de un marco negro.
+ * R2 sí devuelve rangos de forma nativa, y además más rápido que aquel
+ * Worker. Medido contra este objeto:
  *
- * TODO: subir public/fabio-coach-espiritual.mp4 (11.3 MB) a almacenamiento
- * externo con soporte nativo de rangos y poner aquí esa URL. Comprobado que
- * Vercel Blob devuelve 206 en 1 024 bytes; es cambiar solo esta línea.
+ *     bytes=0-1023        ->  206 · 0-1023/11868777
+ *     bytes=5000000-…     ->  206 · salto correcto
+ *     bytes=-500          ->  206 · cola correcta
+ *     latencia            ->  ~0.46 s  (Worker: ~0.67 s)
+ *
+ * No hacen falta cabeceras CORS: el <video> no lleva `crossorigin`, así que
+ * el navegador carga medios de otro origen sin pedirlas.
+ *
+ * El comprimido y el máster viven en media-fuente/, fuera del build.
+ * `npm run media:video` regenera el comprimido si hay que volver a subirlo.
+ *
+ * TODO: cuando drfabiopalacios.pe esté activo, mover el bucket a un dominio
+ * propio (media.drfabiopalacios.pe). La URL de desarrollo r2.dev va con
+ * límite de peticiones y sin caché de CDN. Es cambiar solo esta línea.
  */
 export const COACH_VIDEO = {
-  src: 'fabio-coach-espiritual.mp4',
+  src: 'https://pub-962d9bf96eef4a9a81745128a933f639.r2.dev/fabiovideos/fabio-coach-espiritual.mp4',
   /**
-   * Primer fotograma con el rótulo del doctor. Sin `poster`, mientras el
-   * video carga —o si no llega a cargar— el marco se ve negro, que fue
-   * exactamente lo que apareció en Safari. Con póster, lo peor que puede
-   * pasar es una imagen fija correcta en lugar de un rectángulo vacío.
+   * Primer fotograma con el rótulo del doctor. Se sirve desde el propio sitio
+   * para que aparezca al instante, sin esperar al primer byte del video.
    */
   poster: 'fabio-coach-espiritual-poster.jpg',
   title: 'Un amigo en tu lucha',
