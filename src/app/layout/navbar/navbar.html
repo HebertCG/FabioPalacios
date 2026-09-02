@@ -9,7 +9,7 @@
     <a
       class="brand"
       href="#inicio"
-      aria-label="Ir al inicio — Dr. Fabio Palacios"
+      aria-label="Ir al inicio, Fabio Palacios"
       (click)="closeMenu()"
     >
       <img
@@ -21,7 +21,7 @@
       />
       <span class="brand__text">
         <strong>{{ doctor.displayName }}</strong>
-        <small>{{ doctor.specialty }}</small>
+        <small>{{ doctor.navDescriptor }}</small>
       </span>
     </a>
 
@@ -37,7 +37,7 @@
     <!-- Acciones -->
     <div class="actions">
       <a class="cta" [href]="waLink" target="_blank" rel="noopener noreferrer">
-        Agendar cita
+        Conversemos
         <app-icon name="arrow-right" [strokeWidth]="2" />
       </a>
     </div>
@@ -87,7 +87,7 @@
     (click)="closeMenu()"
   >
     <app-icon name="whatsapp" />
-    Agendar cita por WhatsApp
+    Conversemos por WhatsApp
   </a>
 
   <p class="sheet__legal">CMP {{ doctor.cmp }} · RNE {{ doctor.rne }}</p>

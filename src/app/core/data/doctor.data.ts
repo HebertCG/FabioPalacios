@@ -40,7 +40,8 @@ export const DOCTOR = {
   firstName: 'Fabio',
   lastName: 'Palacios',
   /** Nombre de presentación en navbar, footer y metadatos */
-  displayName: 'Dr. Fabio Palacios',
+  displayName: 'Fabio Palacios',
+  navDescriptor: 'Médico, conferencista y piurano',
   specialty: 'Cirujano Oncólogo General',
   subSpecialty: 'Cavidad Abdominal',
   cmp: '066389',
@@ -594,11 +595,10 @@ export const SOCIALS: readonly SocialLink[] = [
 
 export const NAV_LINKS: readonly NavLink[] = [
   { id: 'inicio', label: 'Inicio', href: '#inicio' },
-  { id: 'sobre-mi', label: 'Sobre mí', href: '#sobre-mi' },
-  { id: 'especialidades', label: 'Especialidades', href: '#especialidades' },
-  { id: 'atencion', label: 'Atención', href: '#atencion' },
-  { id: 'reels', label: 'Videos', href: '#reels' },
-  { id: 'resenas', label: 'Reseñas', href: '#resenas' },
+  { id: 'proposito', label: 'Propósito', href: '#proposito' },
+  { id: 'charlas', label: 'Charlas', href: '#charlas' },
+  { id: 'familia', label: 'Mi familia', href: '#familia' },
+  { id: 'medicina', label: 'Medicina', href: '#medicina' },
   { id: 'contacto', label: 'Contacto', href: '#contacto' },
 ];
 

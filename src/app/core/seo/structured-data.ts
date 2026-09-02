@@ -13,10 +13,8 @@
  *
  * QUÉ SE DECLARA Y PARA QUÉ
  *  · Person + Physician  → panel de conocimiento y paquete local
- *  · MedicalWebPage      → señales E-E-A-T para contenido de salud
+ *  · ProfilePage         → presenta a Fabio como persona pública
  *  · BreadcrumbList      → migas de pan bajo el resultado
- *  · FAQPage             → ver la nota sobre resultados enriquecidos
- *  · VideoObject         → resultados de video (requiere miniaturas)
  *
  * REGLA DE ORO DE ESTE ARCHIVO: nada que no esté verificado. Un dato
  * estructurado falso es una penalización potencial por spam, y en
@@ -24,7 +22,7 @@
  * incompletos se omiten en lugar de rellenarse con supuestos.
  */
 
-import { ABOUT, CONTACT, CREDENTIALS, DOCTOR, FAQS, REELS, SPECIALTIES } from '../data/doctor.data';
+import { CONTACT, CREDENTIALS, DOCTOR, SPECIALTIES } from '../data/doctor.data';
 import {
   absoluteUrl,
   CONTENT_LAST_REVIEWED,
@@ -58,7 +56,6 @@ const ID = {
   website: `${SITE_ORIGIN}/#sitio`,
   webpage: `${SITE_ORIGIN}/#pagina`,
   breadcrumb: `${SITE_ORIGIN}/#migas`,
-  faq: `${SITE_ORIGIN}/#preguntas`,
   primaryImage: `${SITE_ORIGIN}/#imagen-principal`,
 } as const;
 
@@ -101,7 +98,8 @@ function personNode(): JsonLdNode {
     familyName: DOCTOR.lastName,
     honorificPrefix: 'Dr.',
     jobTitle: DOCTOR.specialty,
-    description: ABOUT.paragraphs[0],
+    description:
+      'Médico, conferencista y ciudadano de Piura. Comparte conocimiento y vive su profesión desde la cercanía, el servicio y la familia.',
     image: { '@id': ID.primaryImage },
     url: `${SITE_ORIGIN}/`,
     telephone: CONTACT.whatsapp,
@@ -256,47 +254,34 @@ function websiteNode(): JsonLdNode {
 /**
  * La página concreta.
  *
- * Se declara como `MedicalWebPage` y no como `WebPage` genérica. Es la
- * diferencia entre decirle a Google "esto es una página" y decirle
- * "esto es contenido médico, escrito y revisado por un especialista
- * colegiado, sobre esta especialidad y actualizado en esta fecha".
+ * Se declara como `ProfilePage` porque el foco principal es la persona,
+ * su comunidad y su propósito. El consultorio conserva su propio nodo
+ * `Physician` para que la información médica siga siendo entendible.
  */
 function webPageNode(): JsonLdNode {
   return {
-    '@type': 'MedicalWebPage',
+    '@type': 'ProfilePage',
     '@id': ID.webpage,
     url: `${SITE_ORIGIN}/`,
     name: SEO_TITLE,
     description: SEO_DESCRIPTION,
     inLanguage: SITE_LOCALE,
     isPartOf: { '@id': ID.website },
-    about: { '@id': ID.practice },
+    about: { '@id': ID.person },
     primaryImageOfPage: { '@id': ID.primaryImage },
     breadcrumb: { '@id': ID.breadcrumb },
     author: { '@id': ID.person },
-    reviewedBy: { '@id': ID.person },
-    lastReviewed: CONTENT_LAST_REVIEWED,
     dateModified: CONTENT_LAST_REVIEWED,
-    specialty: 'https://schema.org/Oncologic',
-
-    /** A quién está dirigido el contenido: pacientes, no colegas. */
-    audience: {
-      '@type': 'MedicalAudience',
-      audienceType: 'Patient',
-      geographicArea: {
-        '@type': 'AdministrativeArea',
-        name: `${DOCTOR.city}, Perú`,
-      },
-    },
 
     /**
-     * Las secciones con contenido clínico relevante, para que Google
-     * pueda enlazar directo a una de ellas desde el resultado.
+     * Las secciones principales, para que los buscadores puedan enlazar
+     * directamente a cada faceta de la historia.
      */
     significantLink: [
-      `${SITE_ORIGIN}/#especialidades`,
-      `${SITE_ORIGIN}/#atencion`,
-      `${SITE_ORIGIN}/#preguntas`,
+      `${SITE_ORIGIN}/#proposito`,
+      `${SITE_ORIGIN}/#charlas`,
+      `${SITE_ORIGIN}/#familia`,
+      `${SITE_ORIGIN}/#medicina`,
       `${SITE_ORIGIN}/#contacto`,
     ],
   };
@@ -321,71 +306,11 @@ function breadcrumbNode(): JsonLdNode {
       {
         '@type': 'ListItem',
         position: 2,
-        name: `Cirujano oncólogo en ${DOCTOR.city}`,
-        item: `${SITE_ORIGIN}/#especialidades`,
+        name: 'Fabio Palacios',
+        item: `${SITE_ORIGIN}/#proposito`,
       },
     ],
   };
-}
-
-/**
- * Preguntas frecuentes.
- *
- * NOTA SOBRE RESULTADOS ENRIQUECIDOS: desde agosto de 2023 Google solo
- * muestra el desplegable de preguntas en resultados de webs oficiales
- * de gobierno y de entidades de salud reconocidas. Un consultorio
- * privado ya no lo obtiene. Se mantiene igualmente porque Bing sí lo
- * muestra, porque los asistentes de IA lo usan para citar respuestas, y
- * porque describe correctamente el contenido. No esperar de aquí un
- * cambio visible en Google.
- */
-function faqNode(): JsonLdNode {
-  return {
-    '@type': 'FAQPage',
-    '@id': ID.faq,
-    inLanguage: SITE_LOCALE,
-    isPartOf: { '@id': ID.webpage },
-    mainEntity: FAQS.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-        author: { '@id': ID.person },
-      },
-    })),
-  };
-}
-
-/**
- * Videos.
- *
- * Google exige `name`, `description`, `thumbnailUrl` y `uploadDate`.
- * Sin miniatura, el nodo no es inválido "a medias": queda descartado y
- * ensucia el informe de Search Console. Por eso solo se emiten los
- * reels que ya tienen `poster` y `uploadDate` reales.
- *
- * Para activarlos: generar las miniaturas con `npm run media:posters` y
- * completar `poster` y `uploadDate` en `REELS`. Los nodos aparecen
- * solos, sin tocar este archivo.
- */
-function videoNodes(): JsonLdNode[] {
-  return REELS.filter((reel) => reel.poster && reel.uploadDate).map((reel) => ({
-    '@type': 'VideoObject',
-    '@id': `${SITE_ORIGIN}/#${reel.id}`,
-    name: reel.title,
-    description: reel.description ?? reel.title,
-    thumbnailUrl: absoluteUrl(reel.poster as string),
-    contentUrl: absoluteUrl(reel.src),
-    uploadDate: reel.uploadDate,
-    duration: reel.duration,
-    inLanguage: SITE_LOCALE,
-    isFamilyFriendly: true,
-    creator: { '@id': ID.person },
-    publisher: { '@id': ID.practice },
-    isPartOf: { '@id': ID.webpage },
-    about: { '@id': ID.practice },
-  }));
 }
 
 /* ============================================================
@@ -406,8 +331,6 @@ export function buildStructuredData(): JsonLdNode {
       websiteNode(),
       webPageNode(),
       breadcrumbNode(),
-      faqNode(),
-      ...videoNodes(),
     ],
   };
 }

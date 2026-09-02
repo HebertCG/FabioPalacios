@@ -40,7 +40,7 @@ export class Navbar {
   protected readonly links = NAV_LINKS;
   protected readonly doctor = DOCTOR;
   protected readonly waLink = whatsappLink(
-    `Hola doctor, vengo de su página web. Quisiera agendar una consulta.`,
+    `Hola Fabio, conocí tu historia en la página web y quisiera conversar contigo.`,
   );
 
   /** `true` cuando la barra ya adoptó su forma contraída */

@@ -112,6 +112,60 @@ export const PROCESS_IMAGE: ImageVariant = {
   note: 'retrato de la sección de atención',
 };
 
+/** Fotografías del nuevo relato personal, comunitario y profesional. */
+export const STORY_IMAGES: readonly ImageVariant[] = [
+  {
+    file: 'fabio/fabio-comunidad-portada.jpg',
+    widths: [640, 1024, 1600, 2048],
+    note: 'portada editorial con la comunidad',
+  },
+  {
+    file: 'fabio/fabio-escuchando-comunidad.jpg',
+    widths: [480, 800, 1200],
+    note: 'Fabio junto a una asistente de su charla',
+  },
+  {
+    file: 'fabio/fabio-cercano-comunidad.jpg',
+    widths: [480, 800, 1200],
+    note: 'encuentro cercano después de la charla',
+  },
+  {
+    file: 'fabio/fabio-conferencia-oncologia.jpg',
+    widths: [480, 800],
+    note: 'Fabio en un congreso de oncología',
+  },
+  {
+    file: 'fabio/fabio-charla-podcast.jpg',
+    widths: [640, 1200, 1600],
+    note: 'conversación educativa ante micrófonos',
+  },
+  {
+    file: 'fabio/fabio-esposa-recuerdo.jpg',
+    widths: [480, 720],
+    note: 'recuerdo de Fabio junto a su esposa',
+  },
+  {
+    file: 'fabio/fabio-esposa.jpg',
+    widths: [640, 1200],
+    note: 'Fabio junto a su esposa',
+  },
+  {
+    file: 'fabio/fabio-familia.jpg',
+    widths: [480, 800],
+    note: 'celebración familiar',
+  },
+  {
+    file: 'fabio/fabio-innovacion-quirurgica.jpg',
+    widths: [480, 800],
+    note: 'formación en innovación quirúrgica',
+  },
+  {
+    file: 'fabio/fabio-equipo-medico.jpg',
+    widths: [640, 1200],
+    note: 'equipo médico en Piura',
+  },
+];
+
 /** Anchos de las ilustraciones de especialidad: ocupan media pantalla. */
 export const SPECIALTY_WIDTHS = [600, 900, 1200] as const;
 
@@ -132,6 +186,7 @@ export const IMAGE_VARIANTS: readonly ImageVariant[] = [
   ABOUT_IMAGE,
   ...DOCTOR_GALLERY_IMAGES,
   PROCESS_IMAGE,
+  ...STORY_IMAGES,
   ...SPECIALTY_FILES.map((name) => ({
     file: `specialties/${name}.jpg`,
     widths: SPECIALTY_WIDTHS,

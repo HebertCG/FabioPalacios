@@ -46,32 +46,30 @@ export function absoluteUrl(path: string): string {
 /**
  * TÍTULO — se muestra en la pestaña y como titular azul en Google.
  *
- * Va con la palabra clave delante ("Cirujano Oncólogo en Piura") y la
- * marca detrás. Google trunca alrededor de los 60 caracteres, así que
- * lo que importa tiene que caber antes. La versión anterior empezaba
- * por el nombre propio, que todavía nadie busca, y cerraba con
- * "Cavidad Abdominal", que no es un término de búsqueda.
+ * Abre con el nombre y resume las tres dimensiones de la nueva página.
+ * Mantiene la especialidad médica al final sin convertirla en el único
+ * eje de la identidad. Google trunca cerca de los 60 caracteres.
  */
-export const SEO_TITLE = `Cirujano Oncólogo en ${DOCTOR.city} | ${DOCTOR.displayName}`;
+export const SEO_TITLE = `${DOCTOR.displayName} | Persona, conferencista y cirujano oncólogo`;
 
 /**
  * DESCRIPCIÓN — el párrafo gris bajo el título en Google.
  *
  * Máximo útil: unos 155 caracteres. No es factor de posicionamiento
- * directo, pero decide el clic. Nombra ciudad, especialidad y la
- * credencial que más pesa en oncología peruana: el INEN.
+ * directo, pero decide el clic. Resume comunidad, familia, valores y
+ * trabajo médico sin reducir la identidad de Fabio a su profesión.
  */
 export const SEO_DESCRIPTION =
-  `Cirujano oncólogo en ${DOCTOR.city}. Cirugía de alta complejidad en cáncer ` +
-  `digestivo, mama, cabeza y cuello, urológico y ginecológico. Formado en el INEN.`;
+  `Conoce el lado humano de ${DOCTOR.displayName}: sus valores, su familia, las charlas que ` +
+  `comparte con la comunidad y su trabajo como cirujano oncólogo en ${DOCTOR.city}.`;
 
 /**
  * Descripción corta para tarjetas de redes, donde hay menos espacio y
  * el texto compite con la imagen.
  */
 export const SEO_SOCIAL_DESCRIPTION =
-  `Cirugía oncológica de alta complejidad en ${DOCTOR.city}. Formación en el ` +
-  `INEN de Lima e IRCAD América Latina. CMP ${DOCTOR.cmp}.`;
+  `Médico, conferencista y ciudadano de ${DOCTOR.city}. Una historia de comunidad, ` +
+  `familia, servicio y vocación.`;
 
 /**
  * Palabras clave. Google las ignora desde 2009; se conservan porque
@@ -79,6 +77,9 @@ export const SEO_SOCIAL_DESCRIPTION =
  * y cuestan cero. No añadir términos que la página no cubra de verdad.
  */
 export const SEO_KEYWORDS = [
+  'Fabio Palacios',
+  `conferencista ${DOCTOR.city}`,
+  `charlas de salud ${DOCTOR.city}`,
   `cirujano oncólogo ${DOCTOR.city}`,
   `oncólogo ${DOCTOR.city}`,
   `cirugía oncológica ${DOCTOR.city}`,
@@ -132,21 +133,19 @@ export const CONTENT_LAST_REVIEWED = '2026-08-25';
  * el nombre y la especialidad justo en el formato donde más se comparte.
  */
 export const SEO_SOCIAL_IMAGE = {
-  path: 'og-dr-fabio-palacios-cirujano-oncologo-piura.jpg',
+  path: 'og-fabio-palacios-historia-valores.jpg',
   width: 1200,
   height: 630,
   type: 'image/jpeg',
-  alt: `${DOCTOR.displayName}, ${DOCTOR.specialty} en ${DOCTOR.city}`,
+  alt: `${DOCTOR.displayName} junto a la comunidad, compartiendo una historia de cercanía y servicio`,
 } as const;
 
-/** Retrato del héroe: es el LCP y la imagen principal de la página. */
+/** Fotografía del héroe: es el LCP y la imagen principal de la página. */
 export const SEO_PRIMARY_IMAGE = {
-  path: 'dr-fabio-palacios-cirujano-oncologo-piura.png',
-  width: 430,
-  height: 497,
-  alt:
-    `${DOCTOR.displayName}, ${DOCTOR.specialty} en ${DOCTOR.city}, ` +
-    `revisando estudios de imágenes`,
+  path: 'fabio/fabio-comunidad-portada.jpg',
+  width: 2048,
+  height: 1536,
+  alt: `${DOCTOR.displayName} junto a personas de la comunidad después de una charla`,
 } as const;
 
 /* ============================================================

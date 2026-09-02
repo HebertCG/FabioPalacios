@@ -1,0 +1,387 @@
+<article class="story-page">
+  <section id="inicio" class="hero" aria-labelledby="titulo-inicio">
+    <picture class="hero__media">
+      <source type="image/avif" [srcset]="photos.hero.avif" sizes="100vw" />
+      <source type="image/webp" [srcset]="photos.hero.webp" sizes="100vw" />
+      <img
+        [src]="photos.hero.src"
+        alt="Fabio Palacios sentado al frente de una comunidad reunida después de una charla"
+        width="2048"
+        height="1536"
+        fetchpriority="high"
+      />
+    </picture>
+
+    <div class="hero__content">
+      <p class="hero__name">Fabio Palacios</p>
+      <h1 id="titulo-inicio">La vida se cuida estando cerca.</h1>
+      <p class="hero__lead">Médico cuando hace falta. Persona, esposo y ciudadano siempre.</p>
+      <div class="hero__actions">
+        <a class="action action--solid" href="#proposito">Conoce mi propósito</a>
+        <a
+          class="action action--glass"
+          [href]="conversationLink"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Conversemos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="proposito" class="mission" aria-labelledby="titulo-proposito">
+    <div class="page-shell mission__grid">
+      <div class="mission__body">
+        <p class="mission__eyebrow" appReveal>Mi propósito</p>
+        <h2 id="titulo-proposito" appReveal>
+          Ser cercano también es una forma de cuidar.
+        </h2>
+        <div class="mission__copy" appReveal [revealDelay]="90">
+          <p>
+            Creo en escuchar antes de responder, hablar con honestidad y tratar a cada persona con
+            la misma atención que quisiera para mi familia.
+          </p>
+          <p>
+            La medicina me enseñó precisión y responsabilidad. La vida me enseñó que la empatía,
+            la gratitud y el servicio son los valores que realmente dejan huella.
+          </p>
+        </div>
+        <dl class="mission__values" appReveal [revealDelay]="160">
+          <div>
+            <dt>Cercanía</dt>
+            <dd>Estar presente, escuchar y hablar sin barreras.</dd>
+          </div>
+          <div>
+            <dt>Servicio</dt>
+            <dd>Poner lo que sé al alcance de quienes confían en mí.</dd>
+          </div>
+          <div>
+            <dt>Familia</dt>
+            <dd>Recordar siempre por quién y para qué hago las cosas.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div
+        class="values-carousel"
+        [class.is-paused]="carouselPaused()"
+        appReveal
+        [revealDelay]="120"
+        aria-label="Fabio Palacios como médico y como persona"
+      >
+        <button
+          class="values-carousel__control"
+          type="button"
+          [attr.aria-pressed]="carouselPaused()"
+          (click)="toggleCarousel()"
+        >
+          {{ carouselPaused() ? 'Reanudar fotos' : 'Pausar fotos' }}
+        </button>
+        <figure class="values-carousel__slide">
+          <picture>
+            <source type="image/avif" [srcset]="photos.doctorPortrait.avif" sizes="(min-width: 1024px) 34vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.doctorPortrait.webp" sizes="(min-width: 1024px) 34vw, 100vw" />
+            <img
+              [src]="photos.doctorPortrait.src"
+              alt="Fabio Palacios preparado para ingresar a cirugía"
+              width="659"
+              height="1568"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>La serenidad también forma parte del oficio.</figcaption>
+        </figure>
+        <figure class="values-carousel__slide">
+          <picture>
+            <source type="image/avif" [srcset]="photos.podcast.avif" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.podcast.webp" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <img
+              [src]="photos.podcast.src"
+              alt="Fabio Palacios conversando ante micrófonos durante una charla"
+              width="1600"
+              height="1200"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>Compartir lo aprendido también es una forma de servir.</figcaption>
+        </figure>
+        <figure class="values-carousel__slide">
+          <picture>
+            <source type="image/avif" [srcset]="photos.innovation.avif" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.innovation.webp" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <img
+              [src]="photos.innovation.src"
+              alt="Fabio Palacios en una experiencia de formación en cirugía robótica"
+              width="960"
+              height="1280"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>La curiosidad mantiene viva la vocación.</figcaption>
+        </figure>
+        <figure class="values-carousel__slide">
+          <picture>
+            <source type="image/avif" [srcset]="photos.community.avif" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.community.webp" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <img
+              [src]="photos.community.src"
+              alt="Fabio Palacios compartiendo un momento cercano con una mujer de la comunidad"
+              width="1200"
+              height="1600"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>Fuera del consultorio, sigo siendo una persona más.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="charlas" class="talks" aria-labelledby="titulo-charlas">
+    <div class="page-shell">
+      <header class="talks-heading" appReveal>
+        <h2 id="titulo-charlas">Compartir lo que sé también es cuidar.</h2>
+        <p>
+          Charlas, encuentros y conversaciones que acercan información útil a la vida cotidiana.
+        </p>
+      </header>
+
+      <div class="talks-grid">
+        <figure class="talk-card talk-card--feature" appReveal>
+          <picture>
+            <source type="image/avif" [srcset]="photos.listening.avif" sizes="(min-width: 900px) 48vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.listening.webp" sizes="(min-width: 900px) 48vw, 100vw" />
+            <img
+              [src]="photos.listening.src"
+              alt="Fabio Palacios abrazando a una asistente después de una charla comunitaria"
+              width="1200"
+              height="1600"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>
+            <h3>Escuchar puede ser el comienzo de algo bueno.</h3>
+            <p>Cada pregunta trae consigo una historia que merece tiempo.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="talk-card talk-card--portrait" appReveal [revealDelay]="60">
+          <picture>
+            <source type="image/avif" [srcset]="photos.conference.avif" sizes="(min-width: 900px) 24vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.conference.webp" sizes="(min-width: 900px) 24vw, 100vw" />
+            <img
+              [src]="photos.conference.src"
+              alt="Fabio Palacios participando en el Congreso de Oncología Quirúrgica"
+              width="960"
+              height="1280"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption><h3>Aprender para compartir mejor.</h3></figcaption>
+        </figure>
+
+        <blockquote class="talk-note talk-note--yellow" appReveal [revealDelay]="100">
+          <p>“Una explicación clara puede devolver tranquilidad en un momento difícil.”</p>
+          <cite>Hablar con honestidad</cite>
+        </blockquote>
+
+        <article class="talk-note talk-note--blue" appReveal [revealDelay]="130">
+          <p>La información correcta ayuda a tomar decisiones con menos miedo y más confianza.</p>
+          <strong>Conocimiento que acompaña</strong>
+        </article>
+
+        <figure class="talk-card talk-card--wide" appReveal [revealDelay]="160">
+          <picture>
+            <source type="image/avif" [srcset]="photos.podcast.avif" sizes="(min-width: 900px) 46vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.podcast.webp" sizes="(min-width: 900px) 46vw, 100vw" />
+            <img
+              [src]="photos.podcast.src"
+              alt="Fabio Palacios participando en una conversación educativa frente a micrófonos"
+              width="1600"
+              height="1200"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption><h3>Una buena conversación puede llegar mucho más lejos.</h3></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="familia" class="family" aria-labelledby="titulo-familia">
+    <div class="page-shell family__layout">
+      <div class="family__words" appReveal>
+        <p>Mi lugar seguro</p>
+        <h2 id="titulo-familia">El lugar al que siempre vuelvo.</h2>
+        <div class="family__copy">
+          <p>
+            Mi esposa y mi familia son parte de la persona que soy. Con ellos recuerdo que cuidar
+            también significa estar presente, celebrar y acompañarnos.
+          </p>
+          <p>
+            Esa vida compartida es la que me mantiene con los pies en la tierra y le da sentido a
+            todo lo demás.
+          </p>
+        </div>
+      </div>
+
+      <div class="family-collage" aria-label="Momentos de Fabio con su esposa y su familia">
+        <figure class="family-collage__main" appReveal [revealDelay]="60">
+          <picture>
+            <source type="image/avif" [srcset]="photos.couple.avif" sizes="(min-width: 900px) 48vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.couple.webp" sizes="(min-width: 900px) 48vw, 100vw" />
+            <img
+              [src]="photos.couple.src"
+              alt="Fabio Palacios y su esposa compartiendo una salida"
+              width="1200"
+              height="900"
+              loading="lazy"
+            />
+          </picture>
+        </figure>
+        <figure class="family-collage__memory" appReveal [revealDelay]="120">
+          <picture>
+            <source type="image/avif" [srcset]="photos.coupleMemory.avif" sizes="(min-width: 900px) 22vw, 48vw" />
+            <source type="image/webp" [srcset]="photos.coupleMemory.webp" sizes="(min-width: 900px) 22vw, 48vw" />
+            <img
+              [src]="photos.coupleMemory.src"
+              alt="Un recuerdo de Fabio Palacios junto a su esposa"
+              width="720"
+              height="1280"
+              loading="lazy"
+            />
+          </picture>
+        </figure>
+        <figure class="family-collage__family" appReveal [revealDelay]="180">
+          <picture>
+            <source type="image/avif" [srcset]="photos.family.avif" sizes="(min-width: 900px) 22vw, 48vw" />
+            <source type="image/webp" [srcset]="photos.family.webp" sizes="(min-width: 900px) 22vw, 48vw" />
+            <img
+              [src]="photos.family.src"
+              alt="Fabio Palacios celebrando un cumpleaños en familia"
+              width="800"
+              height="1067"
+              loading="lazy"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="medicina" class="medicine" aria-labelledby="titulo-medicina">
+    <div class="page-shell">
+      <header class="section-heading section-heading--narrow" appReveal>
+        <h2 id="titulo-medicina">También soy cirujano oncólogo.</h2>
+        <p>
+          Es una parte importante de mi historia, no la única. La ejerzo con formación, criterio y
+          el mismo trato cercano que guía todo lo demás.
+        </p>
+      </header>
+
+      <div class="medicine-grid">
+        <figure class="medicine-grid__feature" appReveal>
+          <picture>
+            <source type="image/avif" [srcset]="photos.innovation.avif" sizes="(min-width: 900px) 58vw, 100vw" />
+            <source type="image/webp" [srcset]="photos.innovation.webp" sizes="(min-width: 900px) 58vw, 100vw" />
+            <img
+              [src]="photos.innovation.src"
+              alt="Fabio Palacios durante una experiencia de formación en cirugía robótica"
+              width="800"
+              height="1067"
+              loading="lazy"
+            />
+          </picture>
+          <figcaption>
+            <strong>Cirugía oncológica general</strong>
+            <span>Énfasis en cavidad abdominal y técnicas mínimamente invasivas.</span>
+          </figcaption>
+        </figure>
+
+        <div class="medicine-grid__facts">
+          <div class="medicine-fact" appReveal [revealDelay]="70">
+            <span>Formación</span>
+            <h3>UPCH, INEN e IRCAD América Latina</h3>
+            <p>Una trayectoria construida entre estudio, práctica clínica y actualización constante.</p>
+          </div>
+          <figure class="medicine-grid__team" appReveal [revealDelay]="120">
+            <picture>
+              <source type="image/avif" [srcset]="photos.medicalTeam.avif" sizes="(min-width: 900px) 38vw, 100vw" />
+              <source type="image/webp" [srcset]="photos.medicalTeam.webp" sizes="(min-width: 900px) 38vw, 100vw" />
+              <img
+                [src]="photos.medicalTeam.src"
+                alt="Fabio Palacios junto a colegas médicos en Piura"
+                width="1600"
+                height="1200"
+                loading="lazy"
+              />
+            </picture>
+          </figure>
+          <div class="medicine-fact medicine-fact--action" appReveal [revealDelay]="170">
+            <span>Atención médica</span>
+            <h3>Consulta y cirugía oncológica en Piura</h3>
+            <a [href]="medicalLink" target="_blank" rel="noopener noreferrer">
+              Agendar consulta <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="contact" aria-labelledby="titulo-contacto">
+    <div class="page-shell contact__inner">
+      <div class="contact__title" appReveal>
+        <p>Conversemos</p>
+        <h2 id="titulo-contacto">Las historias importantes empiezan escuchándonos.</h2>
+      </div>
+
+      <div class="contact__paths">
+        <a
+          class="contact-path"
+          [href]="conversationLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          appReveal
+        >
+          <span>Quiero invitar a Fabio a una charla</span>
+          <strong>Coordinar una conversación</strong>
+          <i aria-hidden="true">→</i>
+        </a>
+        <a
+          class="contact-path"
+          [href]="medicalLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          appReveal
+          [revealDelay]="80"
+        >
+          <span>Necesito orientación oncológica</span>
+          <strong>Agendar consulta</strong>
+          <i aria-hidden="true">→</i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="page-shell footer__top">
+      <div>
+        <strong>Fabio Palacios</strong>
+        <p>Persona. Esposo. Conferencista. Cirujano oncólogo.</p>
+      </div>
+      <nav aria-label="Redes sociales">
+        <a href="https://www.facebook.com/DrFabioPalacios/" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://www.instagram.com/fabio_oncologo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@dr..fabio.palacio" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </nav>
+    </div>
+    <div class="page-shell footer__bottom">
+      <p>Este espacio reúne la historia, los valores y el trabajo de Fabio Palacios.</p>
+      <p>
+        La información médica es orientativa y no reemplaza una consulta, diagnóstico ni tratamiento.
+      </p>
+    </div>
+  </footer>
+</article>

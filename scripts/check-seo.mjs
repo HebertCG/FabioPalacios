@@ -68,9 +68,9 @@ function meta(attr, key) {
  * rompiera, el archivo volvería a ser un `<app-root>` vacío de 9 KB.
  */
 const CONTENT_PROBES = [
-  ['Cáncer digestivo', 'especialidades'],
-  ['viajar a Lima', 'preguntas frecuentes'],
-  ['Cayetano Heredia', 'formación'],
+  ['Ser cercano también es una forma de cuidar', 'propósito personal'],
+  ['Compartir lo que sé también es cuidar', 'charlas'],
+  ['También soy cirujano oncólogo', 'medicina'],
 ];
 
 for (const [needle, section] of CONTENT_PROBES) {
@@ -176,7 +176,7 @@ if (!jsonLdRaw) {
   try {
     const graph = JSON.parse(jsonLdRaw)['@graph'] ?? [];
     const types = new Set(graph.map((node) => node['@type']));
-    const REQUIRED_TYPES = ['Person', 'Physician', 'WebSite', 'MedicalWebPage'];
+    const REQUIRED_TYPES = ['Person', 'Physician', 'WebSite', 'ProfilePage'];
     const missingTypes = REQUIRED_TYPES.filter((type) => !types.has(type));
 
     if (missingTypes.length) {

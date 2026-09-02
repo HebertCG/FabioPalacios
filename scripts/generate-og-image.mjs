@@ -1,29 +1,6 @@
 /**
- * Compone la imagen social (Open Graph) de 1200x630.
- *
- * POR QUÉ ESTA IMAGEN IMPORTA MÁS QUE UN RESULTADO DE GOOGLE
- * ---------------------------------------------------------
- * El canal principal de este consultorio es WhatsApp: los pacientes se
- * pasan el enlace entre familiares. Esa miniatura se ve muchas más
- * veces que cualquier posición en un buscador, y es lo único que
- * acompaña al enlace cuando alguien lo reenvía.
- *
- * Antes se usaba el retrato cuadrado de 1772x1772. WhatsApp, Facebook y
- * LinkedIn recortan a 1.91:1, así que le cortaban la cabeza y los pies y
- * no quedaba ni el nombre ni la especialidad. Esta versión ya nace con
- * la proporción correcta: retrato a la derecha, identidad a la
- * izquierda, sobre el azul de marca.
- *
- * El retrato es la silueta recortada del héroe, no la fotografía
- * cuadrada: esa última es un flyer con el nombre y el teléfono ya
- * incrustados, y al recortarla a 1.91:1 partía su propio texto por la
- * mitad. La silueta, en cambio, se compone limpia sobre el fondo.
- *
- * El texto se dibuja como SVG con la familia de sistema, no con
- * Poppins: librsvg usa las tipografías instaladas en la máquina y el
- * resultado variaría según dónde corra el build. La imagen se genera
- * una vez y se versiona, así que se compone en local y se publica el
- * JPG resultante.
+ * Genera la tarjeta 1200x630 que acompaña al enlace en WhatsApp y redes.
+ * La fotografía de comunidad mantiene el relato humano de la portada.
  *
  * Uso: npm run media:og
  */
@@ -35,98 +12,52 @@ import sharp from 'sharp';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC_DIR = join(ROOT, 'public');
-
-/** Proporción que recortan WhatsApp, Facebook, LinkedIn y X. */
 const WIDTH = 1200;
 const HEIGHT = 630;
+const PHOTO = join(PUBLIC_DIR, 'fabio', 'fabio-comunidad-portada.jpg');
+const OUTPUT = join(PUBLIC_DIR, 'og-fabio-palacios-historia-valores.jpg');
 
-const PORTRAIT = join(PUBLIC_DIR, 'dr-fabio-palacios-cirujano-oncologo-piura.png');
-const LOGO = join(PUBLIC_DIR, 'logo.png');
-const OUTPUT = join(PUBLIC_DIR, 'og-dr-fabio-palacios-cirujano-oncologo-piura.jpg');
+if (!existsSync(PHOTO)) throw new Error(`No se encontró ${PHOTO}`);
 
-/** Franja del retrato, medida desde el borde derecho. */
-const PORTRAIT_WIDTH = 420;
+const photo = await sharp(PHOTO)
+  .resize({ width: WIDTH, height: HEIGHT, fit: 'cover', position: 'centre' })
+  .modulate({ saturation: 0.82, brightness: 0.82 })
+  .toBuffer();
 
-for (const file of [PORTRAIT, LOGO]) {
-  if (!existsSync(file)) throw new Error(`No se encontró ${file}`);
-}
-
-/** Azul profundo de la marca (--brand-950 y --brand-800 en los tokens). */
-const background = Buffer.from(
+const overlay = Buffer.from(
   `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-     <defs>
-       <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
-         <stop offset="0" stop-color="#072634"/>
-         <stop offset="0.55" stop-color="#0c3f56"/>
-         <stop offset="1" stop-color="#11536e"/>
-       </linearGradient>
-     </defs>
-     <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#fondo)"/>
-   </svg>`,
+    <defs>
+      <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#04131d" stop-opacity="0.98"/>
+        <stop offset="0.52" stop-color="#04131d" stop-opacity="0.78"/>
+        <stop offset="1" stop-color="#04131d" stop-opacity="0.18"/>
+      </linearGradient>
+    </defs>
+    <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#shade)"/>
+  </svg>`,
 );
-
-/**
- * La silueta se ancla al borde inferior, como si el doctor se apoyara
- * en el filo de la tarjeta. `contain` conserva su proporción: un
- * `cover` le habría recortado la cabeza.
- */
-const PORTRAIT_HEIGHT = 596;
-
-const portrait = await sharp(PORTRAIT)
-  .resize({
-    width: PORTRAIT_WIDTH,
-    height: PORTRAIT_HEIGHT,
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 0 },
-  })
-  .png()
-  .toBuffer();
-
-/**
- * El logo trae su propio fondo blanco opaco. Sobre el azul de marca eso
- * sería un recuadro blanco, así que se recorta en disco igual que los
- * iconos de navegador.
- */
-const LOGO_SIZE = 92;
-
-const logoMask = Buffer.from(
-  `<svg width="${LOGO_SIZE}" height="${LOGO_SIZE}" xmlns="http://www.w3.org/2000/svg">
-     <circle cx="${LOGO_SIZE / 2}" cy="${LOGO_SIZE / 2}" r="${LOGO_SIZE / 2}" fill="#fff"/>
-   </svg>`,
-);
-
-const logo = await sharp(LOGO)
-  .trim({ threshold: 5 })
-  .resize({ width: LOGO_SIZE, height: LOGO_SIZE, fit: 'contain', background: '#ffffff' })
-  .ensureAlpha()
-  .composite([{ input: logoMask, blend: 'dest-in' }])
-  .png()
-  .toBuffer();
 
 const SANS = 'Segoe UI, Helvetica, Arial, sans-serif';
-
 const text = Buffer.from(
   `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-     <text x="72" y="286" font-family="${SANS}" font-size="60" font-weight="700" fill="#ffffff">
-       Dr. Fabio Palacios
-     </text>
-     <text x="72" y="348" font-family="${SANS}" font-size="34" font-weight="600" fill="#76d1ec">
-       Cirujano Oncólogo General
-     </text>
-     <text x="72" y="414" font-family="${SANS}" font-size="26" fill="#c3d3db">
-       Cirugía oncológica de alta complejidad en Piura
-     </text>
-     <text x="72" y="454" font-family="${SANS}" font-size="26" fill="#c3d3db">
-       Formación en el INEN de Lima · CMP 066389
-     </text>
-     <rect x="72" y="510" width="132" height="4" rx="2" fill="#3fd9c0"/>
-   </svg>`,
+    <text x="72" y="112" font-family="${SANS}" font-size="25" font-weight="700" letter-spacing="3" fill="#91e2da">
+      FABIO PALACIOS
+    </text>
+    <text x="72" y="258" font-family="${SANS}" font-size="66" font-weight="700" fill="#ffffff">
+      <tspan x="72" dy="0">La vida se cuida</tspan>
+      <tspan x="72" dy="76">estando cerca.</tspan>
+    </text>
+    <text x="72" y="454" font-family="${SANS}" font-size="27" fill="#d7e4e7">
+      <tspan x="72" dy="0">Comunidad, familia y una vida guiada</tspan>
+      <tspan x="72" dy="39">por la cercanía y el servicio.</tspan>
+    </text>
+    <rect x="72" y="548" width="116" height="5" rx="2.5" fill="#46c8bb"/>
+  </svg>`,
 );
 
-await sharp(background)
+await sharp(photo)
   .composite([
-    { input: portrait, left: WIDTH - PORTRAIT_WIDTH - 40, top: HEIGHT - PORTRAIT_HEIGHT },
-    { input: logo, left: 72, top: 82 },
+    { input: overlay, left: 0, top: 0 },
     { input: text, left: 0, top: 0 },
   ])
   .jpeg({ quality: 88, mozjpeg: true })
