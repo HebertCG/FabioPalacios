@@ -70,7 +70,7 @@ function meta(attr, key) {
 const CONTENT_PROBES = [
   ['Ser cercano también es una forma de cuidar', 'propósito personal'],
   ['Compartir lo que sé también es cuidar', 'charlas'],
-  ['También soy cirujano oncólogo', 'medicina'],
+  ['Mi lado de doctor', 'medicina'],
 ];
 
 for (const [needle, section] of CONTENT_PROBES) {

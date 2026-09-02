@@ -41,7 +41,7 @@ export const DOCTOR = {
   lastName: 'Palacios',
   /** Nombre de presentación en navbar, footer y metadatos */
   displayName: 'Fabio Palacios',
-  navDescriptor: 'Médico, conferencista y piurano',
+  navDescriptor: 'Médico y conferencista',
   specialty: 'Cirujano Oncólogo General',
   subSpecialty: 'Cavidad Abdominal',
   cmp: '066389',
@@ -445,9 +445,11 @@ export const PROCESS: readonly ProcessStep[] = [
    ============================================================ */
 
 /**
- * TODO: los títulos y temas de abajo son provisionales. Reemplazar por
- * el tema real de cada video (se leen en la tarjeta y son el texto
- * alternativo para accesibilidad y SEO).
+ * TODO: los títulos y temas de abajo son PROVISIONALES — nadie ha visto
+ * aún el contenido de los MP4. Reemplazar por el tema real de cada video
+ * antes de publicar: se pintan en la tarjeta y son el texto alternativo
+ * para accesibilidad y SEO. Las duraciones sí son reales: salen de la
+ * cabecera de cada archivo.
  */
 export const REELS: readonly Reel[] = [
   {
@@ -455,36 +457,49 @@ export const REELS: readonly Reel[] = [
     src: 'video-1.mp4',
     title: 'Señales de alerta que no debe ignorar',
     topic: 'Prevención',
+    durationSeconds: 47,
   },
   {
     id: 'reel-2',
     src: 'video-2.mp4',
     title: '¿Qué es una cirugía oncológica?',
     topic: 'Cirugía',
+    durationSeconds: 112,
   },
   {
     id: 'reel-3',
     src: 'video-3.mp4',
     title: 'Cáncer de colon: lo que debe saber',
     topic: 'Digestivo',
+    durationSeconds: 91,
   },
   {
     id: 'reel-4',
     src: 'video-4.mp4',
     title: 'Preguntas frecuentes en consulta',
     topic: 'Consulta',
+    durationSeconds: 90,
   },
   {
     id: 'reel-5',
     src: 'video-5.mp4',
     title: 'Mitos sobre el cáncer',
     topic: 'Educación',
+    durationSeconds: 82,
   },
   {
     id: 'reel-6',
     src: 'video-6.mp4',
     title: 'Después de la operación',
     topic: 'Recuperación',
+    durationSeconds: 74,
+  },
+  {
+    id: 'reel-7',
+    src: 'video-7.mp4',
+    title: 'Conversación sobre prevención',
+    topic: 'Comunidad',
+    durationSeconds: 79,
   },
 ];
 
@@ -597,8 +612,9 @@ export const NAV_LINKS: readonly NavLink[] = [
   { id: 'inicio', label: 'Inicio', href: '#inicio' },
   { id: 'proposito', label: 'Propósito', href: '#proposito' },
   { id: 'charlas', label: 'Charlas', href: '#charlas' },
-  { id: 'familia', label: 'Mi familia', href: '#familia' },
   { id: 'medicina', label: 'Medicina', href: '#medicina' },
+  { id: 'familia', label: 'Mi familia', href: '#familia' },
+  { id: 'videos', label: 'Videos', href: '#videos' },
   { id: 'contacto', label: 'Contacto', href: '#contacto' },
 ];
 

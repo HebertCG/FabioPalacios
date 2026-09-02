@@ -135,6 +135,8 @@ export interface Reel {
   readonly description?: string;
   /** Duración en formato ISO 8601, por ejemplo 'PT58S' */
   readonly duration?: string;
+  /** Duración en segundos, leída de la cabecera del MP4. Se pinta en la tarjeta. */
+  readonly durationSeconds?: number;
 }
 
 /** Pregunta frecuente. */

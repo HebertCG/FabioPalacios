@@ -9,9 +9,10 @@ import { Story } from './sections/story/story';
  * anclajes que usan el navbar, el pie y el resaltado de sección activa,
  * y viven en `NAV_LINKS` dentro de `core/data/doctor.data.ts`.
  *
- * El recorrido presenta primero a Fabio como persona: su propósito,
- * sus charlas y su familia. La medicina aparece después como una parte
- * importante de su historia, sin convertirla en toda su identidad.
+ * El recorrido presenta primero a Fabio como persona: su propósito y
+ * sus charlas. La medicina entra después, como una parte importante de
+ * su historia y no como toda su identidad, y la familia cierra el arco
+ * devolviendo el relato a lo personal.
  */
 @Component({
   selector: 'app-root',

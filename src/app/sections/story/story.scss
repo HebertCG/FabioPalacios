@@ -1,8 +1,7 @@
 @use '../../../styles/mixins' as m;
 
 :host {
-  --story-bg: #fbf6e9;
-  --story-bg-soft: #d8f1f2;
+  --story-bg: #ffffff;
   --story-panel: #f2cfe0;
   --story-text: #172231;
   --story-muted: #56616e;
@@ -13,7 +12,11 @@
   --story-blue: #bfeef4;
   --story-pink: #f3c6da;
   --story-coral: #ff9b7a;
+  --story-green: #0f7a52;
+  --story-green-deep: #0b6240;
   --story-radius: 14px;
+  --tile-r: 20px;
+  --tile-sweep: clamp(2.5rem, 4.6vw, 6rem);
 
   display: block;
   color: var(--story-text);
@@ -23,10 +26,7 @@
 .story-page {
   min-height: 100dvh;
   overflow: clip;
-  background:
-    radial-gradient(circle at 8% 43%, rgba(255, 228, 93, 0.24), transparent 26rem),
-    radial-gradient(circle at 92% 72%, rgba(191, 238, 244, 0.55), transparent 30rem),
-    var(--story-bg);
+  background: var(--story-bg);
 }
 
 .page-shell {
@@ -48,8 +48,7 @@ h3 {
   display: grid;
   align-items: end;
   min-height: 100svh;
-  padding: calc(var(--nav-h) + 2.5rem) clamp(1.25rem, 4vw, 4.5rem)
-    clamp(3rem, 8vh, 6.5rem);
+  padding: calc(var(--nav-h) + 2.5rem) clamp(1.25rem, 4vw, 4.5rem) clamp(3rem, 8vh, 6.5rem);
   overflow: hidden;
   background: #0a1b26;
 
@@ -100,8 +99,8 @@ h3 {
 
   h1 {
     color: #f3f5f4;
-    max-width: 13ch;
-    font-size: clamp(3.2rem, 6.5vw, 6.7rem);
+    max-width: 18ch;
+    font-size: clamp(2.7rem, 5.4vw, 5.8rem);
     line-height: 0.96;
     letter-spacing: -0.055em;
     text-wrap: balance;
@@ -178,696 +177,1569 @@ h3 {
   }
 }
 
-/* Purpose */
+/* Purpose — mismo lenguaje editorial que "Charlas":
+   sin panel de color de fondo, mismo ancho de shell y piezas con dos
+   esquinas "sweep" en diagonal para que encajen entre sí. */
 .mission {
-  padding-block: clamp(6rem, 12vw, 11rem);
+  padding-block: clamp(4.5rem, 8vw, 7rem);
   border-bottom: 1px solid var(--story-line);
 
   &__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(21rem, 0.9fr);
-    gap: clamp(1.25rem, 2.4vw, 2.5rem);
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    /* Una sola fila: el texto define el alto, el mosaico lo copia.
+       El suelo evita que el bloque se aplaste si el copy se acorta. */
+    grid-template-rows: minmax(clamp(24rem, 50svh, 32rem), auto);
+    gap: clamp(1.75rem, 4vw, 4rem);
     align-items: stretch;
   }
 
   &__body {
     display: flex;
     flex-direction: column;
-    min-height: clamp(38rem, 52vw, 46rem);
-    padding: clamp(2rem, 4vw, 4.5rem);
-    border-radius: var(--story-radius);
-    background: var(--story-yellow);
+    padding-block: clamp(0.5rem, 1.5vw, 1.5rem);
   }
 
   &__eyebrow {
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.15rem;
     font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    color: #106a78;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--story-muted);
   }
 
   h2 {
-    max-width: 11ch;
-    font-size: clamp(3rem, 4.8vw, 5rem);
-    line-height: 0.98;
-    letter-spacing: -0.055em;
+    max-width: 13ch;
+    font-size: clamp(2.6rem, 5vw, 4.9rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
   }
 
   &__copy {
     display: grid;
-    gap: 1.25rem;
-    max-width: 39rem;
-    margin-top: clamp(2rem, 4vw, 3.25rem);
-    padding-top: 1.75rem;
+    gap: 1.15rem;
+    max-width: 42ch;
+    margin-top: clamp(1.5rem, 2.6vw, 2.25rem);
+    padding-top: 1.5rem;
     border-top: 1px solid var(--story-line);
 
     p {
-      font-size: clamp(1.04rem, 1.4vw, 1.2rem);
-      line-height: 1.68;
+      font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+      line-height: 1.62;
       color: var(--story-muted);
     }
   }
 
-  &__values {
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-top: auto;
-    padding-top: 2rem;
+    padding-top: clamp(1.75rem, 3vw, 2.5rem);
+  }
 
-    div {
-      display: grid;
-      grid-template-columns: minmax(5.5rem, 0.45fr) minmax(0, 1fr);
-      gap: 1rem;
-      padding-block: 1.15rem;
-      border-top: 1px solid var(--story-line);
+  &__contact {
+    @include m.focus-ring(#172231);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 50px;
+    padding: 0.85rem 1.45rem;
+    border: 1px solid var(--story-text);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #ffffff;
+    background: var(--story-text);
+    transition:
+      transform var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out),
+      color var(--dur) var(--ease-out);
+
+    span {
+      transition: transform var(--dur) var(--ease-out);
     }
 
-    div:last-child {
-      border-bottom: 1px solid var(--story-line);
+    &:hover {
+      transform: translateY(-3px);
+
+      span {
+        transform: translateX(4px);
+      }
     }
 
-    dt {
-      font-family: var(--font-display);
-      font-weight: 700;
+    &:active {
+      transform: translateY(1px) scale(0.99);
+    }
+
+    &--ghost {
       color: var(--story-text);
-    }
+      background: transparent;
 
-    dd {
-      font-size: 0.92rem;
-      line-height: 1.55;
-      color: var(--story-muted);
+      &:hover {
+        color: #ffffff;
+        background: var(--story-text);
+      }
     }
   }
 }
 
-.values-carousel {
-  position: relative;
-  min-height: clamp(38rem, 52vw, 46rem);
-  overflow: hidden;
-  border-radius: var(--story-radius);
-  background: var(--story-panel);
+.purpose-mosaic {
+  /* Recorte tipo rompecabezas: cada pieza lleva UNA esquina dramática, y
+     esa esquina siempre apunta al centro del mosaico. Las cuatro juntas
+     dejan una rosca de aire en el medio en vez de una cruz recta.
+     Gramática distinta a Charlas, que usa hojas de dos esquinas opuestas. */
+  --cut: clamp(1.75rem, 3.4vw, 3.5rem);
+  --cut-lg: clamp(3.5rem, 7vw, 7.5rem);
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(0deg, rgba(3, 15, 23, 0.86), transparent 38%);
-    pointer-events: none;
-  }
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1vw, 1rem);
+  block-size: 100%;
 
-  &__control {
-    @include m.focus-ring(#172231);
-    position: absolute;
-    inset: 1rem 1rem auto auto;
-    z-index: 4;
-    min-height: 40px;
-    padding: 0.65rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.62);
-    border-radius: 999px;
-    font-size: 0.76rem;
-    font-weight: 800;
-    color: #172231;
-    background: rgba(255, 253, 247, 0.84);
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-  }
-
-  &.is-paused &__slide {
-    animation-play-state: paused;
-  }
-
-  &__slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    animation: values-carousel-fade 20s ease-in-out infinite;
-
-    &:nth-child(2) {
-      animation-delay: 5s;
-    }
-
-    &:nth-child(3) {
-      animation-delay: 10s;
-    }
-
-    &:nth-child(4) {
-      animation-delay: 15s;
-    }
+  &__item {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: #eceff1;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      filter: saturate(0.88) contrast(1.03);
+      filter: saturate(0.96) contrast(1.02);
     }
 
-    &:first-child img {
-      object-position: 50% 28%;
+    /* Vertical alta · barre hacia dentro por abajo-derecha */
+    &--doctor-one {
+      grid-area: 1 / 1 / 9 / 7;
+      border-radius: var(--cut) var(--cut) var(--cut-lg) var(--cut);
+
+      img {
+        object-position: 50% 20%;
+      }
     }
 
-    &:nth-child(2) img {
-      object-position: center 38%;
+    /* Apaisada corta · barre hacia dentro por abajo-izquierda */
+    &--person-two {
+      grid-area: 1 / 7 / 6 / 13;
+      border-radius: var(--cut) var(--cut) var(--cut) var(--cut-lg);
+
+      img {
+        object-position: 50% 38%;
+      }
     }
 
-    &:nth-child(3) img {
-      object-position: center 36%;
+    /* Baja y ancha · canto izquierdo en medio punto, como la pieza rosa
+       del referente; barre hacia dentro por arriba-derecha */
+    &--doctor-two {
+      grid-area: 9 / 1 / 13 / 7;
+      border-radius: 999px var(--cut-lg) var(--cut) 999px;
+
+      img {
+        object-position: 50% 30%;
+      }
     }
 
-    &:nth-child(4) img {
-      object-position: center 28%;
-    }
+    /* Vertical alta · barre hacia dentro por arriba-izquierda */
+    &--person-one {
+      grid-area: 6 / 7 / 13 / 13;
+      border-radius: var(--cut-lg) var(--cut) var(--cut) var(--cut);
 
-    figcaption {
-      position: absolute;
-      inset: auto 1.5rem 1.5rem;
-      z-index: 3;
-      max-width: 24ch;
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-      font-weight: 700;
-      line-height: 1.25;
-      color: #f4f7f6;
+      img {
+        object-position: 50% 26%;
+      }
     }
   }
 }
 
-@keyframes values-carousel-fade {
-  0%,
-  20% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  27%,
-  94% {
-    opacity: 0;
-    transform: scale(1.035);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Shared section heading */
-.section-heading {
-  display: grid;
-  gap: 1.35rem;
-  max-width: 59rem;
-  margin-bottom: clamp(3rem, 7vw, 6.5rem);
-
-  h2 {
-    max-width: 15ch;
-    font-size: clamp(2.85rem, 5.6vw, 5.75rem);
-    line-height: 0.98;
-    letter-spacing: -0.05em;
-  }
-
-  p {
-    max-width: 58ch;
-    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-    line-height: 1.65;
-    color: var(--story-muted);
-  }
-
-  &--narrow {
-    max-width: 52rem;
-  }
-}
-
-/* Talks */
+/* Talks — mosaico editorial
+   Piezas de distinto peso (foto / texto / cita / invitación) que encajan
+   entre sí: cada tile lleva dos esquinas "sweep" en diagonal, de modo que
+   los encuentros entre vecinos generan muescas en lugar de rectángulos. */
 .talks {
-  padding-block: clamp(6rem, 12vw, 10rem);
+  padding-block: clamp(4.5rem, 8vw, 7rem);
   border-bottom: 1px solid var(--story-line);
 }
 
 .talks-heading {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.5fr);
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1.55fr) minmax(15rem, 0.45fr);
+  gap: 1.75rem;
   align-items: end;
-  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
-  padding-block: 1.5rem;
-  border-block: 3px solid var(--story-text);
+  margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
+  padding-bottom: 1.15rem;
+  border-bottom: 3px solid var(--story-text);
 
   h2 {
     max-width: 15ch;
-    font-size: clamp(3rem, 6vw, 6.2rem);
-    line-height: 0.9;
-    letter-spacing: -0.065em;
+    font-size: clamp(2.6rem, 5vw, 4.9rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
   }
 
   p {
-    max-width: 34ch;
+    max-width: 32ch;
+    font-size: clamp(0.92rem, 1vw, 1.02rem);
     font-weight: 600;
-    line-height: 1.55;
+    line-height: 1.5;
     color: var(--story-muted);
   }
 }
 
-.talks-grid {
+.talks-mosaic {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(16rem, 1fr));
-  gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1vw, 1rem);
+  block-size: clamp(30rem, 62svh, 41rem);
 }
 
-.talk-card {
+.tile {
   position: relative;
   min-width: 0;
-  min-height: 100%;
+  min-height: 0;
   overflow: hidden;
-  border-radius: var(--story-radius);
-  background: var(--story-panel);
+  transition: transform var(--dur) var(--ease-out);
 
-  &--feature {
-    grid-column: 1 / span 6;
-    grid-row: 1 / -1;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.tile__eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* A · pieza guía: color plano + foto + acción, no una foto a sangre */
+.tile--lead {
+  grid-area: 1 / 1 / 13 / 7;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(1rem, 1.8vw, 1.6rem);
+  padding: clamp(1.35rem, 2.2vw, 2.1rem);
+  border-radius: var(--tile-r) var(--tile-sweep) var(--tile-r) var(--tile-sweep);
+  background: var(--story-pink);
+
+  .tile__eyebrow {
+    color: rgba(23, 34, 49, 0.62);
   }
 
-  &--portrait {
-    grid-column: 7 / span 3;
-    grid-row: 1;
+  h3 {
+    max-width: 15ch;
+    margin-top: 0.65rem;
+    font-size: clamp(1.75rem, 3.2vw, 3.3rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+}
+
+.tile__photo {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--tile-r) var(--tile-r) calc(var(--tile-sweep) * 0.72) var(--tile-r);
+
+  img {
+    object-position: center 30%;
+  }
+}
+
+.tile__cta {
+  @include m.focus-ring(#172231);
+  position: absolute;
+  inset: auto clamp(1.35rem, 2.2vw, 2.1rem) clamp(1.35rem, 2.2vw, 2.1rem) auto;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 1.15rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--story-text);
+  transition:
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+
+  span {
+    transition: transform var(--dur) var(--ease-out);
   }
 
-  &--wide {
-    grid-column: 7 / span 4;
-    grid-row: 2;
+  &:hover {
+    background: var(--story-accent-deep);
+
+    span {
+      transform: translate(2px, -2px);
+    }
   }
+}
+
+/* B · columna estrecha: retrato en arco + recorte en hoja */
+.tile--arch {
+  grid-area: 1 / 7 / 9 / 10;
+  border-radius: 999px 999px var(--tile-r) var(--tile-sweep);
+  background: #eceff1;
+
+  img {
+    object-position: center 18%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(16, 24, 33, 0.72), transparent 46%);
+  }
+
+  figcaption {
+    position: absolute;
+    inset: auto 1.1rem 1.2rem;
+    z-index: 2;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+  }
+}
+
+.tile--chip {
+  grid-area: 9 / 7 / 13 / 10;
+  border-radius: var(--tile-sweep) var(--tile-r) var(--tile-sweep) var(--tile-r);
+  background: #eceff1;
+
+  img {
+    object-position: center 26%;
+  }
+}
+
+/* C · columna de contenido: nota clara arriba, foto ancha abajo */
+.tile--note {
+  grid-area: 1 / 10 / 7 / 14;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.15rem, 1.8vw, 1.75rem);
+  border: 1px solid var(--story-line);
+  border-radius: var(--tile-r) var(--tile-sweep) var(--tile-r) var(--tile-sweep);
+  background: #ffffff;
+
+  .tile__eyebrow {
+    color: var(--story-accent-deep);
+  }
+
+  .tile__body {
+    font-size: clamp(0.98rem, 1.15vw, 1.14rem);
+    line-height: 1.45;
+    letter-spacing: -0.015em;
+  }
+
+  .tile__meta {
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--story-line);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--story-muted);
+  }
+}
+
+.tile--reel {
+  grid-area: 7 / 10 / 13 / 14;
+  border-radius: var(--tile-sweep) var(--tile-r) var(--tile-sweep) var(--tile-r);
+  background: #eceff1;
+
+  img {
+    object-position: center 42%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(16, 24, 33, 0.74), transparent 52%);
+  }
+
+  figcaption {
+    position: absolute;
+    inset: auto clamp(1.1rem, 1.6vw, 1.6rem) clamp(1.1rem, 1.6vw, 1.6rem);
+    z-index: 2;
+    max-width: 18ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.5vw, 1.55rem);
+    font-weight: 750;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+  }
+}
+
+/* D · columna de voz: cita amarilla + invitación */
+.tile--quote {
+  grid-area: 1 / 14 / 8 / 17;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.15rem, 1.8vw, 1.75rem);
+  border-radius: var(--tile-sweep) var(--tile-r) var(--tile-sweep) var(--tile-r);
+  background: var(--story-yellow);
+
+  p {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  cite {
+    margin-top: 1.25rem;
+    font-size: 0.76rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+}
+
+.tile--invite {
+  @include m.focus-ring(#ffffff);
+  grid-area: 8 / 14 / 13 / 17;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(1.15rem, 1.8vw, 1.75rem);
+  border-radius: var(--tile-sweep) var(--tile-r) var(--tile-sweep) var(--tile-r);
+  color: #ffffff;
+  background: var(--story-text);
+
+  .tile__eyebrow {
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  strong {
+    max-width: 14ch;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.25vw, 1.28rem);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+  }
+
+  .tile__arrow {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-top: auto;
+    border-radius: 999px;
+    font-style: normal;
+    color: var(--story-text);
+    background: #ffffff;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  &:hover {
+    background: #0d1927;
+
+    .tile__arrow {
+      transform: translateX(4px);
+    }
+  }
+}
+
+/* Family — constelación
+   Aquí el relato no es un mosaico sino un racimo: un nodo grande del que
+   cuelgan los demás por curvas finas. Es el contrapunto orgánico a los tres
+   bloques rectangulares anteriores, y por eso cierra el recorrido. */
+.family {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  border-bottom: 1px solid var(--story-line);
+  background: var(--story-bg);
+
+  &__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(1.75rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  &__words {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: clamp(0.5rem, 1.5vw, 1.5rem);
+  }
+
+  &__eyebrow {
+    margin-bottom: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--story-muted);
+  }
+
+  h2 {
+    max-width: 13ch;
+    font-size: clamp(2.6rem, 5vw, 4.9rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+  }
+
+  &__copy {
+    display: grid;
+    gap: 1.15rem;
+    max-width: 42ch;
+    margin-top: clamp(1.5rem, 2.6vw, 2.25rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--story-line);
+
+    p {
+      font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+      line-height: 1.62;
+      color: var(--story-muted);
+    }
+  }
+}
+
+.orbit {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  min-width: 0;
+  /* Proporción fija: los % de posición y de tamaño de cada nodo se calculan
+     sobre el ancho, así que si el alto flotara con el texto los círculos se
+     solaparían en unos tamaños de pantalla y no en otros. */
+  aspect-ratio: 1.12;
+
+  &__links {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    path {
+      fill: none;
+      stroke: rgba(23, 34, 49, 0.28);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-dasharray: 5 7;
+    }
+  }
+
+  /* Manchas de pintura: forma orgánica por border-radius elíptico, borde
+     difuminado y mezcla `multiply` para que se tiñan entre ellas donde se
+     cruzan, como acuarela sobre papel. */
+  &__blob {
+    position: absolute;
+    z-index: 0;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    filter: blur(clamp(14px, 2.2vw, 30px));
+    mix-blend-mode: multiply;
+    opacity: 0.72;
+
+    &--sun {
+      left: 30%;
+      top: 27%;
+      width: 62%;
+      border-radius: 58% 42% 47% 53% / 52% 45% 55% 48%;
+      background: var(--story-yellow);
+    }
+
+    &--rose {
+      left: 83%;
+      top: 36%;
+      width: 46%;
+      border-radius: 44% 56% 62% 38% / 47% 58% 42% 53%;
+      background: var(--story-pink);
+    }
+
+    &--mint {
+      left: 24%;
+      top: 84%;
+      width: 48%;
+      border-radius: 62% 38% 35% 65% / 58% 52% 48% 42%;
+      background: var(--accent);
+    }
+
+    &--coral {
+      left: 63%;
+      top: 76%;
+      width: 32%;
+      border-radius: 40% 60% 55% 45% / 62% 38% 62% 38%;
+      background: var(--story-coral);
+    }
+  }
+
+  /* Cada nodo se ancla por su centro, así el % coincide con la coordenada
+     del SVG aunque la caja no sea cuadrada. */
+  &__node {
+    position: absolute;
+    z-index: 2;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #eceff1;
+    transform: translate(-50%, -50%);
+    /* El aro blanco despega la foto de la mancha que tiene detrás */
+    box-shadow:
+      0 0 0 clamp(5px, 0.7vw, 9px) #ffffff,
+      0 22px 46px rgba(12, 20, 28, 0.18);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &--lead {
+      left: 37%;
+      top: 36%;
+      width: 42%;
+
+      img {
+        object-position: 50% 34%;
+      }
+    }
+
+    &--party {
+      left: 75%;
+      top: 19%;
+      width: 30%;
+
+      img {
+        object-position: 50% 40%;
+      }
+    }
+
+    &--memory {
+      left: 78%;
+      top: 62%;
+      width: 28%;
+
+      img {
+        object-position: 50% 30%;
+      }
+    }
+
+    &--child {
+      left: 32%;
+      top: 79%;
+      width: 31%;
+
+      img {
+        object-position: 55% 30%;
+      }
+    }
+
+    /* El centrado vive en el mismo `transform` que anima appReveal, así que
+       se declara en los dos estados: si no, el nodo saltaría al revelarse. */
+    &.reveal {
+      transform: translate(-50%, -50%) scale(0.86);
+    }
+
+    &.reveal.is-visible {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  &__dot,
+  &__spark {
+    position: absolute;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+  }
+
+  &__dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--story-text);
+    box-shadow: 0 0 0 6px #ffffff;
+
+    &--one {
+      left: 58%;
+      top: 26%;
+    }
+
+    &--two {
+      left: 29%;
+      top: 58%;
+    }
+  }
+
+  &__spark {
+    left: 64%;
+    top: 92%;
+    font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+    line-height: 1;
+    color: var(--story-accent-deep);
+  }
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  50% {
+    translate: 2% -3%;
+    rotate: 6deg;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .orbit__blob {
+    animation: blob-drift 18s ease-in-out infinite;
+
+    &--rose {
+      animation-duration: 23s;
+      animation-delay: -6s;
+    }
+
+    &--mint {
+      animation-duration: 20s;
+      animation-delay: -11s;
+    }
+
+    &--coral {
+      animation-duration: 26s;
+      animation-delay: -3s;
+    }
+  }
+}
+
+/* Medicine — tercera gramática de recorte
+   Charlas usa hojas (dos esquinas opuestas). Propósito, una sola esquina
+   apuntando al centro. Aquí el corte trabaja por CANTOS: las dos esquinas
+   de un mismo lado se barren juntas, y en las dos fotos ese barrido llega
+   hasta el medio punto. Los tres bloques encajan sin confundirse. */
+.medicine {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  border-bottom: 1px solid var(--story-line);
+}
+
+.med-mosaic {
+  --mcut: clamp(1.25rem, 2.2vw, 2.25rem);
+  --mcut-lg: clamp(3rem, 6vw, 6.5rem);
+
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1vw, 1rem);
+  block-size: clamp(33rem, 68svh, 45rem);
+}
+
+.med {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  figcaption {
+    position: absolute;
+    inset: auto 1.1rem 1.1rem;
+    z-index: 2;
+    font-family: var(--font-display);
+    font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+}
+
+.med__eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Fotos: canto barrido hasta el medio punto */
+.med--portrait,
+.med--technique,
+.med--explain {
+  background: #eceff1;
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(0deg, rgba(20, 27, 35, 0.78), transparent 58%);
-    pointer-events: none;
+    background: linear-gradient(0deg, rgba(12, 20, 28, 0.76), transparent 44%);
   }
+}
+
+.med--portrait {
+  grid-area: 1 / 1 / 9 / 7;
+  border-radius: 999px 999px var(--mcut) var(--mcut);
 
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.9s var(--ease-out);
+    /* El rostro queda dentro del medio punto, sin que el arco lo recorte */
+    object-position: 50% 18%;
+  }
+}
+
+.med--explain {
+  grid-area: 9 / 1 / 13 / 7;
+  border-radius: var(--mcut) var(--mcut) 999px 999px;
+
+  img {
+    object-position: 50% 30%;
   }
 
-  &--feature img {
-    object-position: center 32%;
-  }
-
-  &--portrait img {
-    object-position: center 22%;
-  }
-
-  &--wide img {
-    object-position: center 42%;
-  }
-
-  &:hover img {
-    transform: scale(1.035);
+  /* El canto inferior es un medio punto: un pie anclado abajo se lo come
+     la curva. Aquí el texto va centrado y el velo cubre la pieza entera. */
+  &::after {
+    background: linear-gradient(0deg, rgba(12, 20, 28, 0.6), rgba(12, 20, 28, 0.3));
   }
 
   figcaption {
-    position: absolute;
-    inset: auto clamp(1.25rem, 2.6vw, 2.5rem) clamp(1.25rem, 2.6vw, 2.5rem);
-    z-index: 2;
-    color: #fffdf7;
-
-    h3 {
-      max-width: 16ch;
-      font-size: clamp(1.45rem, 2.6vw, 2.8rem);
-      line-height: 1;
-      letter-spacing: -0.045em;
-      color: inherit;
-    }
-
-    p {
-      max-width: 45ch;
-      margin-top: 0.7rem;
-      font-size: 0.98rem;
-      line-height: 1.5;
-      color: rgba(255, 253, 247, 0.82);
-    }
+    inset: 0;
+    display: grid;
+    /* Abajo y centrado, pero por dentro de la curva: a esa altura el medio
+       punto deja ~60% del ancho, de ahí el margen lateral generoso. */
+    place-items: end center;
+    padding: 0 22% 19%;
+    text-align: center;
+    text-wrap: balance;
   }
 }
 
-.talk-note {
+.med--technique {
+  grid-area: 1 / 12 / 7 / 17;
+  /* canto derecho */
+  border-radius: var(--mcut) var(--mcut-lg) var(--mcut-lg) var(--mcut);
+
+  img {
+    /* El campo quirúrgico queda abajo: el encuadre se sube al gesto */
+    object-position: 50% 16%;
+  }
+}
+
+/* Identidad · canto izquierdo */
+.med--id {
+  grid-area: 1 / 7 / 6 / 12;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 100%;
-  padding: clamp(1.5rem, 3vw, 2.75rem);
-  border-radius: var(--story-radius);
+  padding: clamp(1.25rem, 2vw, 1.9rem);
+  border-radius: var(--mcut-lg) var(--mcut) var(--mcut) var(--mcut-lg);
+  color: #ffffff;
+  background: var(--story-text);
 
-  p {
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.3vw, 2.45rem);
-    font-weight: 750;
-    line-height: 1.08;
-    letter-spacing: -0.04em;
-  }
-
-  cite,
-  strong {
-    margin-top: 2rem;
-    font-size: 0.82rem;
-    font-style: normal;
-    font-weight: 800;
-  }
-
-  &--yellow {
-    grid-column: 10 / -1;
-    grid-row: 1;
-    background: var(--story-yellow);
-  }
-
-  &--blue {
-    grid-column: 11 / -1;
-    grid-row: 2;
-    background: var(--story-blue);
-  }
-}
-
-/* Family */
-.family {
-  padding-block: clamp(6rem, 12vw, 11rem);
-  border-bottom: 1px solid var(--story-line);
-  background: var(--story-blue);
-
-  &__layout {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.6fr);
-    gap: clamp(3rem, 8vw, 8rem);
-    align-items: center;
-  }
-
-  &__words {
-    align-self: start;
-    padding-top: clamp(0rem, 6vw, 5rem);
-
-    > p {
-      margin-bottom: 1.2rem;
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--story-accent);
-    }
-
-    h2 {
-      max-width: 10ch;
-      font-size: clamp(2.8rem, 4.9vw, 5rem);
-      line-height: 1;
-      letter-spacing: -0.05em;
-    }
-  }
-
-  &__copy {
-    display: grid;
-    gap: 1rem;
-    margin-top: 2rem;
-
-    p {
-      max-width: 48ch;
-      line-height: 1.68;
-      color: var(--story-muted);
-    }
-  }
-}
-
-.family-collage {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: minmax(12rem, 1fr) minmax(12rem, 0.9fr);
-  gap: clamp(0.8rem, 1.7vw, 1.5rem);
-
-  figure {
-    overflow: hidden;
-    border-radius: var(--story-radius);
-    background: var(--story-panel);
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.9s var(--ease-out);
-    }
-
-    &:hover img {
-      transform: scale(1.025);
-    }
-  }
-
-  &__main {
-    grid-row: 1 / -1;
-    min-height: 43rem;
-
-    img {
-      object-position: 47% center;
-    }
-  }
-
-  &__memory img {
-    object-position: center 38%;
-  }
-
-  &__family img {
-    object-position: center 44%;
-  }
-}
-
-/* Medicine */
-.medicine {
-  padding-block: clamp(6rem, 12vw, 10rem);
-  border-bottom: 1px solid var(--story-line);
-  background: #fffaf0;
-}
-
-.medicine-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
-  gap: clamp(1.25rem, 3vw, 3rem);
-  align-items: stretch;
-
-  &__feature {
-    position: relative;
-    min-height: 48rem;
-    overflow: hidden;
-    border-radius: var(--story-radius);
-    background: var(--story-panel);
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: auto 0 0;
-      height: 46%;
-      background: linear-gradient(transparent, rgba(3, 16, 24, 0.9));
-      pointer-events: none;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 40%;
-      transition: transform 1s var(--ease-out);
-    }
-
-    &:hover img {
-      transform: scale(1.025);
-    }
-
-    figcaption {
-      position: absolute;
-      inset: auto clamp(1.4rem, 4vw, 3.5rem) clamp(1.4rem, 4vw, 3.5rem);
-      z-index: 1;
-      display: grid;
-      gap: 0.55rem;
-      color: #fffdf7;
-
-      strong {
-        font-family: var(--font-display);
-        font-size: clamp(1.6rem, 3vw, 2.7rem);
-        line-height: 1.05;
-      }
-
-      span {
-        max-width: 38ch;
-        color: rgba(243, 245, 244, 0.76);
-      }
-    }
-  }
-
-  &__facts {
-    display: grid;
-    grid-template-rows: auto minmax(18rem, 1fr) auto;
-    gap: 1.25rem;
-  }
-
-  &__team {
-    min-height: 20rem;
-    overflow: hidden;
-    border-radius: var(--story-radius);
-    background: var(--story-panel);
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 48%;
-      transition: transform 0.9s var(--ease-out);
-    }
-
-    &:hover img {
-      transform: scale(1.025);
-    }
-  }
-}
-
-.medicine-fact {
-  display: grid;
-  gap: 0.75rem;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  border: 1px solid var(--story-line);
-  border-radius: var(--story-radius);
-  background: var(--story-pink);
-
-  > span {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--story-accent);
+  .med__eyebrow {
+    color: rgba(255, 255, 255, 0.6);
   }
 
   h3 {
-    max-width: 20ch;
-    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    margin-top: 0.7rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.55rem);
+    line-height: 1.14;
+    letter-spacing: -0.035em;
+    color: inherit;
+  }
+
+  .med__reg {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.72);
+  }
+}
+
+/* Áreas · pieza ancla, esquinas parejas */
+.med--areas {
+  grid-area: 6 / 7 / 13 / 12;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2vw, 1.9rem);
+  border: 1px solid var(--story-line);
+  border-radius: var(--mcut);
+  background: #ffffff;
+
+  .med__eyebrow {
+    color: var(--story-accent-deep);
+  }
+
+  ul {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+  }
+
+  li {
+    padding-block: 0.4rem;
+
+    + li {
+      border-top: 1px solid var(--story-line);
+    }
+  }
+
+  strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 0.98vw, 0.98rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  span {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--story-muted);
+  }
+}
+
+/* Formación · canto inferior */
+.med--training {
+  grid-area: 7 / 12 / 11 / 17;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.15rem, 1.8vw, 1.7rem);
+  border-radius: var(--mcut) var(--mcut) var(--mcut-lg) var(--mcut-lg);
+  background: var(--story-yellow);
+
+  ol {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 0.6rem;
+    counter-reset: hito;
+  }
+
+  li {
+    counter-increment: hito;
+    padding-left: 1.6rem;
+    position: relative;
+
+    &::before {
+      content: counter(hito);
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: rgba(23, 34, 49, 0.45);
+    }
+  }
+
+  strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    font-weight: 750;
     line-height: 1.15;
     letter-spacing: -0.03em;
   }
 
-  p {
-    line-height: 1.6;
-    color: var(--story-muted);
-  }
-
-  &--action a {
-    @include m.focus-ring(#76e3d9);
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 0.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--story-line);
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--story-accent-deep);
-
-    span {
-      font-size: 1.35rem;
-      transition: transform var(--dur) var(--ease-out);
-    }
-
-    &:hover span {
-      transform: translateX(5px);
-    }
-  }
-
-  &--action {
-    background: var(--story-yellow);
+  span {
+    display: block;
+    font-size: 0.72rem;
+    line-height: 1.3;
+    color: rgba(23, 34, 49, 0.66);
   }
 }
 
-/* Contact */
-.contact {
-  padding-block: clamp(6rem, 11vw, 10rem);
-  background: #f8d7e4;
-
-  &__inner {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1.2fr);
-    gap: clamp(3rem, 8vw, 8rem);
-  }
-
-  &__title {
-    > p {
-      margin-bottom: 1.2rem;
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--story-accent);
-    }
-
-    h2 {
-      max-width: 11ch;
-      font-size: clamp(2.8rem, 5vw, 5.2rem);
-      line-height: 0.98;
-      letter-spacing: -0.05em;
-    }
-  }
-
-  &__paths {
-    align-self: end;
-    border-top: 1px solid var(--story-line);
-  }
-}
-
-.contact-path {
-  @include m.focus-ring(#76e3d9);
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) auto;
-  gap: 1.5rem;
+/* Consulta · canto superior */
+.med--book {
+  @include m.focus-ring(#ffffff);
+  grid-area: 11 / 12 / 13 / 17;
+  display: flex;
   align-items: center;
-  padding: clamp(1.6rem, 4vw, 2.8rem) 0;
-  border-bottom: 1px solid var(--story-line);
-  isolation: isolate;
+  gap: 0.9rem;
+  padding: clamp(1rem, 1.6vw, 1.5rem);
+  border-radius: var(--mcut-lg) var(--mcut-lg) var(--mcut) var(--mcut);
+  color: #ffffff;
+  background: var(--story-green);
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--story-yellow);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.42s var(--ease-out);
+  .med__eyebrow {
+    display: block;
+    color: rgba(255, 255, 255, 0.68);
   }
 
-  &:hover::before {
-    transform: scaleY(1);
+  strong {
+    display: block;
+    margin-top: 0.15rem;
+    font-family: var(--font-display);
+    font-size: clamp(0.98rem, 1.2vw, 1.2rem);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .med__arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    border-radius: 999px;
+    font-style: normal;
+    color: var(--story-green);
+    background: #ffffff;
+    transition: transform var(--dur) var(--ease-out);
   }
 
   &:hover {
-    padding-inline: 1.5rem;
-  }
+    background: var(--story-green-deep);
 
-  > span {
-    font-size: 0.9rem;
-    color: var(--story-muted);
+    .med__arrow {
+      transform: translate(2px, -2px);
+    }
+  }
+}
+
+/* Tira de acreditaciones: píldoras de contorno, sin logos institucionales */
+.med-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 0.9vw, 0.85rem);
+  margin-top: clamp(1.25rem, 2.2vw, 2rem);
+
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--story-line);
+    border-radius: 999px;
   }
 
   strong {
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.1vw, 2rem);
-    line-height: 1.1;
+    font-size: 0.82rem;
+    font-weight: 750;
+    letter-spacing: -0.015em;
   }
 
-  i {
+  span {
+    font-size: 0.74rem;
+    color: var(--story-muted);
+  }
+}
+
+/* Videos — raíl de tarjetas verticales
+   Los siete MP4 son 9:16 y suman 67 MB. Sin ffmpeg no hay miniaturas, así
+   que en vez de dejar un fotograma negro la tarjeta cerrada es un panel de
+   color de la paleta: el archivo no se toca hasta que alguien pulsa play.
+   Cuando existan miniaturas (`npm run media:posters`) basta con pintarlas
+   sobre este mismo panel. */
+.clips {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  border-bottom: 1px solid var(--story-line);
+}
+
+.clip-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(12.5rem, 17vw, 16rem);
+  gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  /* El desnivel de las pares necesita aire arriba y abajo */
+  padding-block: 0 clamp(1.5rem, 3vw, 3rem);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--story-line) transparent;
+}
+
+.clip {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: clamp(1.4rem, 2.2vw, 2.2rem);
+  scroll-snap-align: start;
+
+  /* El escalonado va por margen y no por transform: appReveal anima
+     `transform` y se pisarían. */
+  &:nth-child(even) {
+    margin-block-start: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  /* Ciclo de color de la paleta; el oscuro rompe la serie a media fila */
+  &:nth-child(6n + 1) {
+    --clip-bg: var(--story-yellow);
+    --clip-fg: var(--story-text);
+  }
+
+  &:nth-child(6n + 2) {
+    --clip-bg: var(--story-pink);
+    --clip-fg: var(--story-text);
+  }
+
+  &:nth-child(6n + 3) {
+    --clip-bg: var(--accent);
+    --clip-fg: var(--story-text);
+  }
+
+  &:nth-child(6n + 4) {
+    --clip-bg: var(--story-text);
+    --clip-fg: #ffffff;
+  }
+
+  &:nth-child(6n + 5) {
+    --clip-bg: var(--story-blue);
+    --clip-fg: var(--story-text);
+  }
+
+  &:nth-child(6n) {
+    --clip-bg: var(--story-coral);
+    --clip-fg: var(--story-text);
+  }
+}
+
+.clip__face {
+  @include m.focus-ring(#172231);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
+  height: 100%;
+  padding: clamp(0.9rem, 1.4vw, 1.3rem);
+  text-align: left;
+  color: var(--clip-fg);
+  background: var(--clip-bg);
+  transition: filter var(--dur) var(--ease-out);
+
+  &:hover {
+    filter: brightness(0.96);
+
+    .clip__play {
+      transform: scale(1.08);
+    }
+  }
+}
+
+.clip__topic {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.68;
+}
+
+.clip__play {
+  place-self: center;
+  display: grid;
+  place-items: center;
+  width: clamp(3.1rem, 4.4vw, 4rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(12, 20, 28, 0.22);
+  transition: transform var(--dur) var(--ease-spring);
+
+  /* Triángulo por bordes: un glifo ▶ cambia de forma según la fuente */
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    margin-left: 0.22em;
+    border-block: 0.42em solid transparent;
+    border-inline-start: 0.7em solid var(--story-text);
+  }
+}
+
+.clip__foot {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.clip__title {
+  font-family: var(--font-display);
+  font-size: clamp(0.88rem, 1vw, 1rem);
+  font-weight: 750;
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.clip__time {
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.62;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Video sonando dentro de su tarjeta */
+.clip__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000000;
+
+  /* Se oculta la pantalla completa nativa para que la ruta de ampliar sea
+     siempre el visor 9:16. `controlsList` lo cubre en Chromium; esto, en
+     WebKit. En Firefox no hay forma y queda el botón del navegador, que al
+     menos respeta la proporción del video. */
+  &::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+}
+
+.clip__tools {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.clip__tool {
+  @include m.focus-ring(#ffffff);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: #ffffff;
+  background: rgba(12, 20, 28, 0.6);
+  backdrop-filter: blur(6px);
+  transition: background-color var(--dur) var(--ease-out);
+
+  &:hover {
+    background: rgba(12, 20, 28, 0.88);
+  }
+}
+
+/* Visor — el video crece pero nunca deja el 9:16
+   A pantalla completa un vertical se ve enorme y descuadrado en un monitor
+   apaisado. Aquí el ancho sale del alto disponible (`86svh * 9/16`), así que
+   el marco es siempre TikTok: no hay deformación ni recorte en ningún tamaño
+   de pantalla, y en móvil manda el ancho. */
+.clip-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  animation: viewer-in 0.28s var(--ease-out) both;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 12, 18, 0.86);
+    backdrop-filter: blur(10px);
+  }
+
+  &__stage {
+    position: relative;
+    z-index: 1;
+    width: min(100%, calc(86svh * 9 / 16));
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: clamp(1rem, 1.8vw, 1.5rem);
+    background: #000000;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  }
+
+  &__video {
+    width: 100%;
+    height: 100%;
+    /* `contain` y no `cover`: los archivos rondan el 9:16 pero no todos lo
+       clavan, y recortar la cara del doctor por un par de píxeles no vale. */
+    object-fit: contain;
+  }
+
+  &__caption {
+    position: relative;
+    z-index: 1;
+    max-width: min(100%, calc(86svh * 9 / 16));
     font-family: var(--font-display);
-    font-size: 1.7rem;
-    font-style: normal;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    text-wrap: balance;
+    color: #ffffff;
+
+    span {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  &__close {
+    @include m.focus-ring(#ffffff);
+    position: absolute;
+    top: clamp(0.75rem, 2vw, 1.5rem);
+    right: clamp(0.75rem, 2vw, 1.5rem);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background-color var(--dur) var(--ease-out);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+  }
+}
+
+@keyframes viewer-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.clip-tiktok {
+  @include m.focus-ring(#172231);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  margin-top: clamp(0.5rem, 1.4vw, 1.25rem);
+  padding: 0.8rem 1.4rem;
+  border: 1px solid var(--story-text);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 800;
+  transition:
+    color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+
+  span {
     transition: transform var(--dur) var(--ease-out);
   }
 
-  &:hover i {
-    transform: translateX(6px);
+  &:hover {
+    color: #ffffff;
+    background: var(--story-text);
+
+    span {
+      transform: translate(2px, -2px);
+    }
+  }
+}
+
+/* Contact — un solo destinatario: el paciente
+   Sin el desvío a "invitar a una charla", el bloque puede optimizar una
+   sola conversión. El motivo elegido redacta el mensaje de WhatsApp: el
+   freno real de estos CTA no es pulsarlos, es no saber qué escribir. */
+.contact {
+  padding-block: clamp(5rem, 9vw, 8rem);
+  background: var(--story-bg);
+
+  &__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+  }
+
+  &__eyebrow {
+    margin-bottom: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--story-muted);
+  }
+
+  &__title h2 {
+    max-width: 14ch;
+    font-size: clamp(2.5rem, 4.6vw, 4.5rem);
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+  }
+
+  &__lead {
+    max-width: 44ch;
+    margin-top: clamp(1.25rem, 2.2vw, 1.9rem);
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--story-line);
+    font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+    line-height: 1.62;
+    color: var(--story-muted);
+  }
+
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 2.25rem;
+    margin-top: clamp(1.4rem, 2.4vw, 2rem);
+
+    li {
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    strong {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    span {
+      font-size: 0.78rem;
+      line-height: 1.35;
+      color: var(--story-muted);
+    }
+  }
+
+  &__panel {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.5rem, 2.6vw, 2.4rem);
+    border-radius: clamp(1.5rem, 2.4vw, 2.4rem);
+    color: #ffffff;
+    background: var(--story-text);
+  }
+
+  &__question {
+    font-family: var(--font-display);
+    font-size: clamp(1.02rem, 1.25vw, 1.22rem);
+    font-weight: 750;
+    letter-spacing: -0.03em;
+  }
+
+  &__send {
+    @include m.focus-ring(#ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 56px;
+    padding: 0.9rem 1.5rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+    background: var(--story-green);
+    transition:
+      transform var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out);
+
+    span {
+      transition: transform var(--dur) var(--ease-out);
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      background: var(--story-green-deep);
+
+      span {
+        transform: translate(2px, -2px);
+      }
+    }
+
+    &:active {
+      transform: translateY(1px) scale(0.995);
+    }
+  }
+
+  &__note {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.62);
+  }
+}
+
+.reason-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.reason {
+  @include m.focus-ring(#ffffff);
+  padding: 0.62rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.82);
+  transition:
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+  }
+
+  &.is-chosen {
+    font-weight: 750;
+    color: var(--story-text);
+    border-color: #ffffff;
+    background: #ffffff;
   }
 }
 
 /* Footer */
 .footer {
   border-top: 1px solid var(--story-line);
-  background: var(--story-yellow);
+  background: var(--story-bg);
 
   &__top {
     display: flex;
@@ -948,6 +1820,73 @@ h3 {
   }
 }
 
+/* Movimiento ligado al scroll (Propósito + Charlas)
+   Se apoya en scroll-driven animations nativas: el cálculo ocurre fuera del
+   hilo principal, sin un solo listener de scroll. Donde no hay soporte queda
+   el fade-up de appReveal, así que no se pierde nada. */
+.talks-mosaic picture,
+.purpose-mosaic__item picture,
+.med-mosaic picture,
+.orbit__node picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  transition: transform 0.9s var(--ease-out);
+}
+
+.talks-mosaic .tile:hover picture,
+.purpose-mosaic__item:hover picture,
+.med-mosaic .med:hover picture,
+.orbit__node:hover picture {
+  transform: scale(1.035);
+}
+
+@keyframes tile-enter {
+  from {
+    opacity: 0;
+    transform: translateY(46px) scale(0.955);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes media-drift {
+  from {
+    transform: scale(1.16) translateY(-3.6%);
+  }
+
+  to {
+    transform: scale(1.16) translateY(3.6%);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .talks-mosaic > *,
+    .purpose-mosaic__item,
+    .med-mosaic > * {
+      animation: tile-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 26%;
+    }
+
+    /* Deriva de la foto dentro de su marco: el recorte respira al scrollear */
+    .talks-mosaic img,
+    .purpose-mosaic__item img,
+    .med-mosaic img,
+    .orbit__node img {
+      animation: media-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
 @media (max-width: 1023.98px) {
   .hero {
     &::before {
@@ -968,26 +1907,112 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .family__words {
-    max-width: 40rem;
-    padding-top: 0;
+  .mission__grid,
+  .family__layout {
+    grid-template-rows: auto;
   }
 
-  .medicine-grid {
-    grid-template-columns: 1fr;
+  .purpose-mosaic {
+    block-size: clamp(24rem, 50svh, 32rem);
+  }
 
-    &__feature {
-      min-height: 42rem;
+  .family__words {
+    max-width: 40rem;
+    padding-block: 0;
+  }
+
+  .orbit {
+    max-width: 40rem;
+    aspect-ratio: 1.2;
+  }
+
+  .med-mosaic {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows:
+      minmax(13rem, auto)
+      minmax(9rem, auto)
+      minmax(11rem, auto)
+      minmax(12rem, auto)
+      minmax(6rem, auto);
+    block-size: auto;
+  }
+
+  .med--portrait {
+    grid-area: 1 / 1 / 3 / 5;
+  }
+
+  .med--id {
+    grid-area: 1 / 5 / 2 / 9;
+  }
+
+  .med--technique {
+    grid-area: 2 / 5 / 4 / 9;
+  }
+
+  .med--areas {
+    grid-area: 3 / 1 / 5 / 5;
+  }
+
+  .med--training {
+    grid-area: 4 / 5 / 5 / 9;
+  }
+
+  .med--explain {
+    grid-area: 5 / 1 / 6 / 5;
+  }
+
+  .med--book {
+    grid-area: 5 / 5 / 6 / 9;
+  }
+
+  .talks-mosaic {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows:
+      repeat(2, minmax(8.5rem, auto))
+      minmax(10rem, auto)
+      minmax(13rem, auto)
+      minmax(7.5rem, auto);
+    block-size: auto;
+  }
+
+  .tile--lead {
+    grid-area: 1 / 1 / 3 / 6;
+  }
+
+  .tile--arch {
+    grid-area: 1 / 6 / 3 / 9;
+  }
+
+  .tile--note {
+    grid-area: 3 / 1 / 4 / 5;
+  }
+
+  .tile--quote {
+    grid-area: 3 / 5 / 4 / 9;
+  }
+
+  .tile--reel {
+    grid-area: 4 / 1 / 5 / 6;
+  }
+
+  .tile--chip {
+    grid-area: 4 / 6 / 5 / 9;
+  }
+
+  .tile--invite {
+    grid-area: 5 / 1 / 6 / 9;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    strong {
+      max-width: none;
     }
 
-    &__facts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: auto minmax(18rem, 1fr);
-    }
-
-    &__team {
-      grid-column: 1 / -1;
-      grid-row: 2;
+    .tile__arrow {
+      margin-top: 0;
+      margin-inline-start: auto;
     }
   }
 }
@@ -1003,7 +2028,12 @@ h3 {
 
     &::before {
       background:
-        linear-gradient(0deg, rgba(3, 13, 20, 0.94) 0%, rgba(3, 13, 20, 0.45) 67%, rgba(3, 13, 20, 0.5) 100%),
+        linear-gradient(
+          0deg,
+          rgba(3, 13, 20, 0.94) 0%,
+          rgba(3, 13, 20, 0.45) 67%,
+          rgba(3, 13, 20, 0.5) 100%
+        ),
         linear-gradient(90deg, rgba(3, 13, 20, 0.4), transparent);
     }
 
@@ -1012,8 +2042,8 @@ h3 {
     }
 
     h1 {
-      max-width: 11ch;
-      font-size: clamp(3rem, 13vw, 4.45rem);
+      max-width: 13ch;
+      font-size: clamp(2.5rem, 10.5vw, 3.9rem);
     }
 
     &__lead {
@@ -1040,29 +2070,57 @@ h3 {
     padding-block: 5.25rem;
   }
 
-  .values-carousel {
-    min-height: 29rem;
-  }
-
   .mission {
     &__grid {
       gap: 2.5rem;
     }
 
     &__body {
-      min-height: auto;
-      padding: 2rem 1.4rem;
+      padding-block: 0;
     }
 
     h2 {
       max-width: 12ch;
-      font-size: clamp(2.75rem, 12vw, 4.2rem);
+      font-size: clamp(2.5rem, 11vw, 4rem);
     }
 
     &__copy {
       grid-template-columns: 1fr;
       gap: 1.2rem;
       margin-top: 2.5rem;
+    }
+
+    &__actions {
+      margin-top: 2rem;
+    }
+
+    &__contact {
+      width: 100%;
+    }
+  }
+
+  .purpose-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(7.5rem, 1fr));
+    gap: 0.7rem;
+    block-size: clamp(26rem, 62svh, 34rem);
+
+    &__item {
+      &--doctor-one {
+        grid-area: 1 / 1 / 3 / 2;
+      }
+
+      &--person-two {
+        grid-area: 1 / 2 / 2 / 3;
+      }
+
+      &--person-one {
+        grid-area: 2 / 2 / 5 / 3;
+      }
+
+      &--doctor-two {
+        grid-area: 3 / 1 / 5 / 2;
+      }
     }
   }
 
@@ -1074,79 +2132,165 @@ h3 {
     }
   }
 
-  .section-heading {
-    margin-bottom: 3rem;
+  .talks-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(6, auto);
+    gap: 0.7rem;
+    block-size: auto;
+  }
 
-    h2 {
-      font-size: clamp(2.65rem, 11vw, 4.1rem);
+  .tile--lead {
+    grid-area: 1 / 1 / 2 / 3;
+    grid-template-rows: auto minmax(12rem, 1fr);
+    min-block-size: 27rem;
+  }
+
+  .tile--arch {
+    grid-area: 2 / 1 / 3 / 2;
+    min-block-size: 16rem;
+  }
+
+  .tile--chip {
+    grid-area: 2 / 2 / 3 / 3;
+    min-block-size: 16rem;
+  }
+
+  .tile--note {
+    grid-area: 3 / 1 / 4 / 3;
+  }
+
+  .tile--reel {
+    grid-area: 4 / 1 / 5 / 3;
+    min-block-size: 15rem;
+  }
+
+  .tile--quote {
+    grid-area: 5 / 1 / 6 / 3;
+    min-block-size: 11rem;
+  }
+
+  .tile--invite {
+    grid-area: 6 / 1 / 7 / 3;
+
+    .tile__arrow {
+      margin-top: 0.9rem;
     }
-  }
-
-  .talks-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: none;
-    gap: 1rem;
-  }
-
-  .talk-card,
-  .talk-note {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .talk-card--feature {
-    min-height: 34rem;
-  }
-
-  .talk-card--portrait,
-  .talk-card--wide {
-    min-height: 24rem;
-  }
-
-  .talk-note {
-    min-height: 18rem;
   }
 
   .family {
     &__layout {
-      gap: 3rem;
+      gap: 2.5rem;
     }
 
     &__words h2 {
       max-width: 11ch;
-      font-size: clamp(2.7rem, 11vw, 4rem);
+      font-size: clamp(2.5rem, 11vw, 4rem);
     }
   }
 
-  .family-collage {
-    grid-template-rows: minmax(19rem, 52svh) minmax(13rem, 34svh);
+  .orbit {
+    aspect-ratio: 0.92;
 
-    &__main {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      min-height: 0;
+    &__node {
+      box-shadow:
+        0 0 0 4px #ffffff,
+        0 14px 30px rgba(12, 20, 28, 0.18);
+
+      &--lead {
+        left: 36%;
+        top: 33%;
+        width: 50%;
+      }
+
+      &--party {
+        left: 78%;
+        top: 15%;
+        width: 34%;
+      }
+
+      &--memory {
+        left: 79%;
+        top: 63%;
+        width: 32%;
+      }
+
+      &--child {
+        left: 30%;
+        top: 80%;
+        width: 36%;
+      }
     }
 
-    &__memory,
-    &__family {
-      grid-row: 2;
+    &__blob {
+      filter: blur(16px);
+
+      &--sun {
+        width: 70%;
+      }
+
+      &--mint {
+        width: 54%;
+      }
+    }
+
+    &__spark {
+      font-size: 1.15rem;
     }
   }
 
-  .medicine-grid {
-    &__feature {
-      min-height: min(37rem, 78svh);
-    }
+  .med-mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(6, auto);
+    gap: 0.7rem;
+    block-size: auto;
+  }
 
-    &__facts {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(17rem, 44svh) auto;
-    }
+  .med--portrait {
+    grid-area: 1 / 1 / 2 / 3;
+    min-block-size: 24rem;
+  }
 
-    &__team {
-      grid-column: 1;
-      grid-row: 2;
+  .med--id {
+    grid-area: 2 / 1 / 3 / 3;
+  }
+
+  .med--technique {
+    grid-area: 3 / 1 / 4 / 2;
+    min-block-size: 15rem;
+  }
+
+  .med--explain {
+    grid-area: 3 / 2 / 4 / 3;
+    min-block-size: 15rem;
+  }
+
+  .med--areas {
+    grid-area: 4 / 1 / 5 / 3;
+
+    li {
+      padding-block: 0.55rem;
     }
+  }
+
+  .med--training {
+    grid-area: 5 / 1 / 6 / 3;
+
+    ol {
+      gap: 0.7rem;
+    }
+  }
+
+  .med--book {
+    grid-area: 6 / 1 / 7 / 3;
+  }
+
+  .clip-rail {
+    grid-auto-columns: 62vw;
+    gap: 0.7rem;
+  }
+
+  .clip:nth-child(even) {
+    margin-block-start: 1.4rem;
   }
 
   .contact {
@@ -1159,17 +2303,12 @@ h3 {
     }
   }
 
-  .contact-path {
-    grid-template-columns: 1fr auto;
-    gap: 0.5rem 1rem;
+  .contact__facts {
+    gap: 0.9rem 1.5rem;
+  }
 
-    > span {
-      grid-column: 1 / -1;
-    }
-
-    &:hover {
-      padding-inline: 0.85rem;
-    }
+  .reason {
+    flex: 1 1 100%;
   }
 
   .footer {
@@ -1203,19 +2342,5 @@ h3 {
     animation: none;
     opacity: 1;
     transform: none;
-  }
-
-  .values-carousel__slide {
-    animation: none;
-    opacity: 0;
-    transform: none;
-
-    &:first-child {
-      opacity: 1;
-    }
-  }
-
-  .values-carousel__control {
-    display: none;
   }
 }

@@ -164,6 +164,21 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
     widths: [640, 1200],
     note: 'equipo médico en Piura',
   },
+  {
+    file: 'fabio/fabio-familia-ceremonia.jpg',
+    widths: [420, 720],
+    note: 'familia: Fabio con un niño en brazos',
+  },
+  {
+    file: 'fabio/fabio-cirugia-laparoscopica.jpg',
+    widths: [480, 960],
+    note: 'técnica laparoscópica en quirófano',
+  },
+  {
+    file: 'fabio/fabio-explicando-estudio.jpg',
+    widths: [480, 960],
+    note: 'revisión de un estudio de imágenes con un colega',
+  },
 ];
 
 /** Anchos de las ilustraciones de especialidad: ocupan media pantalla. */
