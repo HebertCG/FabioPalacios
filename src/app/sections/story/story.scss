@@ -808,6 +808,13 @@ h3 {
     object-fit: cover;
   }
 
+  /* En celulares (y cuando el usuario pide reducir movimiento/consumo), la
+     directiva activa los controles nativos. El boton propio ya no hace falta
+     y no debe quedar encima de Play. */
+  &__video[controls] + &__sound {
+    display: none;
+  }
+
   /* Unico control a la vista. Cristal para no tapar la cara del doctor. */
   &__sound {
     @include m.focus-ring(#ffffff);

@@ -508,8 +508,9 @@
       </div>
 
       <div class="coach__stage" appReveal [revealDelay]="60">
-        <!-- Sin `controls`: la unica pieza de interfaz es el boton de volumen.
-             El vídeo arranca al entrar en cuadro y se pausa al salir. -->
+        <!-- En escritorio arranca al entrar en cuadro y el boton controla el
+             sonido. En celulares la directiva activa los controles nativos:
+             Safari recibe el Play como gesto directo del usuario. -->
         <video
           class="coach__video"
           appInViewPlay

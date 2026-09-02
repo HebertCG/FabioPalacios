@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 
 /**
- * Reproduce un vídeo mientras está a la vista y lo pausa al salir.
+ * Reproduce un video mientras esta a la vista y lo pausa al salir. En
+ * celulares deja el inicio y el audio en manos de los controles nativos.
  *
  * Usa IntersectionObserver en lugar de escuchar el scroll, por lo mismo que
  * `appReveal`: el cálculo lo hace el navegador fuera del hilo principal.
@@ -36,6 +37,8 @@ import {
   selector: 'video[appInViewPlay]',
 })
 export class InViewPlay implements OnDestroy {
+  private static readonly PHONE_QUERY = '(max-width: 767.98px)';
+
   /**
    * Estado del audio. Bidireccional: lo escribe el botón y lo corrige la
    * directiva si el navegador rechaza el sonido.
@@ -49,7 +52,18 @@ export class InViewPlay implements OnDestroy {
 
   private readonly host = inject<ElementRef<HTMLVideoElement>>(ElementRef);
   private observer?: IntersectionObserver;
+  private phoneQuery?: MediaQueryList;
+  private manualPlayback = false;
   private visible = false;
+
+  private readonly onPhoneQueryChange = (event: MediaQueryListEvent): void => {
+    this.configurePlayback(event.matches);
+  };
+
+  private readonly syncMutedState = (): void => {
+    const muted = this.host.nativeElement.muted;
+    if (this.silenced() !== muted) this.silenced.set(muted);
+  };
 
   constructor() {
     effect(() => {
@@ -58,16 +72,73 @@ export class InViewPlay implements OnDestroy {
       video.muted = wantsMuted;
       // Quitar el silencio a mano cuenta como gesto: si estaba pausado por
       // haberse rechazado antes, este es el momento de arrancarlo.
-      if (!wantsMuted && this.visible && video.paused) {
+      if (!this.manualPlayback && !wantsMuted && this.visible && video.paused) {
         video.play().catch(() => undefined);
       }
     });
 
-    afterNextRender(() => this.observe());
+    afterNextRender(() => this.initializeResponsivePlayback());
+  }
+
+  /**
+   * En celulares el usuario controla la reproduccion. Safari recibe asi el
+   * gesto directo que exige para iniciar medios y no queda atrapado entre un
+   * play() automatico rechazado y el poster.
+   */
+  private initializeResponsivePlayback(): void {
+    const video = this.host.nativeElement;
+    video.addEventListener('volumechange', this.syncMutedState);
+
+    if (typeof matchMedia !== 'function') {
+      this.configurePlayback(false);
+      return;
+    }
+
+    this.phoneQuery = matchMedia(InViewPlay.PHONE_QUERY);
+    this.addPhoneQueryListener(this.phoneQuery);
+    this.configurePlayback(this.phoneQuery.matches);
+  }
+
+  /** `addListener` mantiene compatibilidad con versiones antiguas de iOS. */
+  private addPhoneQueryListener(query: MediaQueryList): void {
+    if (typeof query.addEventListener === 'function') {
+      query.addEventListener('change', this.onPhoneQueryChange);
+    } else {
+      query.addListener(this.onPhoneQueryChange);
+    }
+  }
+
+  private removePhoneQueryListener(query: MediaQueryList): void {
+    if (typeof query.removeEventListener === 'function') {
+      query.removeEventListener('change', this.onPhoneQueryChange);
+    } else {
+      query.removeListener(this.onPhoneQueryChange);
+    }
+  }
+
+  private configurePlayback(isPhone: boolean): void {
+    const video = this.host.nativeElement;
+    this.observer?.disconnect();
+    this.observer = undefined;
+    this.visible = false;
+
+    this.manualPlayback = isPhone || !this.shouldAutoplay();
+    video.controls = this.manualPlayback;
+
+    if (this.manualPlayback) {
+      if (!video.paused) video.pause();
+      return;
+    }
+
+    this.observe();
   }
 
   private observe(): void {
-    if (typeof IntersectionObserver === 'undefined' || !this.shouldAutoplay()) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      this.manualPlayback = true;
+      this.host.nativeElement.controls = true;
+      return;
+    }
 
     const video = this.host.nativeElement;
 
@@ -135,5 +206,7 @@ export class InViewPlay implements OnDestroy {
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
+    if (this.phoneQuery) this.removePhoneQueryListener(this.phoneQuery);
+    this.host.nativeElement.removeEventListener('volumechange', this.syncMutedState);
   }
 }
