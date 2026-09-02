@@ -220,6 +220,13 @@ export const SPECIALTIES: readonly Specialty[] = [
  */
 export const COACH_VIDEO = {
   src: 'fabio-coach-espiritual.mp4',
+  /**
+   * Primer fotograma con el rótulo del doctor. Sin `poster`, mientras el
+   * video carga —o si no llega a cargar— el marco se ve negro, que fue
+   * exactamente lo que apareció en Safari. Con póster, lo peor que puede
+   * pasar es una imagen fija correcta en lugar de un rectángulo vacío.
+   */
+  poster: 'fabio-coach-espiritual-poster.jpg',
   title: 'Un amigo en tu lucha',
   /** Leído de la cabecera del MP4 */
   durationSeconds: 91,

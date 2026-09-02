@@ -802,6 +802,12 @@ h3 {
     object-fit: cover;
   }
 
+  /* El póster se pinta con las mismas reglas que el fotograma, para que no
+     salte el encuadre en el momento en que el video empieza a decodificar. */
+  &__video[poster] {
+    object-fit: cover;
+  }
+
   /* Unico control a la vista. Cristal para no tapar la cara del doctor. */
   &__sound {
     @include m.focus-ring(#ffffff);
