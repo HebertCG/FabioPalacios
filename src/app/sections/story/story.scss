@@ -680,9 +680,10 @@ h3 {
 
   &__layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    /* El alto lo marca la columna de texto y el video lo copia */
+    align-items: stretch;
   }
 
   &__words {
@@ -747,13 +748,47 @@ h3 {
       font-size: clamp(0.9rem, 1vw, 1rem);
       line-height: 1.45;
     }
+
+    /* La segunda pieza es un enlace: barre el canto contrario para que las
+       dos no se lean como la misma tarjeta repetida. */
+    &--link {
+      @include m.focus-ring(#172231);
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      border-radius: var(--mcut) var(--mcut-lg) var(--mcut-lg) var(--mcut);
+      background: var(--story-blue);
+      transition: transform var(--dur) var(--ease-out);
+
+      &:hover {
+        transform: translateX(4px);
+
+        .coach__card-arrow {
+          transform: translateX(4px);
+        }
+      }
+    }
+  }
+
+  &__card-arrow {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    font-style: normal;
+    color: #ffffff;
+    background: var(--story-text);
+    transition: transform var(--dur) var(--ease-out);
   }
 
   /* El video vertical manda la proporción, como en el visor del raíl */
   &__stage {
     position: relative;
     justify-self: center;
-    width: min(100%, calc(64svh * 9 / 16));
+    /* El alto viene de la fila; la proporcion 9:16 deriva el ancho, asi que
+       el video llena el bloque sin recorte ni deformacion. */
+    block-size: 100%;
+    inline-size: auto;
+    max-inline-size: 100%;
     aspect-ratio: 9 / 16;
     overflow: hidden;
     border-radius: var(--mcut) var(--mcut) var(--mcut-lg) var(--mcut-lg);
@@ -761,70 +796,53 @@ h3 {
   }
 
   &__video {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
 
-  &__poster {
+  /* Unico control a la vista. Cristal para no tapar la cara del doctor. */
+  &__sound {
     @include m.focus-ring(#ffffff);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
     display: grid;
     place-items: center;
-    align-content: center;
-    gap: 1.25rem;
-    width: 100%;
-    height: 100%;
+    width: clamp(3.25rem, 4.4vw, 4rem);
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
     color: #ffffff;
-    background:
-      radial-gradient(120% 90% at 50% 20%, rgba(15, 122, 82, 0.5), transparent 60%),
-      var(--story-text);
-    transition: filter var(--dur) var(--ease-out);
+    background: rgba(12, 20, 28, 0.42);
+    backdrop-filter: blur(10px);
+    opacity: 0.82;
+    transform: translate(-50%, -50%);
+    transition:
+      opacity var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out),
+      scale var(--dur) var(--ease-spring);
+
+    svg {
+      width: 46%;
+      fill: none;
+      stroke: currentcolor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* El altavoz es macizo; solo las ondas y la cruz van a trazo */
+    path:first-child {
+      fill: currentcolor;
+    }
 
     &:hover {
-      filter: brightness(1.12);
-
-      .coach__play {
-        transform: scale(1.08);
-      }
-    }
-  }
-
-  &__play {
-    display: grid;
-    place-items: center;
-    width: clamp(4rem, 6vw, 5.5rem);
-    aspect-ratio: 1;
-    border-radius: 999px;
-    background: #ffffff;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
-    transition: transform var(--dur) var(--ease-spring);
-
-    &::after {
-      content: '';
-      width: 0;
-      height: 0;
-      margin-left: 0.24em;
-      border-block: 0.44em solid transparent;
-      border-inline-start: 0.74em solid var(--story-text);
-    }
-  }
-
-  &__label {
-    display: grid;
-    gap: 0.3rem;
-    text-align: center;
-
-    strong {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.4vw, 1.35rem);
-      font-weight: 750;
-      letter-spacing: -0.03em;
-    }
-
-    span {
-      font-size: 0.78rem;
-      font-variant-numeric: tabular-nums;
-      color: rgba(255, 255, 255, 0.66);
+      opacity: 1;
+      background: rgba(12, 20, 28, 0.68);
+      scale: 1.06;
     }
   }
 }

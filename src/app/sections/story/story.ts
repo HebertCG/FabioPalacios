@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
+import { InViewPlay } from '../../core/directives/in-view-play';
 import { Reveal } from '../../core/directives/reveal';
 import {
   COACH_VIDEO,
@@ -35,7 +36,7 @@ function media(src: string): StoryMedia {
 
 @Component({
   selector: 'app-story',
-  imports: [Reveal],
+  imports: [InViewPlay, Reveal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story.html',
   styleUrl: './story.scss',
@@ -73,15 +74,12 @@ export class Story {
   /* ---------- Acompañamiento, prevención y sobrevivientes ---------- */
 
   protected readonly coachVideo = COACH_VIDEO;
+
+  /** Lo escribe el boton y lo corrige la directiva si el navegador rechaza
+   *  el sonido, asi que el icono siempre muestra el estado real. */
+  protected readonly coachMuted = signal(true);
   protected readonly prevention = PREVENTION;
   protected readonly survivorProgram = SURVIVOR_PROGRAM;
-
-  /** El video del coach vive fuera del raíl, así que lleva su propio estado. */
-  protected readonly coachPlaying = signal(false);
-
-  protected playCoach(): void {
-    this.coachPlaying.set(true);
-  }
 
   protected readonly survivorLink = whatsappLink(
     'Hola doctor, vengo de su página web. Quisiera participar en el programa de sobrevivientes.',

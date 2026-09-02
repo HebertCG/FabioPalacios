@@ -471,29 +471,73 @@
             </p>
           </div>
         </article>
+
+        <a
+          class="coach__card coach__card--link"
+          href="#sobrevivientes"
+          appReveal
+          [revealDelay]="190"
+        >
+          <figure>
+            <picture>
+              <source
+                type="image/avif"
+                [srcset]="photos.community.avif"
+                sizes="(min-width: 1024px) 16vw, 40vw"
+              />
+              <source
+                type="image/webp"
+                [srcset]="photos.community.webp"
+                sizes="(min-width: 1024px) 16vw, 40vw"
+              />
+              <img
+                [src]="photos.community.src"
+                alt="Fabio Palacios compartiendo con una mujer de la comunidad"
+                width="1200"
+                height="1600"
+                loading="lazy"
+              />
+            </picture>
+          </figure>
+          <div>
+            <p class="coach__eyebrow">Programa de sobrevivientes</p>
+            <p>Charlas y acompañamiento para quienes ya recibieron un diagnóstico.</p>
+          </div>
+          <i class="coach__card-arrow" aria-hidden="true">→</i>
+        </a>
       </div>
 
       <div class="coach__stage" appReveal [revealDelay]="60">
-        @if (coachPlaying()) {
-          <video
-            class="coach__video"
-            [src]="coachVideo.src"
-            [attr.aria-label]="coachVideo.title"
-            autoplay
-            controls
-            playsinline
-            preload="metadata"
-          ></video>
-        } @else {
-          <button class="coach__poster" type="button" (click)="playCoach()">
-            <span class="sr-only">Reproducir: {{ coachVideo.title }}</span>
-            <span class="coach__play" aria-hidden="true"></span>
-            <span class="coach__label" aria-hidden="true">
-              <strong>{{ coachVideo.title }}</strong>
-              <span>{{ clipTime(coachVideo.durationSeconds) }}</span>
-            </span>
-          </button>
-        }
+        <!-- Sin `controls`: la unica pieza de interfaz es el boton de volumen.
+             El vídeo arranca al entrar en cuadro y se pausa al salir. -->
+        <video
+          class="coach__video"
+          appInViewPlay
+          [(muted)]="coachMuted"
+          [src]="coachVideo.src"
+          [attr.aria-label]="coachVideo.title"
+          loop
+          playsinline
+          disablepictureinpicture
+          preload="metadata"
+        ></video>
+
+        <button class="coach__sound" type="button" (click)="coachMuted.set(!coachMuted())">
+          <span class="sr-only">
+            {{ coachMuted() ? 'Activar sonido del video' : 'Silenciar el video' }}
+          </span>
+          @if (coachMuted()) {
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 9h3l5-4v14l-5-4H4z" />
+              <path class="coach__slash" d="M16 9l5 6M21 9l-5 6" />
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 9h3l5-4v14l-5-4H4z" />
+              <path class="coach__wave" d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" />
+            </svg>
+          }
+        </button>
       </div>
     </div>
   </section>
