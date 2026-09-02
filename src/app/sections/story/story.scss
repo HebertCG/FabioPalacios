@@ -2649,6 +2649,12 @@ h3 {
     font-size: clamp(2.5rem, 11vw, 4rem);
   }
 
+  .coach__stage {
+    inline-size: 100%;
+    max-inline-size: 26rem;
+    block-size: auto;
+  }
+
   .coach__card {
     grid-template-columns: 1fr;
     text-align: left;
