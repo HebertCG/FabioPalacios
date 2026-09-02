@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
 import { Reveal } from '../../core/directives/reveal';
 import {
+  COACH_VIDEO,
   CONTACT,
   CREDENTIALS,
   DOCTOR,
+  PREVENTION,
   REELS,
   SOCIALS,
   SPECIALTIES,
+  SURVIVOR_PROGRAM,
   whatsappLink,
 } from '../../core/data/doctor.data';
 import { imageVariantFor, srcsetFor, type ModernFormat } from '../../core/media/image-variants';
@@ -66,6 +69,23 @@ export class Story {
     { place: 'INEN', what: 'Residencia en Cirugía Oncológica' },
     { place: 'IRCAD América Latina', what: 'Cirugía mínimamente invasiva' },
   ] as const;
+
+  /* ---------- Acompañamiento, prevención y sobrevivientes ---------- */
+
+  protected readonly coachVideo = COACH_VIDEO;
+  protected readonly prevention = PREVENTION;
+  protected readonly survivorProgram = SURVIVOR_PROGRAM;
+
+  /** El video del coach vive fuera del raíl, así que lleva su propio estado. */
+  protected readonly coachPlaying = signal(false);
+
+  protected playCoach(): void {
+    this.coachPlaying.set(true);
+  }
+
+  protected readonly survivorLink = whatsappLink(
+    'Hola doctor, vengo de su página web. Quisiera participar en el programa de sobrevivientes.',
+  );
 
   /* ---------- Videos ---------- */
 

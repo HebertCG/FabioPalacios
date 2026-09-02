@@ -44,3 +44,6 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Video maestro sin comprimir: se sirve desde Vercel Blob, no desde el repo
+media-fuente/couchespiritual.mp4

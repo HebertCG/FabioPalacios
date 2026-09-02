@@ -19,13 +19,7 @@
  * Son datos que la página necesita y que aún no están verificados.
  */
 
-import type {
-  Credential,
-  NavLink,
-  Reel,
-  SocialLink,
-  Specialty,
-} from '../models/content.models';
+import type { Credential, NavLink, Reel, SocialLink, Specialty } from '../models/content.models';
 
 /* ============================================================
    IDENTIDAD
@@ -211,6 +205,61 @@ export const SPECIALTIES: readonly Specialty[] = [
 ];
 
 /* ============================================================
+   ACOMPAÑAMIENTO — coach espiritual
+   ============================================================ */
+
+/**
+ * El video maestro pesa 167 MB sin comprimir, muy por encima del límite de
+ * 25 MiB por archivo de Cloudflare Workers y del de 100 MB de GitHub. Por eso
+ * se sirve desde almacenamiento externo: el original queda en media-fuente/.
+ */
+export const COACH_VIDEO = {
+  src: 'https://lmv6u3hbdudonszb.public.blob.vercel-storage.com/Doctor/couchespiritual.mp4',
+  title: 'Un amigo en tu lucha',
+  /** Leído de la cabecera del MP4 */
+  durationSeconds: 91,
+} as const;
+
+/* ============================================================
+   PREVENCIÓN
+   ============================================================ */
+
+/**
+ * TODO: los temas de abajo son los que el doctor enumeró, pero SIN detalle
+ * clínico. Él enviará el contenido y las ilustraciones de cada uno. No añadir
+ * afirmaciones médicas que no vengan firmadas por él.
+ */
+export const PREVENTION = [
+  {
+    id: 'alimentacion',
+    label: 'Alimentos saludables',
+    body: 'Qué comer, cómo prepararlo y por qué la alimentación pesa en la prevención.',
+  },
+  {
+    id: 'actividad',
+    label: 'Actividad física',
+    body: 'El papel del movimiento diario dentro de un plan de prevención.',
+  },
+  {
+    id: 'riesgo',
+    label: 'Factores de riesgo',
+    body: 'Los hábitos y productos que conviene revisar, empezando por los alimentos procesados.',
+  },
+] as const;
+
+/* ============================================================
+   PROGRAMA DE SOBREVIVIENTES
+   ============================================================ */
+
+/** Las cuatro actividades que el doctor enumeró para el programa. */
+export const SURVIVOR_PROGRAM = [
+  { id: 'educacion', label: 'Charlas de educación' },
+  { id: 'sobrevida', label: 'Charlas de sobrevida' },
+  { id: 'manejo', label: 'Cómo manejar el cáncer' },
+  { id: 'alimentacion', label: 'Cómo alimentarse' },
+] as const;
+
+/* ============================================================
    REELS — videos de TikTok en /public
    ============================================================ */
 
@@ -334,10 +383,11 @@ export const NAV_LINKS: readonly NavLink[] = [
   { id: 'proposito', label: 'Propósito', href: '#proposito' },
   { id: 'charlas', label: 'Charlas', href: '#charlas' },
   { id: 'medicina', label: 'Medicina', href: '#medicina' },
+  { id: 'acompanamiento', label: 'Acompañamiento', href: '#acompanamiento' },
+  { id: 'sobrevivientes', label: 'Sobrevivientes', href: '#sobrevivientes' },
   { id: 'familia', label: 'Mi familia', href: '#familia' },
   { id: 'videos', label: 'Videos', href: '#videos' },
   { id: 'contacto', label: 'Contacto', href: '#contacto' },
 ];
 
 /** Reseñas y accesos al perfil público del doctor. */
-

@@ -15,7 +15,9 @@
     <div class="hero__content">
       <p class="hero__name">Fabio Palacios</p>
       <h1 id="titulo-inicio">¡Mientras exista vida, existe esperanza!</h1>
-      <p class="hero__lead">Médico cuando hace falta. Persona, esposo y ciudadano siempre.</p>
+      <p class="hero__lead">
+        Un amigo en tu lucha. Oncólogo y coach espiritual en el manejo del cáncer.
+      </p>
       <div class="hero__actions">
         <a class="action action--solid" href="#proposito">Conoce mi propósito</a>
         <a
@@ -427,6 +429,121 @@
     </div>
   </section>
 
+  <section id="acompanamiento" class="coach" aria-labelledby="titulo-acompanamiento">
+    <div class="page-shell coach__layout">
+      <div class="coach__words">
+        <p class="coach__eyebrow" appReveal>Coach espiritual</p>
+        <h2 id="titulo-acompanamiento" appReveal>Un amigo en tu lucha.</h2>
+        <div class="coach__copy" appReveal [revealDelay]="90">
+          <p>
+            Oncólogo y coach espiritual en el manejo del cáncer. La cirugía es una parte del camino;
+            acompañar todo lo demás es la otra.
+          </p>
+        </div>
+
+        <article class="coach__card" appReveal [revealDelay]="150">
+          <figure>
+            <picture>
+              <source
+                type="image/avif"
+                [srcset]="photos.listening.avif"
+                sizes="(min-width: 1024px) 16vw, 40vw"
+              />
+              <source
+                type="image/webp"
+                [srcset]="photos.listening.webp"
+                sizes="(min-width: 1024px) 16vw, 40vw"
+              />
+              <img
+                [src]="photos.listening.src"
+                alt="Fabio Palacios abrazando a una asistente después de una charla"
+                width="1200"
+                height="1600"
+                loading="lazy"
+              />
+            </picture>
+          </figure>
+          <div>
+            <p class="coach__eyebrow">Cómo vivir con cáncer</p>
+            <p>
+              Un diagnóstico cambia la vida entera, no solo el cuerpo. Nadie debería atravesarlo
+              solo.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="coach__stage" appReveal [revealDelay]="60">
+        @if (coachPlaying()) {
+          <video
+            class="coach__video"
+            [src]="coachVideo.src"
+            [attr.aria-label]="coachVideo.title"
+            autoplay
+            controls
+            playsinline
+            preload="metadata"
+          ></video>
+        } @else {
+          <button class="coach__poster" type="button" (click)="playCoach()">
+            <span class="sr-only">Reproducir: {{ coachVideo.title }}</span>
+            <span class="coach__play" aria-hidden="true"></span>
+            <span class="coach__label" aria-hidden="true">
+              <strong>{{ coachVideo.title }}</strong>
+              <span>{{ clipTime(coachVideo.durationSeconds) }}</span>
+            </span>
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="prevencion" class="prevent" aria-labelledby="titulo-prevencion">
+    <div class="page-shell">
+      <header class="talks-heading" appReveal>
+        <h2 id="titulo-prevencion">Prevenir también es tratar.</h2>
+        <p>
+          Lo que come, cómo se mueve y qué hábitos revisa pesan antes de que aparezca cualquier
+          diagnóstico.
+        </p>
+      </header>
+
+      <ul class="prevent-grid">
+        @for (topic of prevention; track topic.id; let i = $index) {
+          <li class="prevent-card" appReveal [revealDelay]="i * 70">
+            <span class="prevent-card__index" aria-hidden="true">{{ i + 1 }}</span>
+            <h3>{{ topic.label }}</h3>
+            <p>{{ topic.body }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="sobrevivientes" class="survive" aria-labelledby="titulo-sobrevivientes">
+    <div class="page-shell survive__inner">
+      <div class="survive__words" appReveal>
+        <p class="coach__eyebrow">Programa de sobrevivientes</p>
+        <h2 id="titulo-sobrevivientes">¿Sobrevivió al cáncer? Siga acompañado.</h2>
+        <p class="survive__lead">
+          Un espacio para quienes ya recibieron un diagnóstico y para quienes lo superaron. Se entra
+          escribiendo, sin trámite.
+        </p>
+        <a class="survive__cta" [href]="survivorLink" target="_blank" rel="noopener noreferrer">
+          Quiero unirme <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <ul class="survive__list" appReveal [revealDelay]="90">
+        @for (activity of survivorProgram; track activity.id) {
+          <li>
+            <span aria-hidden="true">→</span>
+            {{ activity.label }}
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
   <section id="familia" class="family" aria-labelledby="titulo-familia">
     <div class="page-shell family__layout">
       <div class="family__words">
