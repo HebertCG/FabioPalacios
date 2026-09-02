@@ -27,7 +27,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { DOCTOR } from '../src/app/core/data/doctor.data.ts';
-import { CREDENTIALS, SPECIALTIES } from '../src/app/core/data/doctor.data.ts';
+import { CREDENTIALS } from '../src/app/core/data/doctor.data.ts';
+import { STORY_IMAGES } from '../src/app/core/media/image-variants.ts';
 import {
   CONTENT_LAST_REVIEWED,
   SEO_DESCRIPTION,
@@ -98,17 +99,18 @@ function buildRobots() {
 /**
  * Reúne las imágenes que vale la pena tener en Google Imágenes.
  *
- * Se omiten los logos de instituciones a propósito: son marcas
- * provisionales dibujadas para esta página (ver la nota en
- * `CREDENTIALS`), no material del doctor, y no aportan búsquedas.
+ * Sale de STORY_IMAGES, el mismo registro que alimenta al optimizador, en
+ * lugar de una lista escrita a mano. La lista a mano ya se desincronizó una
+ * vez: al retirar la landing anterior siguió declarando siete archivos que
+ * habían dejado de existir, y un sitemap que apunta a 404 es exactamente lo
+ * que no se quiere enseñarle a Google.
+ *
+ * Se omiten los logos de instituciones a propósito: son marcas provisionales
+ * dibujadas para esta página (ver la nota en `CREDENTIALS`).
  */
 function collectImages() {
-  return [
-    absolute(SEO_PRIMARY_IMAGE.path),
-    absolute(SEO_SOCIAL_IMAGE.path),
-    absolute('retrato-quirofano.jpg'),
-    ...SPECIALTIES.map((specialty) => absolute(specialty.image)),
-  ];
+  const fromRegistry = STORY_IMAGES.map((variant) => absolute(variant.file));
+  return [...new Set([absolute(SEO_SOCIAL_IMAGE.path), ...fromRegistry])];
 }
 
 /**

@@ -209,12 +209,17 @@ export const SPECIALTIES: readonly Specialty[] = [
    ============================================================ */
 
 /**
- * El video maestro pesa 167 MB sin comprimir, muy por encima del límite de
- * 25 MiB por archivo de Cloudflare Workers y del de 100 MB de GitHub. Por eso
- * se sirve desde almacenamiento externo: el original queda en media-fuente/.
+ * Se sirve desde el propio sitio. El máster salía de edición a 1080x1920 y
+ * 15.4 Mbps —167 MB— y así no había hosting que lo arreglara: para verlo sin
+ * cortes hacía falta bajar 15.4 Mbps sostenidos, que una conexión 4G no da, y
+ * Safari en iPhone se quedaba en negro esperando datos.
+ *
+ * `npm run media:video` lo reencoda a 720x1280 y 1 Mbps: 11.3 MB, que además
+ * entra de sobra en el límite de 25 MiB por archivo de Cloudflare. El máster
+ * queda en media-fuente/, fuera del build.
  */
 export const COACH_VIDEO = {
-  src: 'https://lmv6u3hbdudonszb.public.blob.vercel-storage.com/Doctor/couchespiritual.mp4',
+  src: 'fabio-coach-espiritual.mp4',
   title: 'Un amigo en tu lucha',
   /** Leído de la cabecera del MP4 */
   durationSeconds: 91,
