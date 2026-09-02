@@ -18,36 +18,6 @@ export interface Credential {
   readonly logoIsOfficial: boolean;
 }
 
-/** Mensaje e imagen de una de las vistas principales del héroe. */
-export interface HeroSlide {
-  readonly id: string;
-  readonly titleStart: string;
-  readonly titleAccent: string;
-  readonly titleEnd: string;
-  readonly mobileTitle?: string;
-  readonly mobileAccent?: string;
-  readonly lead: string;
-  readonly primaryCta: string;
-  readonly secondaryCta: string;
-  readonly secondaryHref: string;
-  /** Ruta dentro de /public. */
-  readonly image: string;
-  readonly imageAlt: string;
-  readonly imageKind: 'cutout' | 'photo';
-  readonly objectPosition?: string;
-}
-
-/** Fotografía y contexto breve para la galería de trayectoria. */
-export interface DoctorPhoto {
-  readonly id: string;
-  /** Ruta dentro de /public. */
-  readonly image: string;
-  readonly alt: string;
-  readonly label: string;
-  readonly caption: string;
-  readonly objectPosition?: string;
-}
-
 /** Grupo de patologías que el doctor opera. */
 export interface Specialty {
   readonly id: string;
@@ -68,44 +38,6 @@ export interface Specialty {
   readonly imageAlt: string;
   /** Las marcadas se muestran destacadas en la retícula */
   readonly featured?: boolean;
-}
-
-/** Motivo por el que un paciente elegiría al doctor. */
-export interface Advantage {
-  readonly id: string;
-  readonly title: string;
-  readonly body: string;
-  readonly icon: IconName;
-}
-
-/**
- * Opinión mostrada en la sección de reseñas.
- *
- * Las entradas de demostración se identifican con `isSample` y no
- * enlazan a una fuente. Cuando una opinión real se publique, se cambia
- * ese indicador y se añade `sourceUrl` para poder comprobar su origen.
- */
-export interface PatientReview {
-  readonly id: string;
-  /** Cita de muestra o cita literal cuando sea una opinión verificada. */
-  readonly quote: string;
-  /** Nombre tal como el paciente lo publicó. */
-  readonly author: string;
-  /** Contexto breve: procedencia o tipo de consulta. */
-  readonly context: string;
-  /** Estrellas otorgadas por el paciente, 1 a 5. */
-  readonly rating: 1 | 2 | 3 | 4 | 5;
-  /** Permite distinguir visualmente el contenido ficticio autorizado. */
-  readonly isSample?: boolean;
-  /** Enlace a la opinión original cuando exista públicamente. */
-  readonly sourceUrl?: string;
-}
-
-/** Paso del recorrido de atención. */
-export interface ProcessStep {
-  readonly step: string;
-  readonly title: string;
-  readonly body: string;
 }
 
 /**
@@ -137,13 +69,6 @@ export interface Reel {
   readonly duration?: string;
   /** Duración en segundos, leída de la cabecera del MP4. Se pinta en la tarjeta. */
   readonly durationSeconds?: number;
-}
-
-/** Pregunta frecuente. */
-export interface Faq {
-  readonly id: string;
-  readonly question: string;
-  readonly answer: string;
 }
 
 /** Enlace de red social del dock flotante. */

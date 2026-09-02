@@ -49,7 +49,6 @@ export class Story {
     family: media('fabio/fabio-familia.jpg'),
     familyCeremony: media('fabio/fabio-familia-ceremonia.jpg'),
     innovation: media('fabio/fabio-innovacion-quirurgica.jpg'),
-    medicalTeam: media('fabio/fabio-equipo-medico.jpg'),
     surgeryPortrait: media('ImagenPrincipal_2.jpg'),
     laparoscopy: media('fabio/fabio-cirugia-laparoscopica.jpg'),
     reviewingStudy: media('fabio/fabio-explicando-estudio.jpg'),

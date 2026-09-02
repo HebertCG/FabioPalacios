@@ -35,84 +35,16 @@ export interface ImageVariant {
 }
 
 /**
- * Retrato del héroe. Es el LCP de la página: la imagen que decide la
- * métrica que Google mide. El original solo tiene 430 px de ancho, así
- * que no hay tamaños intermedios que generar; toda la ganancia viene
- * del cambio de formato (PNG de 249 KB a AVIF de 13 KB).
+ * Retrato del bloque médico. Es el único superviviente de las imágenes de
+ * la versión anterior: hoy lo usa la pieza en arco de «Mi lado de doctor».
  */
-export const HERO_IMAGE: ImageVariant = {
-  file: 'dr-fabio-palacios-cirujano-oncologo-piura.png',
-  widths: [430],
-  note: 'retrato del héroe (LCP)',
+export const MEDICINE_PORTRAIT: ImageVariant = {
+  file: 'ImagenPrincipal_2.jpg',
+  widths: [480, 800, 1086],
+  note: 'retrato en quirófano del bloque médico',
 };
 
-/** Fotografías verticales de las vistas dos y tres del héroe. */
-export const HERO_CAROUSEL_IMAGES: readonly ImageVariant[] = [
-  {
-    file: 'Imagenprincipal_1.jpg',
-    widths: [480, 800, 1200],
-    note: 'héroe: trayectoria y comunidad médica',
-  },
-  {
-    file: 'ImagenPrincipal_2.jpg',
-    widths: [480, 800, 1086],
-    note: 'héroe: experiencia en cirugía',
-  },
-];
-
-/** Retrato vertical en quirófano de la sección "Sobre mí". */
-export const ABOUT_IMAGE: ImageVariant = {
-  file: 'dr-fabio-palacios-cirugia-oncologica-quirofano.jpg',
-  widths: [659],
-  note: 'retrato en quirófano',
-};
-
-/** Fotografías que acompañan el relato de trayectoria en "Sobre mí". */
-export const DOCTOR_GALLERY_IMAGES: readonly ImageVariant[] = [
-  {
-    file: 'imagendoctor_1.jpg',
-    widths: [480, 800, 1200],
-    note: 'galería: técnica laparoscópica',
-  },
-  {
-    file: 'imagendoctor_2.jpg',
-    widths: [480, 800, 1200],
-    note: 'galería: equipo quirúrgico',
-  },
-  {
-    file: 'imagendoctor_3.jpg',
-    widths: [480],
-    note: 'galería: experiencia clínica',
-  },
-  {
-    file: 'imagendoctor_4.jpg',
-    widths: [480, 800],
-    note: 'galería: cirugía laparoscópica',
-  },
-  {
-    file: 'imagendoctor_5.jpg',
-    widths: [480, 800, 1200],
-    note: 'galería: comunidad médica',
-  },
-  {
-    file: 'imagendoctor_6.jpg',
-    widths: [480, 800, 1200],
-    note: 'galería: formación en el INEN',
-  },
-];
-
-/**
- * Retrato de la sección de atención. El original es de 1772 px y nunca
- * se muestra por encima de unos 700: era la imagen con más peso
- * desperdiciado de toda la página, 786 KB para mostrar 700.
- */
-export const PROCESS_IMAGE: ImageVariant = {
-  file: 'dr-fabio-palacios-consulta-oncologica-piura.png',
-  widths: [700, 1000, 1400],
-  note: 'retrato de la sección de atención',
-};
-
-/** Fotografías del nuevo relato personal, comunitario y profesional. */
+/** Fotografías del relato personal, comunitario y profesional. */
 export const STORY_IMAGES: readonly ImageVariant[] = [
   {
     file: 'fabio/fabio-comunidad-portada.jpg',
@@ -160,11 +92,6 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
     note: 'formación en innovación quirúrgica',
   },
   {
-    file: 'fabio/fabio-equipo-medico.jpg',
-    widths: [640, 1200],
-    note: 'equipo médico en Piura',
-  },
-  {
     file: 'fabio/fabio-familia-ceremonia.jpg',
     widths: [420, 720],
     note: 'familia: Fabio con un niño en brazos',
@@ -181,33 +108,8 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
   },
 ];
 
-/** Anchos de las ilustraciones de especialidad: ocupan media pantalla. */
-export const SPECIALTY_WIDTHS = [600, 900, 1200] as const;
-
-/** Los seis archivos de /public/specialties, en el orden de la retícula. */
-const SPECIALTY_FILES = [
-  'cirugia-cancer-digestivo',
-  'cirugia-cancer-cabeza-cuello',
-  'cirugia-tumores-retroperitoneales',
-  'cirugia-cancer-mama-partes-blandas',
-  'cirugia-cancer-urologico',
-  'cirugia-cancer-ginecologico',
-];
-
 /** Todo lo que el optimizador debe procesar. */
-export const IMAGE_VARIANTS: readonly ImageVariant[] = [
-  HERO_IMAGE,
-  ...HERO_CAROUSEL_IMAGES,
-  ABOUT_IMAGE,
-  ...DOCTOR_GALLERY_IMAGES,
-  PROCESS_IMAGE,
-  ...STORY_IMAGES,
-  ...SPECIALTY_FILES.map((name) => ({
-    file: `specialties/${name}.jpg`,
-    widths: SPECIALTY_WIDTHS,
-    note: 'ilustración de especialidad',
-  })),
-];
+export const IMAGE_VARIANTS: readonly ImageVariant[] = [...STORY_IMAGES, MEDICINE_PORTRAIT];
 
 /* ============================================================
    CONSTRUCTORES DE RUTAS

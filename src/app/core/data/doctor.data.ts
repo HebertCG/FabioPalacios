@@ -8,7 +8,8 @@
  * PROCEDENCIA DE LOS DATOS
  *  · Nombre, especialidad, CMP 066389, RNE 046335, las seis áreas
  *    quirúrgicas y el WhatsApp 906 418 375 provienen del material
- *    gráfico oficial del doctor (public/dr-fabio-palacios-cirujano-oncologo-piura-perfil.jpg).
+ *    gráfico oficial del doctor, conservado en
+ *    media-fuente/dr-fabio-palacios-cirujano-oncologo-piura-perfil.jpg.
  *  · Formación (UPCH, INEN, IRCAD), Sociedad Peruana de Cancerología,
  *    el consultorio de Castilla y su labor en EsSalud provienen de
  *    fuentes públicas: Doctoralia, su Facebook oficial, la cuenta del
@@ -19,14 +20,8 @@
  */
 
 import type {
-  Advantage,
   Credential,
-  DoctorPhoto,
-  Faq,
-  HeroSlide,
   NavLink,
-  PatientReview,
-  ProcessStep,
   Reel,
   SocialLink,
   Specialty,
@@ -89,63 +84,6 @@ export function whatsappLink(message: string = CONTACT.whatsappMessage): string 
 }
 
 /* ============================================================
-   HÉROE
-   ============================================================ */
-
-export const HERO_SLIDES: readonly HeroSlide[] = [
-  {
-    id: 'atencion-cercana',
-    titleStart: 'Cirugía oncológica',
-    titleAccent: 'de alta complejidad',
-    titleEnd: 'para el norte del Perú',
-    mobileTitle: 'Cirugía oncológica',
-    mobileAccent: 'en el norte del Perú',
-    lead:
-      'Cirugía especializada en cáncer digestivo, de mama, cabeza y cuello, ' +
-      'urológico y ginecológico, con atención cercana en Piura.',
-    primaryCta: 'Agendar consulta',
-    secondaryCta: 'Ver especialidades',
-    secondaryHref: '#especialidades',
-    image: 'dr-fabio-palacios-cirujano-oncologo-piura.png',
-    imageAlt: 'Dr. Fabio Palacios sonriendo con mandil blanco mientras revisa estudios de imágenes',
-    imageKind: 'cutout',
-  },
-  {
-    id: 'trayectoria',
-    titleStart: 'Experiencia que inspira',
-    titleAccent: 'confianza',
-    titleEnd: 'antes de decidir',
-    lead:
-      'Formación oncológica, actualización constante y una explicación clara para que usted ' +
-      'y su familia tomen decisiones con tranquilidad.',
-    primaryCta: 'Agendar consulta',
-    secondaryCta: 'Conocer mi trayectoria',
-    secondaryHref: '#formacion',
-    image: 'Imagenprincipal_1.jpg',
-    imageAlt:
-      'Dr. Fabio Palacios sonriendo durante un congreso de la Sociedad Peruana de Oncología Quirúrgica',
-    imageKind: 'photo',
-    objectPosition: 'center 42%',
-  },
-  {
-    id: 'precision-humana',
-    titleStart: 'Precisión quirúrgica',
-    titleAccent: 'con trato humano',
-    titleEnd: 'en cada etapa',
-    lead:
-      'De la primera consulta al seguimiento, el mismo cirujano acompaña su caso y le explica ' +
-      'cada paso sin tecnicismos.',
-    primaryCta: 'Agendar consulta',
-    secondaryCta: 'Cómo es la atención',
-    secondaryHref: '#atencion',
-    image: 'ImagenPrincipal_2.jpg',
-    imageAlt: 'Dr. Fabio Palacios realizando una cirugía mínimamente invasiva en quirófano',
-    imageKind: 'photo',
-    objectPosition: 'center 55%',
-  },
-];
-
-/* ============================================================
    FORMACIÓN — alimenta la marquesina vertical
    ============================================================ */
 
@@ -204,139 +142,6 @@ export const CREDENTIALS: readonly Credential[] = [
     detail: 'Especialista con registro nacional vigente',
     logo: 'logos/cmp.svg',
     logoIsOfficial: false,
-  },
-];
-
-/* ============================================================
-   SOBRE MÍ
-   ============================================================ */
-
-export const ABOUT = {
-  eyebrow: 'Sobre mí',
-  titleStart: 'Un solo cirujano',
-  titleAccent: 'de principio a fin',
-  paragraphs: [
-    'Soy cirujano oncólogo general con subespecialidad en cavidad abdominal. ' +
-      'Me formé como médico en la Universidad Peruana Cayetano Heredia e hice ' +
-      'mi residencia en el Instituto Nacional de Enfermedades Neoplásicas, el ' +
-      'centro de referencia oncológica del Perú.',
-    'Completé mi entrenamiento en cirugía mínimamente invasiva en IRCAD ' +
-      'América Latina y soy miembro de la Sociedad Peruana de Cancerología. ' +
-      'Hoy atiendo en consulta privada en Castilla y opero también en la Red ' +
-      'Asistencial de EsSalud en Piura, donde he resuelto casos de alta ' +
-      'complejidad como resecciones hepáticas mayores.',
-    'Trabajo con una convicción simple: un diagnóstico de cáncer ya es ' +
-      'bastante difícil como para además tener que viajar a Lima, repetir ' +
-      'estudios y explicarle su caso a un médico distinto cada vez.',
-  ],
-} as const;
-
-export const DOCTOR_GALLERY: readonly DoctorPhoto[] = [
-  {
-    id: 'retrato-cercano',
-    image: 'dr-fabio-palacios-cirugia-oncologica-quirofano.jpg',
-    alt: 'Dr. Fabio Palacios sonriendo con uniforme quirúrgico',
-    label: 'El médico detrás de la consulta',
-    caption: 'Experiencia clínica con una atención directa y cercana.',
-    objectPosition: 'center 5%',
-  },
-  {
-    id: 'tecnica-laparoscopica',
-    image: 'imagendoctor_1.jpg',
-    alt: 'Dr. Fabio Palacios utilizando instrumental laparoscópico durante una cirugía',
-    label: 'Precisión en quirófano',
-    caption: 'Técnica mínimamente invasiva y concentración en cada procedimiento.',
-    objectPosition: 'center 48%',
-  },
-  {
-    id: 'equipo-quirurgico',
-    image: 'imagendoctor_2.jpg',
-    alt: 'Dr. Fabio Palacios a la izquierda junto a su equipo quirúrgico en sala de operaciones',
-    label: 'Trabajo en equipo',
-    caption: 'Coordinación y experiencia compartida dentro de sala de operaciones.',
-    objectPosition: 'left 42%',
-  },
-  {
-    id: 'experiencia-clinica',
-    image: 'imagendoctor_3.jpg',
-    alt: 'Dr. Fabio Palacios con uniforme quirúrgico dentro del quirófano',
-    label: 'Experiencia clínica',
-    caption: 'Preparación y criterio ante procedimientos de alta complejidad.',
-    objectPosition: 'center 36%',
-  },
-  {
-    id: 'cirugia-laparoscopica',
-    image: 'imagendoctor_4.jpg',
-    alt: 'Dr. Fabio Palacios trabajando con un equipo durante una cirugía laparoscópica',
-    label: 'Cirugía laparoscópica',
-    caption: 'Tecnología, técnica y coordinación aplicadas al cuidado del paciente.',
-    objectPosition: 'center 48%',
-  },
-  {
-    id: 'comunidad-medica',
-    image: 'imagendoctor_5.jpg',
-    alt: 'Dr. Fabio Palacios en un encuentro de la Sociedad Peruana de Oncología Quirúrgica',
-    label: 'Comunidad médica',
-    caption: 'Actualización constante y participación en la comunidad oncológica.',
-    objectPosition: 'center 24%',
-  },
-  {
-    id: 'formacion-inen',
-    image: 'imagendoctor_6.jpg',
-    alt: 'Dr. Fabio Palacios con mandil blanco frente al Instituto Nacional de Enfermedades Neoplásicas',
-    label: 'Formación en el INEN',
-    caption: 'Trayectoria construida en uno de los centros oncológicos de referencia del Perú.',
-    objectPosition: 'center 46%',
-  },
-];
-
-export const ADVANTAGES: readonly Advantage[] = [
-  {
-    id: 'inen',
-    title: 'Formación en el INEN',
-    body:
-      'Residencia completa en el instituto oncológico de referencia del país, ' +
-      'con el volumen de casos que eso implica.',
-    icon: 'hospital',
-  },
-  {
-    id: 'minimally-invasive',
-    title: 'Cirugía mínimamente invasiva',
-    body:
-      'Entrenamiento en IRCAD América Latina. Menos agresión quirúrgica ' +
-      'cuando el caso lo permite.',
-    icon: 'scalpel',
-  },
-  {
-    id: 'local',
-    title: 'Alta complejidad en Piura',
-    body:
-      'Cirugías que antes obligaban a viajar a Lima se resuelven aquí, ' +
-      'cerca de su casa y de su familia.',
-    icon: 'pin',
-  },
-  {
-    id: 'continuity',
-    title: 'El mismo médico siempre',
-    body:
-      'De la primera consulta al alta lo atiende el mismo cirujano. ' +
-      'No repite su historia en cada cita.',
-    icon: 'route',
-  },
-  {
-    id: 'second-opinion',
-    title: 'Segunda opinión con lectura de estudios',
-    body:
-      'Reviso sus informes, biopsias y tomografías antes de opinar. ' +
-      'Sin diagnósticos apresurados.',
-    icon: 'eye',
-  },
-  {
-    id: 'clarity',
-    title: 'Explicaciones en claro',
-    body:
-      'Usted y su familia van a entender el plan quirúrgico antes de ' + 'decidir cualquier cosa.',
-    icon: 'hand-heart',
   },
 ];
 
@@ -402,41 +207,6 @@ export const SPECIALTIES: readonly Specialty[] = [
     icon: 'gynecologic',
     image: 'specialties/cirugia-cancer-ginecologico.jpg',
     imageAlt: 'Ilustración del aparato reproductor femenino: útero, cérvix y ovarios',
-  },
-];
-
-/* ============================================================
-   CÓMO ES LA ATENCIÓN
-   ============================================================ */
-
-export const PROCESS: readonly ProcessStep[] = [
-  {
-    step: '01',
-    title: 'Escríbame por WhatsApp',
-    body:
-      'Envíeme un mensaje y, si los tiene, fotos claras de sus informes, ' +
-      'biopsias o tomografías. No necesita ordenar todo antes de escribir.',
-  },
-  {
-    step: '02',
-    title: 'Revisamos su caso',
-    body:
-      'En consulta reviso sus estudios, resuelvo sus dudas y le explico con ' +
-      'claridad qué muestran los resultados y qué falta por definir.',
-  },
-  {
-    step: '03',
-    title: 'Definimos el plan',
-    body:
-      'Le explico las opciones, sus riesgos y sus tiempos para que usted y ' +
-      'su familia puedan decidir con información clara.',
-  },
-  {
-    step: '04',
-    title: 'Cirugía y seguimiento',
-    body:
-      'Yo realizo la cirugía y yo hago sus controles posteriores. ' +
-      'El seguimiento no se delega.',
   },
 ];
 
@@ -512,55 +282,6 @@ export const REELS: readonly Reel[] = [
  * pública disponible. El doctor debe revisarlas y corregirlas antes
  * de publicar: son afirmaciones clínicas hechas en su nombre.
  */
-export const FAQS: readonly Faq[] = [
-  {
-    id: 'faq-1',
-    question: '¿Tengo que viajar a Lima para operarme?',
-    answer:
-      'En la mayoría de los casos, no. Buena parte de la cirugía oncológica ' +
-      'de alta complejidad se puede realizar en Piura. En la consulta le digo ' +
-      'con franqueza si su caso puntual requiere un centro de mayor ' +
-      'complejidad, y de ser así lo orientamos.',
-  },
-  {
-    id: 'faq-2',
-    question: '¿Qué debo llevar a la primera consulta?',
-    answer:
-      'Todo lo que tenga: informes médicos, resultados de biopsia, ' +
-      'tomografías, ecografías, análisis de sangre y la lista de ' +
-      'medicamentos que toma. Mientras más completo, mejor la evaluación.',
-  },
-  {
-    id: 'faq-3',
-    question: '¿Atiende segunda opinión si ya tengo un diagnóstico?',
-    answer:
-      'Sí. Reviso sus estudios y le doy mi lectura del caso. Una segunda ' +
-      'opinión no es desconfiar de su médico: es tomar una decisión ' +
-      'importante con más información.',
-  },
-  {
-    id: 'faq-4',
-    question: '¿Acepta seguros o EPS?',
-    answer:
-      'Las modalidades de atención y cobertura pueden cambiar. Escríbame por ' +
-      'WhatsApp antes de agendar para confirmar las opciones vigentes para su caso.',
-  },
-  {
-    id: 'faq-5',
-    question: '¿Vienen pacientes de fuera de Piura?',
-    answer:
-      'Sí, atiendo pacientes de Sullana, Talara, Tumbes y de la sierra ' +
-      'piurana. Si viene de lejos, escríbame antes por WhatsApp para ' +
-      'organizar la consulta y los estudios en el mismo viaje.',
-  },
-  {
-    id: 'faq-6',
-    question: '¿Cuánto demora en responder un mensaje?',
-    answer:
-      'Los mensajes se atienden por orden dentro del horario de consulta. Si ' +
-      'se trata de una emergencia, acuda al servicio de urgencias más cercano.',
-  },
-];
 
 /* ============================================================
    REDES SOCIALES — dock flotante y pie de página
@@ -619,60 +340,4 @@ export const NAV_LINKS: readonly NavLink[] = [
 ];
 
 /** Reseñas y accesos al perfil público del doctor. */
-export const REVIEWS = {
-  platform: 'Doctoralia',
-  profileUrl: 'https://www.doctoralia.pe/perfil/fabio-palacios',
-  submitUrl: 'https://www.doctoralia.pe/anade-opinion/fabio-palacios',
 
-  /**
-   * Contenido ficticio solicitado para evaluar el diseño. Cada entrada
-   * se marca internamente como muestra, usa nombres ficticios y evita
-   * afirmaciones sobre resultados clínicos.
-   */
-  published: [
-    {
-      id: 'muestra-claridad',
-      quote:
-        'El doctor me explicó todo con claridad y paciencia. Salí de la consulta entendiendo mejor los siguientes pasos.',
-      author: 'María González',
-      context: 'Consulta oncológica',
-      rating: 5,
-      isSample: true,
-    },
-    {
-      id: 'muestra-trato',
-      quote:
-        'Desde la primera consulta sentí un trato cercano y respetuoso. Respondió cada pregunta sin apresurarse.',
-      author: 'Rosa Paredes',
-      context: 'Consulta oncológica',
-      rating: 5,
-      isSample: true,
-    },
-    {
-      id: 'muestra-acompanamiento',
-      quote:
-        'Me dio tranquilidad poder conversar directamente con el cirujano y recibir una explicación sencilla para mi familia.',
-      author: 'Luis Andrade',
-      context: 'Consulta oncológica',
-      rating: 5,
-      isSample: true,
-    },
-  ] as readonly PatientReview[],
-} as const;
-
-/* ============================================================
-   PIE DE PÁGINA
-   ============================================================ */
-
-export const FOOTER = {
-  tagline:
-    'Cirugía oncológica de alta complejidad en Piura. Diagnóstico claro, ' +
-    'plan explicado y un solo cirujano a cargo de su caso.',
-  disclaimer:
-    'La información de este sitio tiene fines informativos y no reemplaza ' +
-    'una consulta médica presencial, un diagnóstico ni un tratamiento. ' +
-    'Ningún contenido de esta página garantiza resultados.',
-  /** TODO: completar razón social y RUC si el consultorio los tiene */
-  legalEntity: '',
-  ruc: '',
-} as const;
