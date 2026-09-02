@@ -50,7 +50,7 @@ export class Story {
     podcast: media('fabio/fabio-charla-podcast.jpg'),
     coupleMemory: media('fabio/fabio-esposa-recuerdo.jpg'),
     couple: media('fabio/fabio-esposa.jpg'),
-    family: media('fabio/fabio-familia.jpg'),
+    family: media('fabio/fabio-familia-estudio.jpg'),
     familyCeremony: media('fabio/fabio-familia-ceremonia.jpg'),
     innovation: media('fabio/fabio-innovacion-quirurgica.jpg'),
     surgeryPortrait: media('ImagenPrincipal_2.jpg'),

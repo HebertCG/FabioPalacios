@@ -82,9 +82,9 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
     note: 'Fabio junto a su esposa',
   },
   {
-    file: 'fabio/fabio-familia.jpg',
-    widths: [480, 800],
-    note: 'celebración familiar',
+    file: 'fabio/fabio-familia-estudio.jpg',
+    widths: [420, 720],
+    note: 'retrato familiar de estudio',
   },
   {
     file: 'fabio/fabio-innovacion-quirurgica.jpg',
