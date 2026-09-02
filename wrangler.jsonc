@@ -18,11 +18,6 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "fabiopalacios",
 
-  // Única pieza de servidor del proyecto, y con un motivo medido: los
-  // recursos estáticos de Cloudflare ignoran la cabecera `Range` y Safari en
-  // iOS la exige para reproducir un <video>. Ver worker/index.js.
-  "main": "worker/index.js",
-
   // Fija el conjunto de APIs del runtime. Subirla es una decisión
   // deliberada, no algo que deba moverse al azar: cambia el
   // comportamiento del entorno bajo el que corre el Worker.
@@ -42,13 +37,6 @@
     // Esto reemplaza al `_redirects` que usaba Pages: son dos formas
     // de hacer lo mismo y tener las dos solo confunde a quien venga
     // después. Las cabeceras sí siguen en `public/_headers`.
-    "not_found_handling": "single-page-application",
-
-    // El Worker necesita un asa para pedir los archivos al almacén.
-    "binding": "ASSETS",
-
-    // Y solo debe despertarse para los vídeos. Todo lo demás sigue saliendo
-    // por la ruta estática rápida, sin pasar por código.
-    "run_worker_first": ["/*.mp4"]
+    "not_found_handling": "single-page-application"
   }
 }
