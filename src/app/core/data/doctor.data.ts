@@ -209,14 +209,25 @@ export const SPECIALTIES: readonly Specialty[] = [
    ============================================================ */
 
 /**
- * Se sirve desde el propio sitio. El máster salía de edición a 1080x1920 y
- * 15.4 Mbps —167 MB— y así no había hosting que lo arreglara: para verlo sin
- * cortes hacía falta bajar 15.4 Mbps sostenidos, que una conexión 4G no da, y
- * Safari en iPhone se quedaba en negro esperando datos.
+ * ORIGEN DEL VIDEO — y por qué no se sirve desde /public
  *
- * `npm run media:video` lo reencoda a 720x1280 y 1 Mbps: 11.3 MB, que además
- * entra de sobra en el límite de 25 MiB por archivo de Cloudflare. El máster
- * queda en media-fuente/, fuera del build.
+ * `npm run media:video` reencoda el máster a 720x1280 y 1 Mbps: de 167 MB a
+ * 11.3 MB. Eso resolvió el bitrate, pero no la reproducción en Safari.
+ *
+ * Safari en iOS exige respuestas parciales (HTTP 206) para arrancar un
+ * <video>, y los recursos estáticos de Cloudflare Workers ignoran la
+ * cabecera `Range`: ante `bytes=0-1023` devuelven 200 con el archivo entero.
+ * Se probó un Worker que armaba el 206 a mano; funcionaba, pero relee el
+ * archivo del almacén en cada rango y añadía ~200 ms por petición. Un video
+ * hace decenas mientras almacena, así que Safari seguía trabándose y Chrome
+ * se volvió más lento. Está revertido.
+ *
+ * De momento se sirve desde /public: en Chrome funciona y en Safari al menos
+ * queda el póster en lugar de un marco negro.
+ *
+ * TODO: subir public/fabio-coach-espiritual.mp4 (11.3 MB) a almacenamiento
+ * externo con soporte nativo de rangos y poner aquí esa URL. Comprobado que
+ * Vercel Blob devuelve 206 en 1 024 bytes; es cambiar solo esta línea.
  */
 export const COACH_VIDEO = {
   src: 'fabio-coach-espiritual.mp4',
