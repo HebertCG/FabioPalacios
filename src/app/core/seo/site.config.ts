@@ -28,10 +28,12 @@ import { CONTACT, DOCTOR } from '../data/doctor.data';
  * Origen canónico, sin barra final.
  *
  * Cambiarlo aquí reescribe canonical, Open Graph, JSON-LD y sitemap.
- * TODO: confirmar el dominio definitivo antes de publicar. Si termina
- * siendo otro, este es el único punto a tocar.
+ *
+ * Es el apex, sin `www`. Hay que elegir una de las dos formas y quedarse con
+ * ella: si Google encuentra el mismo contenido en las dos, reparte la señal
+ * entre ambas en vez de sumarla. `www` debe redirigir aquí con un 301.
  */
-export const SITE_ORIGIN = 'https://drfabiopalacios.pe';
+export const SITE_ORIGIN = 'https://fabiopalacios.org.pe';
 
 /** Une el origen con una ruta relativa y devuelve una URL absoluta. */
 export function absoluteUrl(path: string): string {

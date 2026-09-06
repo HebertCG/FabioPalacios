@@ -10,4 +10,4 @@ Disallow: /*?
 # Los videos pesan; que el rastreador no los descargue completos.
 Disallow: /*.mp4$
 
-Sitemap: https://drfabiopalacios.pe/sitemap.xml
+Sitemap: https://fabiopalacios.org.pe/sitemap.xml

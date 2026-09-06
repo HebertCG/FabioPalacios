@@ -235,8 +235,8 @@ export const SPECIALTIES: readonly Specialty[] = [
  * El comprimido y el máster viven en media-fuente/, fuera del build.
  * `npm run media:video` regenera el comprimido si hay que volver a subirlo.
  *
- * TODO: cuando drfabiopalacios.pe esté activo, mover el bucket a un dominio
- * propio (media.drfabiopalacios.pe). La URL de desarrollo r2.dev va con
+ * TODO: cuando fabiopalacios.org.pe resuelva, mover el bucket a un dominio
+ * propio (media.fabiopalacios.org.pe). La URL de desarrollo r2.dev va con
  * límite de peticiones y sin caché de CDN. Es cambiar solo esta línea.
  */
 export const COACH_VIDEO = {
