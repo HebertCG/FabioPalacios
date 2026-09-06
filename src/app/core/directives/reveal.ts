@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  inject,
-  input,
-  OnDestroy,
-  afterNextRender,
-} from '@angular/core';
+import { Directive, ElementRef, inject, input, OnDestroy, afterNextRender } from '@angular/core';
 
 /**
  * Revela un elemento cuando entra en el viewport.

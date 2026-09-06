@@ -8,7 +8,8 @@
     <!-- Marca compacta: isotipo, nombre y especialidad. -->
     <a
       class="brand"
-      href="#inicio"
+      routerLink="/"
+      fragment="inicio"
       aria-label="Ir al inicio, Fabio Palacios"
       (click)="closeMenu()"
     >
@@ -29,7 +30,9 @@
     <ul class="links">
       @for (link of links; track link.id) {
         <li>
-          <a [href]="link.href" [class.is-active]="activeSection() === link.id">{{ link.label }}</a>
+          <a routerLink="/" [fragment]="link.id" [class.is-active]="activeSection() === link.id">{{
+            link.label
+          }}</a>
         </li>
       }
     </ul>
@@ -71,7 +74,7 @@
   <ul class="sheet__links">
     @for (link of links; track link.id; let i = $index) {
       <li [style.--i]="i">
-        <a [href]="link.href" (click)="closeMenu()">
+        <a routerLink="/" [fragment]="link.id" (click)="closeMenu()">
           <span>{{ link.label }}</span>
           <app-icon name="arrow-right" [strokeWidth]="1.6" />
         </a>

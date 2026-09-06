@@ -1,0 +1,49 @@
+<div class="page">
+  <img
+    class="page__seal"
+    src="logo.png"
+    alt="Sello del Dr. Fabio Palacios, cirujano oncólogo"
+    width="512"
+    height="512"
+  />
+
+  <p class="page__code" aria-hidden="true">404</p>
+
+  <p class="page__eyebrow">Página no encontrada</p>
+  <h1>Esta dirección no existe.</h1>
+  <p class="page__lead">
+    Puede que el enlace esté mal escrito o que la página haya cambiado de sitio. Lo que buscas
+    probablemente esté aquí abajo.
+  </p>
+
+  <div class="page__actions">
+    <a class="page__btn" routerLink="/">Ir al inicio <span aria-hidden="true">→</span></a>
+    <a
+      class="page__btn page__btn--green"
+      [href]="medicalLink"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Consultar <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+
+  <nav class="page__links" aria-label="Secciones principales">
+    <a routerLink="/" fragment="medicina">
+      <strong>Cirugía oncológica</strong>
+      <span>Especialidad, formación y las seis áreas que opera en Piura.</span>
+    </a>
+    <a routerLink="/" fragment="acompanamiento">
+      <strong>Acompañamiento</strong>
+      <span>Coach espiritual en el manejo del cáncer.</span>
+    </a>
+    <a routerLink="/" fragment="sobrevivientes">
+      <strong>Programa de sobrevivientes</strong>
+      <span>Charlas para quienes ya recibieron un diagnóstico.</span>
+    </a>
+    <a routerLink="/" fragment="contacto">
+      <strong>Contacto</strong>
+      <span>Escribir por WhatsApp y agendar una consulta.</span>
+    </a>
+  </nav>
+</div>

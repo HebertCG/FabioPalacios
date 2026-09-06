@@ -99,7 +99,9 @@ function personNode(): JsonLdNode {
     honorificPrefix: 'Dr.',
     jobTitle: DOCTOR.specialty,
     description:
-      'Médico, conferencista y ciudadano de Piura. Comparte conocimiento y vive su profesión desde la cercanía, el servicio y la familia.',
+      'Cirujano oncólogo en Piura, con subespecialidad en cavidad abdominal. Formado en el INEN ' +
+      'e IRCAD América Latina. Opera cáncer digestivo, de mama, cabeza y cuello, urológico y ' +
+      'ginecológico, y acompaña el proceso completo del paciente.',
     image: { '@id': ID.primaryImage },
     url: `${SITE_ORIGIN}/`,
     telephone: CONTACT.whatsapp,

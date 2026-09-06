@@ -1,0 +1,48 @@
+<div class="page">
+  <img
+    class="page__seal"
+    src="logo.png"
+    alt="Sello del Dr. Fabio Palacios, cirujano oncólogo"
+    width="512"
+    height="512"
+  />
+
+  <p class="page__eyebrow">Mensaje listo</p>
+  <h1>Gracias por escribir.</h1>
+  <p class="page__lead">
+    Se abrió WhatsApp con tu mensaje ya redactado. Si no lo ves, revisa la otra pestaña o escribe
+    directamente al {{ contact.whatsappDisplay }}.
+  </p>
+
+  <div class="doc">
+    <section>
+      <h2>Qué pasa ahora</h2>
+      <ul>
+        <li>Responde el propio doctor, no un asistente ni un contestador automático.</li>
+        <li>
+          Si ya tienes estudios —tomografías, biopsias, análisis— puedes enviarlos por el mismo
+          chat. Llegar con ellos ahorra una consulta.
+        </li>
+        <li>La consulta es previa cita, en Castilla, Piura.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="page__actions">
+    <a class="page__btn" routerLink="/">Volver al inicio <span aria-hidden="true">→</span></a>
+    <a class="page__btn page__btn--ghost" routerLink="/" fragment="videos">
+      Ver sus videos <span aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <nav class="page__links" aria-label="Mientras esperas la respuesta">
+    <a routerLink="/" fragment="prevencion">
+      <strong>Prevención</strong>
+      <span>Alimentación, actividad física y factores de riesgo.</span>
+    </a>
+    <a routerLink="/" fragment="sobrevivientes">
+      <strong>Programa de sobrevivientes</strong>
+      <span>Charlas para quienes ya recibieron un diagnóstico.</span>
+    </a>
+  </nav>
+</div>

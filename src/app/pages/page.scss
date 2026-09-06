@@ -1,0 +1,239 @@
+@use '../../styles/mixins' as m;
+
+/* ============================================================
+   PÁGINAS DE APOYO — 404, gracias y privacidad
+   ============================================================
+   Las tres comparten esta hoja porque son la misma pieza con distinto
+   contenido: una columna centrada bajo el navbar, con el sello del doctor
+   arriba. Duplicar el sistema en tres archivos solo garantizaba que se
+   desincronizaran.
+
+   Hereda los tokens de `styles/_tokens.scss`; aquí solo se define lo que
+   estas páginas necesitan y la portada no. */
+
+:host {
+  --page-ink: #172231;
+  --page-muted: #56616e;
+  --page-line: rgba(23, 34, 49, 0.16);
+  --page-green: #0f7a52;
+  --page-green-deep: #0b6240;
+
+  display: block;
+  min-height: 100dvh;
+  color: var(--page-ink);
+  background: #ffffff;
+}
+
+.page {
+  display: grid;
+  align-content: start;
+  gap: clamp(1.25rem, 2.4vw, 1.9rem);
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  padding: calc(var(--nav-h) + clamp(2.5rem, 7vw, 5.5rem)) clamp(1.25rem, 5vw, 2.5rem)
+    clamp(3.5rem, 8vw, 6rem);
+}
+
+/* El sello del doctor: identifica la página aunque el navbar no se vea */
+.page__seal {
+  width: clamp(3.25rem, 6vw, 4.25rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  object-fit: contain;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px var(--page-line);
+}
+
+.page__eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--page-muted);
+}
+
+.page h1 {
+  max-width: 17ch;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.page__lead {
+  max-width: 52ch;
+  font-size: clamp(1rem, 1.15vw, 1.12rem);
+  line-height: 1.62;
+  color: var(--page-muted);
+}
+
+/* Código enorme del 404: cifra, no adorno */
+.page__code {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 14vw, 9rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: var(--page-line);
+  font-variant-numeric: tabular-nums;
+}
+
+.page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: clamp(0.5rem, 1.4vw, 1rem);
+}
+
+.page__btn {
+  @include m.focus-ring(#172231);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0.85rem 1.45rem;
+  border: 1px solid var(--page-ink);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--page-ink);
+  transition:
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+
+  span {
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    span {
+      transform: translateX(3px);
+    }
+  }
+
+  &--ghost {
+    color: var(--page-ink);
+    background: transparent;
+
+    &:hover {
+      color: #ffffff;
+      background: var(--page-ink);
+    }
+  }
+
+  &--green {
+    border-color: var(--page-green);
+    background: var(--page-green);
+
+    &:hover {
+      border-color: var(--page-green-deep);
+      background: var(--page-green-deep);
+
+      span {
+        transform: translate(2px, -2px);
+      }
+    }
+  }
+}
+
+/* Rejilla de enlaces internos: de una página sin salida a una con salidas */
+.page__links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1px;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--page-line);
+  background: var(--page-line);
+
+  a {
+    @include m.focus-ring(#172231);
+    display: grid;
+    gap: 0.3rem;
+    padding: clamp(1rem, 2vw, 1.35rem);
+    background: #ffffff;
+    transition: background-color var(--dur) var(--ease-out);
+
+    strong {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    span {
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--page-muted);
+    }
+
+    &:hover {
+      background: #f4f7f8;
+    }
+  }
+}
+
+/* ---------- Documento legal ---------- */
+
+.doc {
+  display: grid;
+  gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--page-line);
+
+  section {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  h2 {
+    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  p,
+  li {
+    max-width: 68ch;
+    font-size: clamp(0.95rem, 1.05vw, 1.03rem);
+    line-height: 1.68;
+    color: var(--page-muted);
+  }
+
+  ul {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.15rem;
+    list-style: disc;
+  }
+
+  strong {
+    color: var(--page-ink);
+  }
+
+  a {
+    color: var(--page-green);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+}
+
+.doc__stamp {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--page-muted);
+}
+
+@media (max-width: 767.98px) {
+  .page__btn {
+    width: 100%;
+  }
+}

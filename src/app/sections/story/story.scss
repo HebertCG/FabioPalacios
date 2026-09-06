@@ -2082,6 +2082,72 @@ h3 {
   }
 }
 
+/* CTA fijo en móvil
+   Solo existe en pantallas pequeñas: en escritorio los botones del héroe y del
+   bloque de contacto quedan siempre a un scroll de distancia, y una barra fija
+   ahí solo robaría alto útil. Aparece cuando el héroe sale de pantalla. */
+.dock {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 90;
+  display: none;
+  padding: 0.7rem clamp(0.85rem, 4vw, 1.25rem);
+  /* El área del gesto de inicio del iPhone se suma al relleno, para que el
+     botón no quede debajo de la barra del sistema. */
+  padding-bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--story-line);
+  transform: translateY(110%);
+  transition: transform 0.32s var(--ease-out);
+
+  &.is-visible {
+    transform: none;
+  }
+
+  &__cta {
+    @include m.focus-ring(#ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 52px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #ffffff;
+    background: var(--story-green);
+
+    &:active {
+      background: var(--story-green-deep);
+    }
+  }
+}
+
+/* Mapa del sitio en el pie: enlaces internos a cada sección, que es lo que
+   permite a un rastreador recorrer la página entera desde cualquier punto. */
+.footer__sitemap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  padding-block: clamp(1.25rem, 2.4vw, 1.75rem);
+  border-top: 1px solid var(--story-line);
+
+  a {
+    @include m.focus-ring(#172231);
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--story-muted);
+    transition: color var(--dur) var(--ease-out);
+
+    &:hover {
+      color: var(--story-text);
+    }
+  }
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--story-line);
@@ -2671,6 +2737,15 @@ h3 {
   .survive__cta {
     width: 100%;
     justify-content: center;
+  }
+
+  .dock {
+    display: block;
+  }
+
+  /* El pie reserva el alto del dock para que su última línea no quede debajo */
+  .footer__bottom {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .clip-rail {

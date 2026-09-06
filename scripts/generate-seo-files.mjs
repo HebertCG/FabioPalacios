@@ -142,6 +142,14 @@ function buildSitemap() {
     '    <priority>1.0</priority>',
     images,
     '  </url>',
+    // `/gracias` y `/404` existen pero van con `noindex`: listarlas aquí sería
+    // pedirle a Google que indexe justo lo que se le pide que ignore.
+    '  <url>',
+    `    <loc>${xmlEscape(SITE_ORIGIN)}/privacidad</loc>`,
+    `    <lastmod>${CONTENT_LAST_REVIEWED}</lastmod>`,
+    '    <changefreq>yearly</changefreq>',
+    '    <priority>0.3</priority>',
+    '  </url>',
     '</urlset>',
     '',
   ].join('\n');

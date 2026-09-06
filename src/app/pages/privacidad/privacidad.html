@@ -1,0 +1,124 @@
+<div class="page">
+  <img
+    class="page__seal"
+    src="logo.png"
+    alt="Sello del Dr. Fabio Palacios, cirujano oncólogo"
+    width="512"
+    height="512"
+  />
+
+  <p class="page__eyebrow">Política de privacidad</p>
+  <h1>Qué datos trata esta web.</h1>
+  <p class="page__lead">
+    Esta página no tiene formularios ni cuentas de usuario. No pide, no guarda y no vende datos
+    personales. Lo que sigue explica las únicas excepciones y cómo ejercer tus derechos.
+  </p>
+  <p class="doc__stamp">Última actualización: {{ updated }}</p>
+
+  <div class="doc">
+    <section>
+      <h2>Quién es responsable</h2>
+      <p>
+        {{ doctor.displayName }}, {{ doctor.specialty }} (CMP {{ doctor.cmp }} · RNE
+        {{ doctor.rne }}), con consulta en {{ doctor.district }}, {{ doctor.city }}, Perú. Puedes
+        escribir al WhatsApp {{ contact.whatsappDisplay }} para cualquier asunto relacionado con
+        esta política.
+      </p>
+    </section>
+
+    <section>
+      <h2>Qué recoge la web por sí misma</h2>
+      <p>
+        <strong>Nada.</strong> No hay formularios de contacto, ni registro, ni área privada. Las
+        tipografías se sirven desde este mismo dominio, así que ni siquiera cargar la página avisa a
+        un tercero de que estuviste aquí.
+      </p>
+      <p>
+        Como cualquier sitio en internet, el servidor que la entrega —Cloudflare— procesa datos
+        técnicos de la conexión, como la dirección IP, para poder responder y para protegerse de
+        ataques. Es un tratamiento necesario para que la web funcione y no se usa para identificar a
+        nadie.
+      </p>
+    </section>
+
+    <section>
+      <h2>Cuando escribes por WhatsApp</h2>
+      <p>
+        Los botones de contacto abren WhatsApp con un mensaje ya redactado.
+        <strong>Nada se envía hasta que tú lo envías.</strong> A partir de ahí, la conversación se
+        rige por las condiciones de WhatsApp y de su empresa propietaria, no por esta web.
+      </p>
+      <p>
+        Lo que escribas en ese chat —incluidos diagnósticos, estudios o cualquier dato de salud que
+        decidas compartir— lo recibe el doctor directamente y queda amparado por el secreto
+        profesional médico. La
+        <strong>Ley N.° 29733 de Protección de Datos Personales</strong> trata los datos de salud
+        como categoría sensible: no se ceden a terceros ni se usan con fines distintos de atender tu
+        consulta.
+      </p>
+    </section>
+
+    <section>
+      <h2>Vídeos</h2>
+      <p>
+        Los vídeos del doctor se alojan en Cloudflare R2 y se reproducen dentro de la propia página,
+        sin reproductores incrustados de terceros. Reproducir uno no crea ningún perfil
+        publicitario.
+      </p>
+    </section>
+
+    @if (analyticsEnabled) {
+      <section>
+        <h2>Medición de visitas</h2>
+        <p>
+          La web usa Google Analytics para saber cuántas personas la visitan y qué secciones leen.
+          Esa herramienta instala identificadores en tu navegador y trata datos de uso de forma
+          estadística. No se usa para publicidad ni permite saber quién eres.
+        </p>
+        <p>
+          Puedes impedirlo desde la configuración de cookies de tu navegador o instalando el
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            target="_blank"
+            rel="noopener noreferrer"
+            >complemento de inhabilitación de Google Analytics</a
+          >.
+        </p>
+      </section>
+    } @else {
+      <section>
+        <h2>Cookies y medición</h2>
+        <p>
+          Esta web <strong>no instala cookies</strong> ni utiliza herramientas de analítica o
+          publicidad. Si eso cambia, se anunciará aquí antes de activarse.
+        </p>
+      </section>
+    }
+
+    <section>
+      <h2>Tus derechos</h2>
+      <p>
+        La Ley N.° 29733 te reconoce los derechos de acceso, rectificación, cancelación y oposición
+        sobre tus datos personales. Para ejercerlos, escribe al WhatsApp
+        {{ contact.whatsappDisplay }} indicando qué necesitas.
+      </p>
+      <p>
+        Si consideras que no se han atendido, puedes presentar una reclamación ante la
+        <strong>Autoridad Nacional de Protección de Datos Personales</strong> del Ministerio de
+        Justicia y Derechos Humanos del Perú.
+      </p>
+    </section>
+
+    <section>
+      <h2>Un recordatorio importante</h2>
+      <p>
+        El contenido de esta web es informativo. No constituye un diagnóstico ni sustituye una
+        consulta médica. Ante cualquier síntoma, acude a un profesional de la salud.
+      </p>
+    </section>
+  </div>
+
+  <div class="page__actions">
+    <a class="page__btn" routerLink="/">Volver al inicio <span aria-hidden="true">→</span></a>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Icon } from '../../ui/icon/icon';
 import { DOCTOR, NAV_LINKS, whatsappLink } from '../../core/data/doctor.data';
 
@@ -31,7 +32,7 @@ const MORPH_THRESHOLD = 48;
  */
 @Component({
   selector: 'app-navbar',
-  imports: [Icon],
+  imports: [Icon, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
@@ -149,6 +150,8 @@ export class Navbar {
   /* ---------------- sección activa ---------------- */
 
   private watchSections(): void {
+    // En las páginas de apoyo no existe ninguna sección: `querySelector`
+    // devuelve null para todas y el observador no llega a crearse.
     const sections = this.links
       .map((link) => document.querySelector<HTMLElement>(link.href))
       .filter((el): el is HTMLElement => el !== null);

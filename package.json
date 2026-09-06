@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run media:images && npm run media:brand && npm run media:og && npm run seo:files && ng build",
+    "build": "npm run media:images && npm run media:brand && npm run media:og && npm run seo:files && ng build && npm run build:finalize",
+    "build:finalize": "node scripts/finalize-build.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "seo:files": "node --import ./scripts/lib/register-ts-imports.mjs scripts/generate-seo-files.mjs",

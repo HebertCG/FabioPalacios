@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  HostListener,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
+import { ContactCta } from '../../core/directives/contact-cta';
 import { InViewPlay } from '../../core/directives/in-view-play';
+import { RouterLink } from '@angular/router';
 import { Reveal } from '../../core/directives/reveal';
 import {
   COACH_VIDEO,
@@ -8,6 +19,7 @@ import {
   DOCTOR,
   PREVENTION,
   REELS,
+  NAV_LINKS,
   SOCIALS,
   SPECIALTIES,
   SURVIVOR_PROGRAM,
@@ -36,12 +48,14 @@ function media(src: string): StoryMedia {
 
 @Component({
   selector: 'app-story',
-  imports: [InViewPlay, Reveal],
+  imports: [ContactCta, InViewPlay, Reveal, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story.html',
   styleUrl: './story.scss',
 })
 export class Story {
+  private readonly destroyRef = inject(DestroyRef);
+
   protected readonly photos = {
     hero: media('fabio/fabio-comunidad-portada.jpg'),
     listening: media('fabio/fabio-escuchando-comunidad.jpg'),
@@ -148,6 +162,36 @@ export class Story {
     if (!seconds) return '';
     const minutes = Math.floor(seconds / 60);
     return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
+  }
+
+  /* ---------- Pie y CTA fijo ---------- */
+
+  protected readonly navLinks = NAV_LINKS;
+
+  /**
+   * El CTA fijo aparece solo cuando el héroe ya salió de pantalla. Mientras se
+   * ve, sus propios botones hacen el mismo trabajo y esta barra solo taparía
+   * contenido.
+   */
+  protected readonly dockVisible = signal(false);
+
+  constructor() {
+    afterNextRender(() => this.watchHero());
+  }
+
+  private watchHero(): void {
+    const hero = document.getElementById('inicio');
+    if (!hero || typeof IntersectionObserver === 'undefined') {
+      this.dockVisible.set(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => this.dockVisible.set(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+    this.destroyRef.onDestroy(() => observer.disconnect());
   }
 
   /* ---------- Contacto ---------- */

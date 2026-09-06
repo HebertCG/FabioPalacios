@@ -29,14 +29,16 @@
     // se publica.
     "directory": "./dist/landing/browser",
 
-    // La landing es una sola página con anclas, pero Angular arranca
-    // en el navegador: cualquier ruta desconocida debe devolver el
-    // index con código 200 para que la aplicación resuelva, en lugar
-    // de un 404 del servidor.
+    // Las rutas reales (`/`, `/gracias`, `/privacidad`) se prerenderizan
+    // como carpetas con su index, así que el almacén de assets las sirve
+    // solo. Lo que no existe debe devolver un 404 de verdad, no la
+    // portada con estado 200: eso último es un «soft 404» y Google acaba
+    // indexando direcciones inexistentes.
     //
-    // Esto reemplaza al `_redirects` que usaba Pages: son dos formas
-    // de hacer lo mismo y tener las dos solo confunde a quien venga
-    // después. Las cabeceras sí siguen en `public/_headers`.
-    "not_found_handling": "single-page-application"
+    // Cloudflare busca `404.html` en la raíz de lo publicado; lo deja ahí
+    // `scripts/finalize-build.mjs` copiando el prerender de `/404`.
+    //
+    // Las cabeceras siguen en `public/_headers`.
+    "not_found_handling": "404-page"
   }
 }

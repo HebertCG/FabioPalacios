@@ -48,30 +48,36 @@ export function absoluteUrl(path: string): string {
 /**
  * TÍTULO — se muestra en la pestaña y como titular azul en Google.
  *
- * Abre con el nombre y resume las tres dimensiones de la nueva página.
- * Mantiene la especialidad médica al final sin convertirla en el único
- * eje de la identidad. Google trunca cerca de los 60 caracteres.
+ * Abre con la especialidad y la ciudad porque son las palabras que la gente
+ * escribe: casi nadie busca «Fabio Palacios» sin conocerlo ya. El nombre va
+ * detrás, donde sigue resolviendo las búsquedas por marca.
+ *
+ * La versión anterior —«Persona, conferencista y cirujano oncólogo»— describía
+ * un posicionamiento que la página ya no tiene, y no contenía la palabra
+ * «Piura» en ningún punto. Google trunca cerca de los 60 caracteres; este
+ * ocupa 43.
  */
-export const SEO_TITLE = `${DOCTOR.displayName} | Persona, conferencista y cirujano oncólogo`;
+export const SEO_TITLE = `Cirujano oncólogo en ${DOCTOR.city} | ${DOCTOR.displayName}`;
 
 /**
  * DESCRIPCIÓN — el párrafo gris bajo el título en Google.
  *
- * Máximo útil: unos 155 caracteres. No es factor de posicionamiento
- * directo, pero decide el clic. Resume comunidad, familia, valores y
- * trabajo médico sin reducir la identidad de Fabio a su profesión.
+ * Máximo útil: unos 155 caracteres. No es factor de posicionamiento directo,
+ * pero decide el clic. Nombra las seis áreas que opera y las dos razones por
+ * las que alguien busca a un oncólogo sin ser todavía su paciente: pedir una
+ * segunda opinión y saber dónde se atiende.
  */
 export const SEO_DESCRIPTION =
-  `Conoce el lado humano de ${DOCTOR.displayName}: sus valores, su familia, las charlas que ` +
-  `comparte con la comunidad y su trabajo como cirujano oncólogo en ${DOCTOR.city}.`;
+  `Cirugía oncológica en ${DOCTOR.city}: cáncer digestivo, de mama, cabeza y cuello, urológico ` +
+  `y ginecológico. Segunda opinión y consulta previa cita en ${DOCTOR.district}.`;
 
 /**
  * Descripción corta para tarjetas de redes, donde hay menos espacio y
  * el texto compite con la imagen.
  */
 export const SEO_SOCIAL_DESCRIPTION =
-  `Médico, conferencista y ciudadano de ${DOCTOR.city}. Una historia de comunidad, ` +
-  `familia, servicio y vocación.`;
+  `Cirujano oncólogo en ${DOCTOR.city}. Un amigo en tu lucha: cirugía, acompañamiento y ` +
+  `segunda opinión, con respuesta del propio doctor.`;
 
 /**
  * Palabras clave. Google las ignora desde 2009; se conservan porque
@@ -116,7 +122,7 @@ export const SITE_LOCALE_OG = 'es_PE';
  * TODO: actualizar esta fecha cada vez que el doctor revise y apruebe
  * los textos clínicos (especialidades, preguntas frecuentes, sobre mí).
  */
-export const CONTENT_LAST_REVIEWED = '2026-08-25';
+export const CONTENT_LAST_REVIEWED = '2026-09-06';
 
 /* ============================================================
    IMÁGENES

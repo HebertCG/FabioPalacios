@@ -23,6 +23,8 @@
         <a
           class="action action--glass"
           [href]="conversationLink"
+          appContactCta
+          ctaReason="conversar"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -51,6 +53,8 @@
           <a
             class="mission__contact"
             [href]="conversationLink"
+            appContactCta
+            ctaReason="conversar"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -192,7 +196,14 @@
               />
             </picture>
           </figure>
-          <a class="tile__cta" [href]="conversationLink" target="_blank" rel="noopener noreferrer">
+          <a
+            class="tile__cta"
+            [href]="conversationLink"
+            appContactCta
+            ctaReason="conversar"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Conversemos <span aria-hidden="true">↗</span>
           </a>
         </article>
@@ -281,6 +292,8 @@
         <a
           class="tile tile--invite"
           [href]="conversationLink"
+          appContactCta
+          ctaReason="conversar"
           target="_blank"
           rel="noopener noreferrer"
           appReveal
@@ -407,6 +420,8 @@
         <a
           class="med med--book"
           [href]="medicalLink"
+          appContactCta
+          ctaReason="consultar"
           target="_blank"
           rel="noopener noreferrer"
           appReveal
@@ -576,7 +591,14 @@
           Un espacio para quienes ya recibieron un diagnóstico y para quienes lo superaron. Se entra
           escribiendo, sin trámite.
         </p>
-        <a class="survive__cta" [href]="survivorLink" target="_blank" rel="noopener noreferrer">
+        <a
+          class="survive__cta"
+          [href]="survivorLink"
+          appContactCta
+          ctaReason="sobrevivientes"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Quiero unirme <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -855,7 +877,14 @@
           }
         </div>
 
-        <a class="contact__send" [href]="contactLink()" target="_blank" rel="noopener noreferrer">
+        <a
+          class="contact__send"
+          [href]="contactLink()"
+          appContactCta
+          ctaReason="contacto"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Escribir por WhatsApp <span aria-hidden="true">↗</span>
         </a>
 
@@ -893,12 +922,38 @@
         >
       </nav>
     </div>
+    <nav class="page-shell footer__sitemap" aria-label="Secciones del sitio">
+      @for (link of navLinks; track link.id) {
+        <a routerLink="/" [fragment]="link.id">{{ link.label }}</a>
+      }
+      <a routerLink="/privacidad">Privacidad</a>
+    </nav>
+
     <div class="page-shell footer__bottom">
-      <p>Este espacio reúne la historia, los valores y el trabajo de Fabio Palacios.</p>
+      <p>
+        Cirugía oncológica en Castilla, Piura. Atiende también a pacientes de Sullana, Talara, Paita
+        y Tumbes.
+      </p>
       <p>
         La información médica es orientativa y no reemplaza una consulta, diagnóstico ni
         tratamiento.
       </p>
     </div>
   </footer>
+
+  <!-- CTA fijo en móvil. Solo aparece cuando el héroe ya salió de pantalla:
+       mientras se ve, sus propios botones cumplen la misma función y este
+       tapaba contenido sin aportar nada. -->
+  <div class="dock" [class.is-visible]="dockVisible()" aria-hidden="false">
+    <a
+      class="dock__cta"
+      [href]="medicalLink"
+      appContactCta
+      ctaReason="dock-movil"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Consultar por WhatsApp <span aria-hidden="true">↗</span>
+    </a>
+  </div>
 </article>

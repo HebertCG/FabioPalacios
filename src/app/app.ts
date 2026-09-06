@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Navbar } from './layout/navbar/navbar';
-import { Story } from './sections/story/story';
+import { RouterOutlet } from '@angular/router';
 
 /**
  * Shell de la landing.
@@ -17,7 +17,7 @@ import { Story } from './sections/story/story';
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Navbar, Story],
+  imports: [Navbar, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
