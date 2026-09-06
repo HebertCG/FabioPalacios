@@ -48,36 +48,35 @@ export function absoluteUrl(path: string): string {
 /**
  * TÍTULO — se muestra en la pestaña y como titular azul en Google.
  *
- * Abre con la especialidad y la ciudad porque son las palabras que la gente
- * escribe: casi nadie busca «Fabio Palacios» sin conocerlo ya. El nombre va
- * detrás, donde sigue resolviendo las búsquedas por marca.
+ * Especialidad y nombre, sin ciudad: el doctor no quiere que su posicionamiento
+ * quede atado a Piura. Ocupa 32 caracteres de los ~60 que Google muestra.
  *
- * La versión anterior —«Persona, conferencista y cirujano oncólogo»— describía
- * un posicionamiento que la página ya no tiene, y no contenía la palabra
- * «Piura» en ningún punto. Google trunca cerca de los 60 caracteres; este
- * ocupa 43.
+ * La contrapartida es real y conviene tenerla presente: sin la ciudad en el
+ * título, «oncólogo Piura» y sus variantes locales quedan más difíciles. Ese
+ * terreno lo cubre sobre todo el Perfil de Empresa de Google, que es lo que
+ * alimenta el bloque de mapa, y no este campo.
  */
-export const SEO_TITLE = `Cirujano oncólogo en ${DOCTOR.city} | ${DOCTOR.displayName}`;
+export const SEO_TITLE = `Cirujano oncólogo ${DOCTOR.displayName}`;
 
 /**
  * DESCRIPCIÓN — el párrafo gris bajo el título en Google.
  *
  * Máximo útil: unos 155 caracteres. No es factor de posicionamiento directo,
- * pero decide el clic. Nombra las seis áreas que opera y las dos razones por
- * las que alguien busca a un oncólogo sin ser todavía su paciente: pedir una
- * segunda opinión y saber dónde se atiende.
+ * pero decide el clic. Abre con lo que hace y no con dónde, en línea con el
+ * título; la ciudad queda al final porque quien está a punto de escribir sí
+ * necesita saber dónde se atiende.
  */
 export const SEO_DESCRIPTION =
-  `Cirugía oncológica en ${DOCTOR.city}: cáncer digestivo, de mama, cabeza y cuello, urológico ` +
-  `y ginecológico. Segunda opinión y consulta previa cita en ${DOCTOR.district}.`;
+  `Cirugía oncológica de alta complejidad: cáncer digestivo, de mama, cabeza y cuello, urológico ` +
+  `y ginecológico. Segunda opinión y consulta en ${DOCTOR.city}.`;
 
 /**
  * Descripción corta para tarjetas de redes, donde hay menos espacio y
  * el texto compite con la imagen.
  */
 export const SEO_SOCIAL_DESCRIPTION =
-  `Cirujano oncólogo en ${DOCTOR.city}. Un amigo en tu lucha: cirugía, acompañamiento y ` +
-  `segunda opinión, con respuesta del propio doctor.`;
+  `Un amigo en tu lucha. Cirugía oncológica, acompañamiento y segunda opinión, ` +
+  `con respuesta del propio doctor.`;
 
 /**
  * Palabras clave. Google las ignora desde 2009; se conservan porque
