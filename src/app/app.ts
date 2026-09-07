@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@angular/core';
 import { Navbar } from './layout/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
+import { SmoothScroll } from './core/scroll/smooth-scroll';
 import { SocialRail } from './ui/social-rail/social-rail';
 
 /**
@@ -22,4 +23,12 @@ import { SocialRail } from './ui/social-rail/social-rail';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  private readonly smoothScroll = inject(SmoothScroll);
+
+  constructor() {
+    /* Después del primer pintado y solo en el navegador: durante el
+       prerender no hay ventana que desplazar. */
+    afterNextRender(() => this.smoothScroll.boot());
+  }
+}

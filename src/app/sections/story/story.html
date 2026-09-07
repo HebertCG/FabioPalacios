@@ -403,7 +403,9 @@
       </div>
 
       <app-member-marquee appReveal [revealDelay]="120" />
-      <app-research-publications appReveal [revealDelay]="150" />
+      <!-- La entrada la resuelve cada tarjeta por su cuenta, escalonada.
+           Revelar además el bloque entero solo añadía un fundido por encima. -->
+      <app-research-publications />
     </div>
   </section>
 

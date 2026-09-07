@@ -1,5 +1,35 @@
 @use '../../../styles/mixins' as m;
 
+/* ============================================================
+   PUBLICACIONES
+   ============================================================
+   Cuatro piezas de peso muy distinto: dos notas de prensa, un registro
+   académico y una entrevista en video. Antes ocupaban cuatro columnas
+   idénticas y el bloque se leía como una rejilla de plantilla, sin decir
+   cuál importaba más.
+
+   Aquí hay tres formatos de tarjeta, no uno repetido cuatro veces:
+
+     · la nota principal es vertical y grande, con la foto mandando
+     · las dos del medio son compactas y horizontales, foto a la izquierda
+     · la entrevista es una banda ancha, que es la forma que pide un video
+
+   El mosaico de Medicina está justo encima, así que este bloque
+   deliberadamente NO usa sus cortes asimétricos: repetirlos aquí haría que
+   los dos se confundieran. Este habla con esquinas redondeadas parejas y
+   una sola excepción por tarjeta. */
+
+/* El zoom del cursor y la deriva del scroll quieren la misma propiedad
+   `transform` de la misma imagen, y una animación con `both` le gana siempre
+   a una transición. Registrando el factor de escala como propiedad animable
+   los dos conviven: la deriva lo lee dentro de sus fotogramas y el cursor lo
+   transiciona. */
+@property --shot-zoom {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
 :host {
   display: block;
   margin-top: clamp(3rem, 5vw, 4.5rem);
@@ -16,9 +46,12 @@
   background: var(--story-text);
 }
 
+/* ---------- Cabecera ---------- */
+
 .research__heading {
+  display: grid;
+  gap: 0.55rem;
   padding-bottom: clamp(1rem, 1.5vw, 1.35rem);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 
   h2 {
     font-size: clamp(2.1rem, 3.15vw, 3.25rem);
@@ -27,74 +60,134 @@
     white-space: nowrap;
     color: #ffffff;
   }
+
+  /* La regla era un `border-bottom` y un borde no se puede animar por su
+     largo. Como pseudoelemento sí: se dibuja de izquierda a derecha
+     conforme el bloque entra en cuadro. */
+  &::after {
+    content: '';
+    display: block;
+    height: 1px;
+    margin-top: clamp(0.9rem, 1.4vw, 1.25rem);
+    background: rgba(255, 255, 255, 0.28);
+    transform-origin: left center;
+  }
 }
 
-.research-card__topline,
-.research-card__footer {
+.research__eyebrow {
   font-family: var(--font-display);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
 }
 
+/* ---------- El bento ---------- */
+
+/* La maquetación está escrita para estas cuatro piezas. Si el doctor añade
+   una quinta, cae en una fila nueva de ancho completo: no se rompe, pero
+   habrá que decidirle sitio. */
 .research__grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(2, clamp(11.5rem, 15vw, 14rem)) auto;
   gap: clamp(0.65rem, 1vw, 0.95rem);
   margin-top: clamp(1.25rem, 2vw, 1.8rem);
 }
 
 .research-card {
   @include m.focus-ring(#ffffff);
+  position: relative;
   display: flex;
   min-width: 0;
-  min-height: clamp(24rem, 33vw, 29rem);
-  flex-direction: column;
+  min-height: 0;
   overflow: hidden;
   border-radius: clamp(1.2rem, 2vw, 2rem);
   color: var(--story-text);
   background: #ffffff;
   transition:
     transform var(--dur) var(--ease-out),
-    box-shadow var(--dur) var(--ease-out);
+    box-shadow var(--dur) var(--ease-out),
+    --shot-zoom 0.75s var(--ease-out);
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 42px rgba(3, 10, 17, 0.3);
+    --shot-zoom: 1.06;
 
-    img {
-      transform: scale(1.035);
-    }
+    transform: translateY(-5px);
+    box-shadow: 0 20px 46px rgba(3, 10, 17, 0.34);
 
     .research-card__footer i {
       transform: translate(3px, -3px);
+      background: var(--story-accent-deep);
+    }
+
+    .research-card__badge {
+      transform: translateY(-3px);
     }
   }
+}
 
-  &--lead,
-  &--clinical,
-  &--academic,
-  &--interview {
-    grid-column: span 3;
+/* 1 · Nota principal: vertical, la foto manda */
+.research-card--lead {
+  grid-area: 1 / 1 / 3 / 8;
+  flex-direction: column;
+  /* La única esquina que rompe la simetría, y la lleva la pieza principal */
+  border-radius: clamp(1.2rem, 2vw, 2rem) clamp(3rem, 5vw, 5rem) clamp(1.2rem, 2vw, 2rem)
+    clamp(3rem, 5vw, 5rem);
+
+  .research-card__media {
+    height: 56%;
   }
 
-  &--lead {
-    border-radius: clamp(1.2rem, 2vw, 2rem) clamp(3rem, 5vw, 5rem) clamp(1.2rem, 2vw, 2rem)
-      clamp(3rem, 5vw, 5rem);
+  .research-card__copy h3 {
+    font-size: clamp(1.45rem, 2.15vw, 2.15rem);
   }
 
-  &--academic {
-    border-radius: clamp(3rem, 5vw, 5rem) clamp(1.2rem, 2vw, 2rem);
+  .research-card__copy p {
+    max-width: 46ch;
+    font-size: clamp(0.82rem, 0.9vw, 0.92rem);
   }
 }
+
+/* 2 y 3 · Compactas: foto a la izquierda, texto a la derecha */
+.research-card--clinical {
+  grid-area: 1 / 8 / 2 / 13;
+}
+
+.research-card--academic {
+  grid-area: 2 / 8 / 3 / 13;
+  border-radius: clamp(3rem, 5vw, 5rem) clamp(1.2rem, 2vw, 2rem);
+}
+
+/* 4 · La entrevista es un video: una banda ancha es la forma que le toca */
+.research-card--interview {
+  grid-area: 3 / 1 / 4 / 13;
+  min-height: clamp(10rem, 13vw, 12.5rem);
+}
+
+.research-card--clinical,
+.research-card--academic,
+.research-card--interview {
+  flex-direction: row;
+
+  .research-card__media {
+    width: 38%;
+    height: auto;
+    flex: none;
+  }
+}
+
+.research-card--interview .research-card__media {
+  width: 32%;
+}
+
+/* ---------- La franja de imagen ---------- */
 
 .research-card__media {
   position: relative;
   display: grid;
-  flex: none;
   place-items: center;
-  height: clamp(9rem, 12vw, 11rem);
   overflow: hidden;
   background: #e8ecef;
 
@@ -110,7 +203,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.7s var(--ease-out);
+    transform: scale(var(--shot-zoom));
   }
 }
 
@@ -124,7 +217,7 @@
 
 .research-card__monogram {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-size: clamp(1.6rem, 2.2vw, 2.4rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.06em;
@@ -140,29 +233,45 @@
   font-size: clamp(0.68rem, 0.75vw, 0.78rem);
   line-height: 1.2;
   color: #ffffff;
+  transition: transform var(--dur) var(--ease-out);
 }
 
 .research-card--academic .research-card__badge {
   color: var(--story-muted);
 }
 
+/* El anillo late para decir que detrás hay un video y no una foto. Es el
+   mismo gesto que la aureola del botón de WhatsApp: en esta página, algo que
+   se expande en círculo significa «esto se reproduce o se abre». */
 .research-card__play {
   position: absolute;
   z-index: 2;
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   padding-left: 3px;
   border-radius: 999px;
   color: var(--story-text);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 8px 24px rgba(10, 17, 24, 0.2);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 24px rgba(10, 17, 24, 0.25);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    animation: research-ping 2.6s var(--ease-out) infinite;
+  }
 }
+
+/* ---------- El texto ---------- */
 
 .research-card__content {
   display: flex;
   flex: 1;
+  min-width: 0;
   min-height: 0;
   flex-direction: column;
   padding: clamp(1rem, 1.5vw, 1.4rem);
@@ -174,6 +283,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .research-card__topline {
@@ -191,12 +305,13 @@
 }
 
 .research-card__copy {
-  margin-top: clamp(1rem, 1.6vw, 1.4rem);
+  margin-top: clamp(0.9rem, 1.5vw, 1.3rem);
 
   h3 {
     font-size: clamp(1.08rem, 1.3vw, 1.35rem);
     line-height: 1.06;
     letter-spacing: -0.035em;
+    text-wrap: balance;
   }
 
   p {
@@ -222,21 +337,120 @@
     font-style: normal;
     color: #ffffff;
     background: var(--story-text);
-    transition: transform var(--dur) var(--ease-out);
+    transition:
+      transform var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out);
   }
 }
 
+/* ============================================================
+   MOVIMIENTO LIGADO AL SCROLL
+   ============================================================
+   Donde el navegador lo soporta, la entrada y la deriva de las fotos las
+   conduce la posición de scroll y no un temporizador: el bloque responde
+   al gesto en lugar de reproducirse solo. Donde no —Safari por debajo de
+   la 26, sobre todo—, `appReveal` ya deja hechas las entradas. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .research-card {
+      animation: research-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 2% cover 24%;
+    }
+
+    /* Cada foto deriva dentro de su marco mientras el bloque pasa. El 1,14
+       de escala es el margen que hace falta para que el recorrido no
+       descubra un borde vacío. */
+    .research-card__media img {
+      animation: research-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    .research__heading::after {
+      animation: research-rule linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 18%;
+    }
+  }
+}
+
+@keyframes research-rise {
+  from {
+    opacity: 0;
+    transform: translateY(52px) scale(0.965);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes research-drift {
+  from {
+    transform: scale(calc(var(--shot-zoom) * 1.14)) translateY(-3.2%);
+  }
+
+  to {
+    transform: scale(calc(var(--shot-zoom) * 1.14)) translateY(3.2%);
+  }
+}
+
+@keyframes research-rule {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes research-ping {
+  from {
+    scale: 1;
+    opacity: 0.7;
+  }
+
+  to {
+    scale: 1.85;
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   PANTALLAS MEDIANAS Y PEQUEÑAS
+   ============================================================ */
+
+/* El bento de tres formatos necesita ancho. Por debajo se reparte en dos
+   columnas: la principal y la entrevista ocupan la fila entera, y las dos
+   compactas se quedan juntas. */
 @media (max-width: 1099.98px) {
   .research__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
   }
 
-  .research-card--lead,
+  .research-card--lead {
+    grid-area: auto / 1 / auto / 3;
+    min-height: 26rem;
+  }
+
   .research-card--clinical,
-  .research-card--academic,
+  .research-card--academic {
+    grid-area: auto;
+    min-height: 24rem;
+    flex-direction: column;
+
+    .research-card__media {
+      width: auto;
+      height: clamp(9rem, 20vw, 11rem);
+    }
+  }
+
   .research-card--interview {
-    grid-column: auto;
-    min-height: 25rem;
+    grid-area: auto / 1 / auto / 3;
   }
 }
 
@@ -264,19 +478,37 @@
     grid-template-columns: 1fr;
   }
 
+  /* Todas verticales: en un canal de 320px una tarjeta horizontal deja el
+     texto en dos palabras por línea. */
   .research-card--lead,
   .research-card--clinical,
   .research-card--academic,
   .research-card--interview {
+    grid-area: auto;
     min-height: 24rem;
+    flex-direction: column;
     border-radius: 1.25rem 3rem 1.25rem 3rem;
+
+    .research-card__media {
+      width: auto;
+      height: 11rem;
+    }
+  }
+
+  .research-card--lead .research-card__media {
+    height: 13rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .research-card,
-  .research-card img,
+  .research-card__media img,
+  .research-card__badge,
   .research-card__footer i {
     transition: none;
+  }
+
+  .research-card__play::after {
+    animation: none;
   }
 }

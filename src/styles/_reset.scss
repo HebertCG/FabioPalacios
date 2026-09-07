@@ -14,9 +14,39 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Para quien no tiene la inercia activa: sin JavaScript, con movimiento
+     reducido o durante el prerender, los saltos de ancla siguen siendo
+     suaves. Cuando la inercia arranca, la regla de abajo lo desactiva. */
   scroll-behavior: smooth;
   /* Compensa el navbar fijo al saltar a una sección con ancla */
   scroll-padding-top: calc(var(--nav-h-scrolled) + 1.5rem);
+}
+
+/* ---------- Desplazamiento suave (Lenis) ----------
+   La librería marca el <html> con estas clases al arrancar. Son sus reglas
+   oficiales, aquí en lugar de importar su hoja: son cuatro líneas y así no
+   entra otro archivo al bundle solo para esto.
+
+   La importante es la segunda. La inercia escribe la posición real del
+   documento en cada fotograma; si además el navegador tuviera su propio
+   desplazamiento suave activo, los dos pelearían por el mismo scroll en el
+   mismo fotograma y el resultado es un temblor. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* Zonas que hacen su propio scroll y no deben arrastrar a la página */
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
 }
 
 body {

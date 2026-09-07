@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { ContactCta } from '../../core/directives/contact-cta';
 import { InViewPlay } from '../../core/directives/in-view-play';
 import { RouterLink } from '@angular/router';
@@ -6,6 +13,7 @@ import { MemberMarquee } from '../../ui/member-marquee/member-marquee';
 import { PhotoRotator, type RotatorSlide } from '../../ui/photo-rotator/photo-rotator';
 import { ResearchPublications } from '../../ui/research-publications/research-publications';
 import { Reveal } from '../../core/directives/reveal';
+import { SmoothScroll } from '../../core/scroll/smooth-scroll';
 import {
   COACH_VIDEO,
   CONTACT,
@@ -246,10 +254,20 @@ export class Story {
     if (this.viewerClipId()) this.closeViewer();
   }
 
-  /** El fondo no debe desplazarse detrás del visor. Guardado por SSR. */
+  private readonly smoothScroll = inject(SmoothScroll);
+
+  /**
+   * El fondo no debe desplazarse detrás del visor. Guardado por SSR.
+   *
+   * `overflow: hidden` solo frena al scroll nativo: la inercia escribe la
+   * posición ella misma en cada fotograma y seguiría corriendo detrás del
+   * video. Por eso hay que pararla aparte.
+   */
   private lockScroll(lock: boolean): void {
     if (typeof document === 'undefined') return;
     document.body.style.overflow = lock ? 'hidden' : '';
+    if (lock) this.smoothScroll.stop();
+    else this.smoothScroll.start();
   }
 
   /** 112 → «1:52» */

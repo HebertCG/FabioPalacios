@@ -1,10 +1,11 @@
 <section class="research" aria-labelledby="titulo-investigacion">
-  <header class="research__heading">
+  <header class="research__heading" appReveal>
+    <p class="research__eyebrow">Publicaciones</p>
     <h2 id="titulo-investigacion">La experiencia también deja evidencia</h2>
   </header>
 
   <div class="research__grid">
-    @for (publication of publications; track publication.id) {
+    @for (publication of publications; track publication.id; let i = $index) {
       <a
         class="research-card"
         [class.research-card--lead]="publication.tone === 'lead'"
@@ -14,6 +15,8 @@
         [href]="publication.url"
         target="_blank"
         rel="noopener noreferrer"
+        appReveal
+        [revealDelay]="90 + i * 90"
       >
         <div class="research-card__media">
           @if (publication.image) {

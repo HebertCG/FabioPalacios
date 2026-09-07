@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Reveal } from '../../core/directives/reveal';
 
 interface ResearchPublication {
   readonly id: string;
@@ -16,6 +17,7 @@ interface ResearchPublication {
 
 @Component({
   selector: 'app-research-publications',
+  imports: [Reveal],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './research-publications.html',
   styleUrl: './research-publications.scss',
