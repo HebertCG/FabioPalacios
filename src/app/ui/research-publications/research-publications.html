@@ -1,0 +1,49 @@
+<section class="research" aria-labelledby="titulo-investigacion">
+  <header class="research__heading">
+    <h2 id="titulo-investigacion">La experiencia también deja evidencia</h2>
+  </header>
+
+  <div class="research__grid">
+    @for (publication of publications; track publication.id) {
+      <a
+        class="research-card"
+        [class.research-card--lead]="publication.tone === 'lead'"
+        [class.research-card--clinical]="publication.tone === 'clinical'"
+        [class.research-card--academic]="publication.tone === 'academic'"
+        [class.research-card--interview]="publication.tone === 'interview'"
+        [href]="publication.url"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="research-card__media">
+          @if (publication.image) {
+            <img [src]="publication.image" [alt]="publication.imageAlt" width="1280" height="720" />
+          } @else {
+            <span class="research-card__monogram" aria-hidden="true">RENATI</span>
+          }
+          <strong class="research-card__badge">{{ publication.badge }}</strong>
+          @if (publication.tone === 'interview') {
+            <span class="research-card__play" aria-hidden="true">▶</span>
+          }
+        </div>
+
+        <div class="research-card__content">
+          <div class="research-card__topline">
+            <span>{{ publication.source }}</span>
+            <time>{{ publication.date }}</time>
+          </div>
+
+          <div class="research-card__copy">
+            <h3>{{ publication.title }}</h3>
+            <p>{{ publication.summary }}</p>
+          </div>
+
+          <footer class="research-card__footer">
+            <span>{{ publication.action }}</span>
+            <i aria-hidden="true">↗</i>
+          </footer>
+        </div>
+      </a>
+    }
+  </div>
+</section>

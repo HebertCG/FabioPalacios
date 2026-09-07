@@ -4,6 +4,7 @@ import { InViewPlay } from '../../core/directives/in-view-play';
 import { RouterLink } from '@angular/router';
 import { MemberMarquee } from '../../ui/member-marquee/member-marquee';
 import { PhotoRotator, type RotatorSlide } from '../../ui/photo-rotator/photo-rotator';
+import { ResearchPublications } from '../../ui/research-publications/research-publications';
 import { Reveal } from '../../core/directives/reveal';
 import {
   COACH_VIDEO,
@@ -39,7 +40,15 @@ function media(src: string): StoryMedia {
 
 @Component({
   selector: 'app-story',
-  imports: [ContactCta, InViewPlay, MemberMarquee, PhotoRotator, Reveal, RouterLink],
+  imports: [
+    ContactCta,
+    InViewPlay,
+    MemberMarquee,
+    PhotoRotator,
+    ResearchPublications,
+    Reveal,
+    RouterLink,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story.html',
   styleUrl: './story.scss',

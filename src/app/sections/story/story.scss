@@ -544,6 +544,15 @@ h3 {
   border: 1px solid var(--story-line);
   border-radius: var(--tile-r) var(--tile-sweep) var(--tile-r) var(--tile-sweep);
   background: #ffffff;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(23, 34, 49, 0.09);
+  }
 
   .tile__eyebrow {
     color: var(--story-accent-deep);
@@ -586,8 +595,10 @@ h3 {
       color var(--dur) var(--ease-out),
       background-color var(--dur) var(--ease-out),
       transform var(--dur) var(--ease-out);
+    animation: tile-cue-down 3.8s var(--ease-out) infinite;
 
     &:hover {
+      animation-play-state: paused;
       transform: translateY(3px);
       color: #ffffff;
       background: var(--story-text);
@@ -663,6 +674,10 @@ h3 {
   border-radius: var(--tile-sweep) var(--tile-r) var(--tile-sweep) var(--tile-r);
   color: #ffffff;
   background: var(--story-text);
+  transition:
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
 
   .tile__eyebrow {
     color: rgba(255, 255, 255, 0.62);
@@ -688,14 +703,59 @@ h3 {
     color: var(--story-text);
     background: #ffffff;
     transition: transform var(--dur) var(--ease-out);
+    animation: tile-cue-right 3.8s var(--ease-out) 0.7s infinite;
   }
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-3px);
     background: #0d1927;
+    box-shadow: 0 14px 30px rgba(23, 34, 49, 0.16);
 
     .tile__arrow {
+      animation-play-state: paused;
       transform: translateX(4px);
     }
+  }
+}
+
+@keyframes tile-cue-down {
+  0%,
+  72%,
+  100% {
+    transform: translateY(0);
+  }
+
+  80% {
+    transform: translateY(3px);
+  }
+
+  88% {
+    transform: translateY(0);
+  }
+
+  94% {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes tile-cue-right {
+  0%,
+  72%,
+  100% {
+    transform: translateX(0);
+  }
+
+  80% {
+    transform: translateX(3px);
+  }
+
+  88% {
+    transform: translateX(0);
+  }
+
+  94% {
+    transform: translateX(2px);
   }
 }
 
@@ -2866,7 +2926,9 @@ h3 {
   .hero__name,
   .hero h1,
   .hero__lead,
-  .hero__actions {
+  .hero__actions,
+  .tile__jump,
+  .tile__arrow {
     animation: none;
     opacity: 1;
     transform: none;
