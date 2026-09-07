@@ -9,7 +9,6 @@ import {
   COACH_VIDEO,
   CONTACT,
   DOCTOR,
-  PREVENTION,
   REELS,
   NAV_LINKS,
   SOCIALS,
@@ -161,18 +160,29 @@ export class Story {
     },
   ];
 
-  /* ---------- Acompañamiento, prevención y sobrevivientes ---------- */
+  /* ---------- Acompañamiento y programas ---------- */
 
   protected readonly coachVideo = COACH_VIDEO;
 
   /** Lo escribe el boton y lo corrige la directiva si el navegador rechaza
    *  el sonido, asi que el icono siempre muestra el estado real. */
   protected readonly coachMuted = signal(true);
-  protected readonly prevention = PREVENTION;
-  protected readonly survivorProgram = SURVIVOR_PROGRAM;
+  /**
+   * Los cuatro programas, cada uno con su chat ya redactado. El enlace se
+   * resuelve aquí y no en la plantilla: llamar a `whatsappLink()` dentro del
+   * `@for` lo recalcularía en cada detección de cambios y devolvería una
+   * cadena nueva cada vez, que es justo lo que hace que Angular vuelva a
+   * escribir el `href` sin motivo.
+   */
+  protected readonly programmes = SURVIVOR_PROGRAM.map((programme) => ({
+    ...programme,
+    link: whatsappLink(programme.message),
+  }));
 
+  /** Para quien no sabe cuál le toca. Es la mitad de los casos. */
   protected readonly survivorLink = whatsappLink(
-    'Hola doctor, vengo de su página web. Quisiera participar en el programa de sobrevivientes.',
+    'Hola doctor, vengo de su página web. Quisiera saber cuál de sus programas de ' +
+      'acompañamiento me conviene.',
   );
 
   /* ---------- Videos ---------- */

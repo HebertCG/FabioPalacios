@@ -726,19 +726,26 @@ h3 {
     color: var(--story-muted);
   }
 
-  /* Canto izquierdo barrido, igual que la tarjeta de identidad de Medicina */
+  /* Canto izquierdo barrido, igual que la tarjeta de identidad de Medicina.
+     Antes eran dos tarjetas y solo la segunda llevaba a los programas. El
+     doctor pidió una sola, así que esta es la puerta: el enlace es la pieza
+     entera, no un botón dentro de ella. */
   &__card {
+    @include m.focus-ring(#172231);
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: clamp(0.9rem, 1.6vw, 1.4rem);
     align-items: center;
     margin-top: clamp(1.75rem, 3vw, 2.5rem);
-    padding: clamp(0.9rem, 1.5vw, 1.25rem);
+    padding: clamp(1rem, 1.7vw, 1.45rem);
     border-radius: var(--mcut-lg) var(--mcut) var(--mcut) var(--mcut-lg);
     background: var(--story-yellow);
+    transition: transform var(--dur) var(--ease-out);
 
     figure {
-      width: clamp(4.5rem, 7vw, 6.5rem);
+      /* Al quedarse sola, el retrato crece: es la única foto de esta columna
+         y a 4,5rem se leía como un icono. */
+      width: clamp(5rem, 8vw, 7.5rem);
       aspect-ratio: 1;
       overflow: hidden;
       border-radius: 999px;
@@ -757,21 +764,11 @@ h3 {
       line-height: 1.45;
     }
 
-    /* La segunda pieza es un enlace: barre el canto contrario para que las
-       dos no se lean como la misma tarjeta repetida. */
-    &--link {
-      @include m.focus-ring(#172231);
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      border-radius: var(--mcut) var(--mcut-lg) var(--mcut-lg) var(--mcut);
-      background: var(--story-blue);
-      transition: transform var(--dur) var(--ease-out);
+    &:hover {
+      transform: translateX(4px);
 
-      &:hover {
+      .coach__card-arrow {
         transform: translateX(4px);
-
-        .coach__card-arrow {
-          transform: translateX(4px);
-        }
       }
     }
   }
@@ -793,8 +790,11 @@ h3 {
     position: relative;
     justify-self: center;
     /* El alto viene de la fila; la proporcion 9:16 deriva el ancho, asi que
-       el video llena el bloque sin recorte ni deformacion. */
+       el video llena el bloque sin recorte ni deformacion. El minimo existe
+       porque la columna de texto perdio una tarjeta al unificarlas: sin el,
+       el video encogeria unos 130px por un cambio que no era suyo. */
     block-size: 100%;
+    min-block-size: clamp(28rem, 64svh, 42rem);
     inline-size: auto;
     max-inline-size: 100%;
     aspect-ratio: 9 / 16;
@@ -868,71 +868,18 @@ h3 {
   }
 }
 
-/* Prevención */
-.prevent {
-  padding-block: clamp(4.5rem, 8vw, 7rem);
-  border-bottom: 1px solid var(--story-line);
-}
-
-.prevent-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.75rem, 1.4vw, 1.25rem);
-}
-
-.prevent-card {
-  display: grid;
-  align-content: start;
-  gap: 0.65rem;
-  padding: clamp(1.4rem, 2.4vw, 2.2rem);
-  border: 1px solid var(--story-line);
-  background: #ffffff;
-
-  /* La serie recorre canto superior, derecho e inferior: tres piezas
-     distintas que se leen como una sola familia. */
-  &:nth-child(1) {
-    border-radius: var(--mcut-lg) var(--mcut-lg) var(--mcut) var(--mcut);
-  }
-
-  &:nth-child(2) {
-    border-color: transparent;
-    border-radius: var(--mcut) var(--mcut-lg) var(--mcut-lg) var(--mcut);
-    background: var(--story-blue);
-  }
-
-  &:nth-child(3) {
-    border-radius: var(--mcut) var(--mcut) var(--mcut-lg) var(--mcut-lg);
-  }
-
-  &__index {
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    color: var(--story-muted);
-  }
-
-  h3 {
-    font-size: clamp(1.15rem, 1.6vw, 1.6rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-  }
-
-  p {
-    font-size: clamp(0.92rem, 1.02vw, 1rem);
-    line-height: 1.55;
-    color: var(--story-muted);
-  }
-}
-
-/* Sobrevivientes */
+/* Sobrevivientes — los cuatro programas
+   La losa oscura es lo único que no es blanco en toda la página, así que
+   funciona como puerta: aquí no se lee, se elige. Cada tarjeta es un enlace a
+   WhatsApp con su propio mensaje ya redactado, y el principal se lleva el
+   verde, que en esta página significa exactamente una cosa: acción. */
 .survive {
   padding-block: clamp(4.5rem, 8vw, 7rem);
   border-bottom: 1px solid var(--story-line);
 
   &__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
     gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
     padding-block: clamp(2rem, 4vw, 3.25rem);
@@ -947,7 +894,7 @@ h3 {
   }
 
   h2 {
-    max-width: 16ch;
+    max-width: 14ch;
     margin-top: 1rem;
     font-size: clamp(2rem, 3.4vw, 3.4rem);
     line-height: 1;
@@ -956,39 +903,40 @@ h3 {
   }
 
   &__lead {
-    max-width: 42ch;
+    max-width: 40ch;
     margin-top: 1.15rem;
     font-size: clamp(0.95rem, 1.05vw, 1.05rem);
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
   }
 
-  &__cta {
+  /* Quien no sabe cuál le toca necesita una salida, no un quinto botón que
+     compita con los cuatro programas. De ahí el enlace subrayado. */
+  &__help {
     @include m.focus-ring(#ffffff);
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
-    gap: 0.6rem;
-    min-height: 52px;
-    margin-top: clamp(1.4rem, 2.4vw, 2rem);
-    padding: 0.85rem 1.5rem;
-    border-radius: 999px;
+    gap: 0.45rem;
+    min-height: 44px;
+    margin-top: clamp(1.2rem, 2vw, 1.7rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
     font-family: var(--font-display);
     font-size: 0.9rem;
-    font-weight: 800;
-    color: #ffffff;
-    background: var(--story-green);
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    color: rgba(255, 255, 255, 0.82);
     transition:
-      transform var(--dur) var(--ease-out),
-      background-color var(--dur) var(--ease-out);
+      color var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
 
     span {
       transition: transform var(--dur) var(--ease-out);
     }
 
     &:hover {
-      transform: translateY(-2px);
-      background: var(--story-green-deep);
+      border-color: #ffffff;
+      color: #ffffff;
 
       span {
         transform: translate(2px, -2px);
@@ -998,25 +946,133 @@ h3 {
 
   &__list {
     display: grid;
-    gap: 0.2rem;
+    gap: 0.55rem;
+  }
+}
 
-    li {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 0.9rem;
-      align-items: center;
-      padding-block: clamp(0.85rem, 1.6vw, 1.15rem);
-      font-family: var(--font-display);
-      font-size: clamp(1rem, 1.4vw, 1.35rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+/* Una tarjeta de programa. Es un enlace entero y no un título con un botón
+   al lado: el área de toque es toda la pieza, que en un móvil es la
+   diferencia entre entrar al programa y fallar el dedo. */
+.programme {
+  @include m.focus-ring(#ffffff);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(0.85rem, 1.5vw, 1.25rem);
+  align-items: center;
+  padding: clamp(0.9rem, 1.5vw, 1.25rem) clamp(1rem, 1.7vw, 1.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--story-radius);
+  color: #ffffff;
+  transition:
+    transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
 
-      + li {
-        border-top: 1px solid rgba(255, 255, 255, 0.16);
-      }
+  &__index {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.45);
+  }
 
-      span {
-        color: var(--story-green);
+  &__text {
+    display: grid;
+    gap: 0.18rem;
+  }
+
+  /* Pastilla blanca en vez de texto tenue: sobre el verde, un rótulo de
+     0.6rem al 70% de blanco no llega al contraste mínimo, y este rótulo es
+     justo el que dice cuál es el importante. */
+  &__tag {
+    justify-self: start;
+    margin-bottom: 0.35rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--story-green-deep);
+    background: #ffffff;
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.25vw, 1.2rem);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  &__body {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  &__arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    font-style: normal;
+    font-size: 0.85rem;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transition:
+      transform var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out);
+  }
+
+  &:hover {
+    transform: translateX(4px);
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+
+    .programme__arrow {
+      transform: translate(2px, -2px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  /* El principal. Se lleva el verde y el mismo canto barrido de la losa que
+     lo contiene, así que se lee como la pieza que la sección señala y no
+     como una tarjeta más grande. */
+  &--lead {
+    padding-block: clamp(1.1rem, 1.9vw, 1.6rem);
+    border-color: transparent;
+    border-radius: var(--mcut-lg) var(--mcut) var(--mcut) var(--mcut-lg);
+    background: var(--story-green);
+
+    strong {
+      font-size: clamp(1.15rem, 1.55vw, 1.5rem);
+    }
+
+    .programme__index {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Sobre el verde el texto va en blanco puro: al 62% se queda en 3,3:1 y
+       esta es la tarjeta que más se va a leer. */
+    .programme__body {
+      color: #ffffff;
+    }
+
+    .programme__arrow {
+      color: var(--story-green-deep);
+      background: #ffffff;
+    }
+
+    &:hover {
+      border-color: transparent;
+      background: var(--story-green-deep);
+
+      .programme__arrow {
+        background: #ffffff;
       }
     }
   }
@@ -1342,28 +1398,19 @@ h3 {
 }
 
 .med--explain {
+  /* El canto inferior es un medio punto: un pie anclado abajo y a los lados
+     se lo come la curva, así que aquí el carrusel centra su texto y lo sube.
+     (El velo lo pinta el propio carrusel; la regla `&::after` que había aquí
+     no llegaba a existir, porque ningún `.med` declara `content`.) */
+  --rotator-caption-inline: 18%;
+  --rotator-caption-bottom: 22%;
+  --rotator-caption-align: center;
+
   grid-area: 9 / 1 / 13 / 7;
   border-radius: var(--mcut) var(--mcut) 999px 999px;
 
   img {
     object-position: 50% 30%;
-  }
-
-  /* El canto inferior es un medio punto: un pie anclado abajo se lo come
-     la curva. Aquí el texto va centrado y el velo cubre la pieza entera. */
-  &::after {
-    background: linear-gradient(0deg, rgba(12, 20, 28, 0.6), rgba(12, 20, 28, 0.3));
-  }
-
-  figcaption {
-    inset: 0;
-    display: grid;
-    /* Abajo y centrado, pero por dentro de la curva: a esa altura el medio
-       punto deja ~60% del ancho, de ahí el margen lateral generoso. */
-    place-items: end center;
-    padding: 0 22% 19%;
-    text-align: center;
-    text-wrap: balance;
   }
 }
 
@@ -2306,14 +2353,6 @@ h3 {
     width: min(100%, calc(58svh * 9 / 16));
   }
 
-  .prevent-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .prevent-card:nth-child(3) {
-    grid-column: 1 / -1;
-  }
-
   .mission__grid,
   .family__layout {
     grid-template-rows: auto;
@@ -2705,22 +2744,30 @@ h3 {
     block-size: auto;
   }
 
+  /* La flecha baja a su propia fila, alineada a la derecha bajo el texto:
+     en 360px, foto + texto + flecha en una sola fila deja el texto en un
+     canal de dos palabras. */
   .coach__card {
-    grid-template-columns: 1fr;
-    text-align: left;
-  }
+    grid-template-columns: auto minmax(0, 1fr);
 
-  .prevent-grid {
-    grid-template-columns: 1fr;
+    .coach__card-arrow {
+      grid-column: 2;
+      justify-self: end;
+    }
   }
 
   .survive__inner {
     padding-inline: 1.25rem;
   }
 
-  .survive__cta {
-    width: 100%;
-    justify-content: center;
+  .programme {
+    grid-template-columns: auto minmax(0, 1fr);
+
+    &__arrow {
+      grid-column: 2;
+      justify-self: end;
+      margin-top: 0.35rem;
+    }
   }
 
   .clip-rail {

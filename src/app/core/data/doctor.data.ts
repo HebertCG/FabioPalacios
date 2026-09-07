@@ -335,43 +335,72 @@ export const COACH_VIDEO = {
 } as const;
 
 /* ============================================================
-   PREVENCIÓN
+   PROGRAMAS DE ACOMPAÑAMIENTO
    ============================================================ */
+
+/** Un programa del acompañamiento, con el mensaje que abre su chat. */
+export interface SurvivorProgramme {
+  readonly id: string;
+  readonly label: string;
+  readonly body: string;
+  /** El que el doctor señala como principal. Encabeza la lista. */
+  readonly featured?: boolean;
+  /**
+   * Texto con el que se abre WhatsApp al elegirlo. Va junto a la etiqueta a
+   * propósito: si el nombre del programa cambia y el mensaje se queda en otro
+   * archivo, el doctor acaba recibiendo peticiones de un programa que ya no
+   * se llama así.
+   */
+  readonly message: string;
+}
 
 /**
- * TODO: los temas de abajo son los que el doctor enumeró, pero SIN detalle
- * clínico. Él enviará el contenido y las ilustraciones de cada uno. No añadir
- * afirmaciones médicas que no vengan firmadas por él.
+ * Los cuatro programas que el doctor enumeró. Absorben lo que antes era el
+ * bloque de prevención: alimentación y actividad física estaban allí sueltas
+ * y ahora son dos programas con nombre y puerta de entrada.
+ *
+ * Los textos describen de qué trata cada programa y en qué consiste el
+ * acompañamiento. NO afirman un efecto clínico: nada de lo que se dice aquí
+ * necesita una firma médica que no tenemos.
+ *
+ * TODO: confirmar con el doctor el nombre del de ejercicio. Él dijo «programa
+ * de ejercicios para el cáncer»; «Ejercicio y movimiento» es la propuesta,
+ * porque el nombre original suena a que el ejercicio trata la enfermedad.
  */
-export const PREVENTION = [
+export const SURVIVOR_PROGRAM: readonly SurvivorProgramme[] = [
+  {
+    id: 'avanzada',
+    label: 'Enfrentar la enfermedad avanzada',
+    body: 'Acompañamiento para el tramo más duro del camino, con la familia dentro.',
+    featured: true,
+    message:
+      'Hola doctor, vengo de su página web. Quisiera entrar al programa para enfrentar la ' +
+      'enfermedad avanzada.',
+  },
+  {
+    id: 'ejercicio',
+    label: 'Ejercicio y movimiento',
+    body: 'Cómo mover el cuerpo durante y después del tratamiento, al ritmo de cada quien.',
+    message:
+      'Hola doctor, vengo de su página web. Quisiera entrar al programa de ejercicio y ' +
+      'movimiento.',
+  },
+  {
+    id: 'estres',
+    label: 'Manejo del estrés',
+    body: 'Herramientas para sostener la cabeza cuando el diagnóstico la ocupa entera.',
+    message:
+      'Hola doctor, vengo de su página web. Quisiera entrar al programa de manejo del estrés.',
+  },
   {
     id: 'alimentacion',
-    label: 'Alimentos saludables',
-    body: 'Qué comer, cómo prepararlo y por qué la alimentación pesa en la prevención.',
+    label: 'Alimentación saludable',
+    body: 'Qué comer y cómo prepararlo, sin dietas milagro ni promesas.',
+    message:
+      'Hola doctor, vengo de su página web. Quisiera entrar al programa de alimentación ' +
+      'saludable.',
   },
-  {
-    id: 'actividad',
-    label: 'Actividad física',
-    body: 'El papel del movimiento diario dentro de un plan de prevención.',
-  },
-  {
-    id: 'riesgo',
-    label: 'Factores de riesgo',
-    body: 'Los hábitos y productos que conviene revisar, empezando por los alimentos procesados.',
-  },
-] as const;
-
-/* ============================================================
-   PROGRAMA DE SOBREVIVIENTES
-   ============================================================ */
-
-/** Las cuatro actividades que el doctor enumeró para el programa. */
-export const SURVIVOR_PROGRAM = [
-  { id: 'educacion', label: 'Charlas de educación' },
-  { id: 'sobrevida', label: 'Charlas de sobrevida' },
-  { id: 'manejo', label: 'Cómo manejar el cáncer' },
-  { id: 'alimentacion', label: 'Cómo alimentarse' },
-] as const;
+];
 
 /* ============================================================
    REELS — videos de TikTok en /public
