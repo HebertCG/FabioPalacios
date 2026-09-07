@@ -147,7 +147,7 @@ export class Story {
       width: 1280,
       height: 960,
       alt: 'Fabio Palacios revisando estudios de imágenes con otros médicos',
-      caption: 'Cada imagen se lee entre varios',
+      caption: 'Cada imagen ayuda a decidir mejor',
       position: '50% 34%',
     },
     {
@@ -155,7 +155,7 @@ export class Story {
       width: 1280,
       height: 960,
       alt: 'Fabio Palacios en una junta médica con colegas',
-      caption: 'La junta decide, no una sola cabeza',
+      caption: 'Años de experiencia respaldan cada decisión',
       position: '50% 36%',
     },
   ];

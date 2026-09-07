@@ -244,7 +244,16 @@
           <p class="tile__body">
             La información correcta ayuda a tomar decisiones con menos miedo y más confianza.
           </p>
-          <p class="tile__meta">Charlas para pacientes y familias</p>
+          <div class="tile__note-footer">
+            <p class="tile__meta">Charlas para pacientes y familias</p>
+            <a
+              class="tile__jump"
+              href="#sobrevivientes"
+              aria-label="Ir al programa de sobrevivientes"
+            >
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
         </article>
 
         <blockquote class="tile tile--quote" appReveal [revealDelay]="120">
@@ -760,19 +769,16 @@
   <section id="contacto" class="contact" aria-labelledby="titulo-contacto">
     <div class="page-shell contact__inner">
       <div class="contact__title" appReveal>
-        <p class="contact__eyebrow">Conversemos</p>
-        <h2 id="titulo-contacto">Cuénteme su caso y lo vemos juntos.</h2>
+        <p class="contact__eyebrow">Te escucho</p>
+        <h2 id="titulo-contacto">
+          <span class="contact__diagnosis">¿Te diagnosticaron</span>
+          <span>cáncer?</span>
+          <span>Estoy aquí para acompañarte.</span>
+        </h2>
         <p class="contact__lead">
-          Una consulta sirve para entender el diagnóstico, revisar los estudios que ya tiene y saber
-          qué opciones existen. También para una segunda opinión, sin compromiso.
+          Selecciona la opción que mejor describa lo que necesitas y haz clic en “Escribir por
+          WhatsApp”. Demos juntos el primer paso para orientarte y acompañarte en este proceso.
         </p>
-
-        <ul class="contact__facts">
-          <li>
-            <strong>WhatsApp {{ contact.whatsappDisplay }}</strong>
-            <span>Le responde el propio doctor</span>
-          </li>
-        </ul>
       </div>
 
       <div class="contact__panel" appReveal [revealDelay]="90">
@@ -815,7 +821,7 @@
     <div class="page-shell footer__top">
       <div>
         <strong>Fabio Palacios</strong>
-        <p>Persona. Esposo. Conferencista. Cirujano oncólogo.</p>
+        <p>Oncólogo aliado en tu lucha</p>
       </div>
       <nav aria-label="Redes sociales">
         <a
