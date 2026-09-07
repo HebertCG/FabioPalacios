@@ -3,21 +3,16 @@
 /* ============================================================
    PUBLICACIONES
    ============================================================
-   Cuatro piezas de peso muy distinto: dos notas de prensa, un registro
-   académico y una entrevista en video. Antes ocupaban cuatro columnas
-   idénticas y el bloque se leía como una rejilla de plantilla, sin decir
-   cuál importaba más.
+   Cuatro piezas verticales en fila, del mismo ancho. Se probó un bento con
+   tres formatos distintos y las tarjetas salían demasiado grandes: en una
+   franja que va después del mosaico de Medicina y de la pasarela de
+   sociedades, lo que hace falta es una fila que se lea de un vistazo, no un
+   tercer bloque que vuelva a pedir toda la pantalla.
 
-   Aquí hay tres formatos de tarjeta, no uno repetido cuatro veces:
-
-     · la nota principal es vertical y grande, con la foto mandando
-     · las dos del medio son compactas y horizontales, foto a la izquierda
-     · la entrevista es una banda ancha, que es la forma que pide un video
-
-   El mosaico de Medicina está justo encima, así que este bloque
-   deliberadamente NO usa sus cortes asimétricos: repetirlos aquí haría que
-   los dos se confundieran. Este habla con esquinas redondeadas parejas y
-   una sola excepción por tarjeta. */
+   Así que el interés no lo pone la maquetación: lo pone el movimiento.
+   La entrada va escalonada, las fotos derivan dentro de su marco mientras
+   la fila pasa, un brillo cruza la imagen al pasar el cursor y un filete
+   turquesa se dibuja bajo ella. */
 
 /* El zoom del cursor y la deriva del scroll quieren la misma propiedad
    `transform` de la misma imagen, y una animación con `both` le gana siempre
@@ -50,7 +45,7 @@
 
 .research__heading {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.5rem;
   padding-bottom: clamp(1rem, 1.5vw, 1.35rem);
 
   h2 {
@@ -83,15 +78,11 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
-/* ---------- El bento ---------- */
+/* ---------- La fila ---------- */
 
-/* La maquetación está escrita para estas cuatro piezas. Si el doctor añade
-   una quinta, cae en una fila nueva de ancho completo: no se rompe, pero
-   habrá que decidirle sitio. */
 .research__grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: repeat(2, clamp(11.5rem, 15vw, 14rem)) auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.65rem, 1vw, 0.95rem);
   margin-top: clamp(1.25rem, 2vw, 1.8rem);
 }
@@ -101,7 +92,8 @@
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 0;
+  min-height: clamp(20rem, 25vw, 23rem);
+  flex-direction: column;
   overflow: hidden;
   border-radius: clamp(1.2rem, 2vw, 2rem);
   color: var(--story-text);
@@ -112,74 +104,48 @@
     --shot-zoom 0.75s var(--ease-out);
 
   &:hover {
-    --shot-zoom: 1.06;
+    --shot-zoom: 1.07;
 
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     box-shadow: 0 20px 46px rgba(3, 10, 17, 0.34);
+
+    .research-card__badge {
+      transform: translateY(-3px);
+    }
+
+    /* El filete se dibuja bajo la foto */
+    .research-card__media::before {
+      scale: 1 1;
+    }
+
+    /* Y un brillo la cruza una sola vez */
+    .research-card__sheen {
+      translate: 210% 0;
+      transition: translate 0.85s var(--ease-out);
+    }
 
     .research-card__footer i {
       transform: translate(3px, -3px);
       background: var(--story-accent-deep);
     }
-
-    .research-card__badge {
-      transform: translateY(-3px);
-    }
   }
 }
 
-/* 1 · Nota principal: vertical, la foto manda */
+/* Cada tarjeta rompe una esquina distinta. Es lo único que las diferencia
+   en forma, y con cuatro piezas iguales basta para que la fila no se lea
+   como una plantilla. */
 .research-card--lead {
-  grid-area: 1 / 1 / 3 / 8;
-  flex-direction: column;
-  /* La única esquina que rompe la simetría, y la lleva la pieza principal */
-  border-radius: clamp(1.2rem, 2vw, 2rem) clamp(3rem, 5vw, 5rem) clamp(1.2rem, 2vw, 2rem)
-    clamp(3rem, 5vw, 5rem);
-
-  .research-card__media {
-    height: 56%;
-  }
-
-  .research-card__copy h3 {
-    font-size: clamp(1.45rem, 2.15vw, 2.15rem);
-  }
-
-  .research-card__copy p {
-    max-width: 46ch;
-    font-size: clamp(0.82rem, 0.9vw, 0.92rem);
-  }
-}
-
-/* 2 y 3 · Compactas: foto a la izquierda, texto a la derecha */
-.research-card--clinical {
-  grid-area: 1 / 8 / 2 / 13;
+  border-radius: clamp(1.2rem, 2vw, 2rem) clamp(2.5rem, 4vw, 4rem) clamp(1.2rem, 2vw, 2rem)
+    clamp(2.5rem, 4vw, 4rem);
 }
 
 .research-card--academic {
-  grid-area: 2 / 8 / 3 / 13;
-  border-radius: clamp(3rem, 5vw, 5rem) clamp(1.2rem, 2vw, 2rem);
+  border-radius: clamp(2.5rem, 4vw, 4rem) clamp(1.2rem, 2vw, 2rem);
 }
 
-/* 4 · La entrevista es un video: una banda ancha es la forma que le toca */
 .research-card--interview {
-  grid-area: 3 / 1 / 4 / 13;
-  min-height: clamp(10rem, 13vw, 12.5rem);
-}
-
-.research-card--clinical,
-.research-card--academic,
-.research-card--interview {
-  flex-direction: row;
-
-  .research-card__media {
-    width: 38%;
-    height: auto;
-    flex: none;
-  }
-}
-
-.research-card--interview .research-card__media {
-  width: 32%;
+  border-radius: clamp(1.2rem, 2vw, 2rem) clamp(1.2rem, 2vw, 2rem) clamp(2.5rem, 4vw, 4rem)
+    clamp(2.5rem, 4vw, 4rem);
 }
 
 /* ---------- La franja de imagen ---------- */
@@ -187,14 +153,31 @@
 .research-card__media {
   position: relative;
   display: grid;
+  flex: none;
   place-items: center;
+  height: clamp(8.5rem, 11vw, 10.5rem);
   overflow: hidden;
   background: #e8ecef;
 
+  /* Filete turquesa bajo la foto, que se dibuja al pasar el cursor */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    height: 3px;
+    background: var(--story-accent);
+    scale: 0 1;
+    transform-origin: left center;
+    transition: scale 0.55s var(--ease-out);
+  }
+
+  /* El velo que hace legible el rótulo sobre la foto */
   &::after {
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
     background: linear-gradient(180deg, transparent 42%, rgba(10, 17, 24, 0.58));
     pointer-events: none;
   }
@@ -207,6 +190,19 @@
   }
 }
 
+/* El brillo. Parte fuera de cuadro por la izquierda y solo entra al pasar el
+   cursor; en reposo no lleva transición, para que al salir no vuelva
+   cruzando la foto al revés. */
+.research-card__sheen {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 45%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  translate: -210% 0;
+  pointer-events: none;
+}
+
 .research-card--academic .research-card__media {
   background: #eef1f3;
 
@@ -217,7 +213,7 @@
 
 .research-card__monogram {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 2.2vw, 2.4rem);
+  font-size: clamp(1.8rem, 2.6vw, 2.8rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.06em;
@@ -228,7 +224,7 @@
   right: 0.75rem;
   bottom: 0.75rem;
   left: 0.75rem;
-  z-index: 1;
+  z-index: 3;
   font-family: var(--font-display);
   font-size: clamp(0.68rem, 0.75vw, 0.78rem);
   line-height: 1.2;
@@ -245,11 +241,11 @@
    se expande en círculo significa «esto se reproduce o se abre». */
 .research-card__play {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   padding-left: 3px;
   border-radius: 999px;
   color: var(--story-text);
@@ -274,7 +270,7 @@
   min-width: 0;
   min-height: 0;
   flex-direction: column;
-  padding: clamp(1rem, 1.5vw, 1.4rem);
+  padding: clamp(0.95rem, 1.4vw, 1.3rem);
 }
 
 .research-card__topline,
@@ -305,18 +301,18 @@
 }
 
 .research-card__copy {
-  margin-top: clamp(0.9rem, 1.5vw, 1.3rem);
+  margin-top: clamp(0.85rem, 1.4vw, 1.2rem);
 
   h3 {
-    font-size: clamp(1.08rem, 1.3vw, 1.35rem);
-    line-height: 1.06;
+    font-size: clamp(1.02rem, 1.2vw, 1.25rem);
+    line-height: 1.08;
     letter-spacing: -0.035em;
     text-wrap: balance;
   }
 
   p {
-    margin-top: 0.55rem;
-    font-size: clamp(0.74rem, 0.8vw, 0.82rem);
+    margin-top: 0.5rem;
+    font-size: clamp(0.73rem, 0.78vw, 0.8rem);
     line-height: 1.42;
     color: rgba(23, 34, 49, 0.7);
   }
@@ -347,22 +343,47 @@
    MOVIMIENTO LIGADO AL SCROLL
    ============================================================
    Donde el navegador lo soporta, la entrada y la deriva de las fotos las
-   conduce la posición de scroll y no un temporizador: el bloque responde
-   al gesto en lugar de reproducirse solo. Donde no —Safari por debajo de
-   la 26, sobre todo—, `appReveal` ya deja hechas las entradas. */
+   conduce la posición de scroll y no un temporizador: la fila responde al
+   gesto en lugar de reproducirse sola. Donde no —Safari por debajo de la 26,
+   sobre todo—, `appReveal` ya deja hechas las entradas escalonadas. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .research-card {
       animation: research-rise linear both;
       animation-timeline: view();
-      animation-range: entry 2% cover 24%;
     }
 
-    /* Cada foto deriva dentro de su marco mientras el bloque pasa. El 1,14
-       de escala es el margen que hace falta para que el recorrido no
-       descubra un borde vacío. */
+    /* Cada tarjeta termina de subir un poco más tarde que la anterior, así
+       la fila entra en cascada y no las cuatro de golpe. */
+    .research-card:nth-child(1) {
+      animation-range: entry 2% cover 20%;
+    }
+
+    .research-card:nth-child(2) {
+      animation-range: entry 4% cover 25%;
+    }
+
+    .research-card:nth-child(3) {
+      animation-range: entry 6% cover 30%;
+    }
+
+    .research-card:nth-child(4) {
+      animation-range: entry 8% cover 35%;
+    }
+
+    /* Cada foto deriva dentro de su marco mientras la fila pasa. El 1,14 de
+       escala es el margen que hace falta para que el recorrido no descubra
+       un borde vacío. */
     .research-card__media img {
       animation: research-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* La tarjeta académica no tiene foto, así que deriva su monograma: sin
+       esto sería la única pieza quieta de la fila. */
+    .research-card__monogram {
+      animation: research-monogram linear both;
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
     }
@@ -378,7 +399,7 @@
 @keyframes research-rise {
   from {
     opacity: 0;
-    transform: translateY(52px) scale(0.965);
+    transform: translateY(56px) scale(0.955);
   }
 
   to {
@@ -389,11 +410,21 @@
 
 @keyframes research-drift {
   from {
-    transform: scale(calc(var(--shot-zoom) * 1.14)) translateY(-3.2%);
+    transform: scale(calc(var(--shot-zoom) * 1.14)) translateY(-3.4%);
   }
 
   to {
-    transform: scale(calc(var(--shot-zoom) * 1.14)) translateY(3.2%);
+    transform: scale(calc(var(--shot-zoom) * 1.14)) translateY(3.4%);
+  }
+}
+
+@keyframes research-monogram {
+  from {
+    transform: translateY(14%);
+  }
+
+  to {
+    transform: translateY(-14%);
   }
 }
 
@@ -423,34 +454,9 @@
    PANTALLAS MEDIANAS Y PEQUEÑAS
    ============================================================ */
 
-/* El bento de tres formatos necesita ancho. Por debajo se reparte en dos
-   columnas: la principal y la entrevista ocupan la fila entera, y las dos
-   compactas se quedan juntas. */
 @media (max-width: 1099.98px) {
   .research__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: none;
-  }
-
-  .research-card--lead {
-    grid-area: auto / 1 / auto / 3;
-    min-height: 26rem;
-  }
-
-  .research-card--clinical,
-  .research-card--academic {
-    grid-area: auto;
-    min-height: 24rem;
-    flex-direction: column;
-
-    .research-card__media {
-      width: auto;
-      height: clamp(9rem, 20vw, 11rem);
-    }
-  }
-
-  .research-card--interview {
-    grid-area: auto / 1 / auto / 3;
   }
 }
 
@@ -478,33 +484,17 @@
     grid-template-columns: 1fr;
   }
 
-  /* Todas verticales: en un canal de 320px una tarjeta horizontal deja el
-     texto en dos palabras por línea. */
-  .research-card--lead,
-  .research-card--clinical,
-  .research-card--academic,
-  .research-card--interview {
-    grid-area: auto;
-    min-height: 24rem;
-    flex-direction: column;
-    border-radius: 1.25rem 3rem 1.25rem 3rem;
-
-    .research-card__media {
-      width: auto;
-      height: 11rem;
-    }
-  }
-
-  .research-card--lead .research-card__media {
-    height: 13rem;
+  .research-card {
+    min-height: 22rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .research-card,
-  .research-card__media img,
   .research-card__badge,
-  .research-card__footer i {
+  .research-card__footer i,
+  .research-card__media::before,
+  .research-card__sheen {
     transition: none;
   }
 
