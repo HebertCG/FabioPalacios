@@ -1,0 +1,30 @@
+<aside class="rail" [class.is-visible]="visible()" aria-label="Contacto y redes sociales">
+  <!-- Los perfiles van arriba y WhatsApp abajo: la acción queda en el punto
+       más cercano al pulgar, y lo que solo lleva a mirar no se interpone. -->
+  <ul class="rail__profiles">
+    @for (social of profiles; track social.id) {
+      <li>
+        <a [href]="social.url" target="_blank" rel="noopener noreferrer">
+          <span class="sr-only">{{ social.label }}</span>
+          <app-icon [name]="social.id" />
+        </a>
+      </li>
+    }
+  </ul>
+
+  <a
+    class="rail__wa"
+    [href]="waLink"
+    appContactCta
+    ctaReason="riel-flotante"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="sr-only">Escribir por WhatsApp</span>
+    <!-- Dos anillos con el mismo latido y medio ciclo de desfase: uno sale
+         cuando el otro va por la mitad, y la aureola se ve continua. -->
+    <span class="rail__halo" aria-hidden="true"></span>
+    <span class="rail__halo rail__halo--late" aria-hidden="true"></span>
+    <app-icon name="whatsapp" />
+  </a>
+</aside>

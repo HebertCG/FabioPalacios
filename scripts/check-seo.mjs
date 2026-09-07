@@ -68,9 +68,9 @@ function meta(attr, key) {
  * rompiera, el archivo volvería a ser un `<app-root>` vacío de 9 KB.
  */
 const CONTENT_PROBES = [
-  ['Ser cercano también es una forma de cuidar', 'propósito personal'],
-  ['Compartir lo que sé también es cuidar', 'charlas'],
-  ['Mi lado de doctor', 'medicina'],
+  ['Desde mi trinchera', 'propósito personal'],
+  ['Compartir mi conocimiento', 'charlas'],
+  ['Ser cirujano oncólogo', 'medicina'],
 ];
 
 for (const [needle, section] of CONTENT_PROBES) {

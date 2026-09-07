@@ -106,6 +106,36 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
     widths: [480, 960],
     note: 'revisión de un estudio de imágenes con un colega',
   },
+  {
+    file: 'fabio/fabio-quirofano-lampara.jpg',
+    widths: [480, 960],
+    note: 'carrusel: en quirófano bajo la lámpara',
+  },
+  {
+    file: 'fabio/fabio-quirofano-espera.jpg',
+    widths: [480, 561],
+    note: 'carrusel: preparado antes de intervenir',
+  },
+  {
+    file: 'fabio/fabio-equipo-quirofano.jpg',
+    widths: [640, 1280],
+    note: 'carrusel: equipo quirúrgico completo',
+  },
+  {
+    file: 'fabio/fabio-equipo-mesa.jpg',
+    widths: [640, 1280],
+    note: 'carrusel: equipo en mesa de operaciones',
+  },
+  {
+    file: 'fabio/fabio-junta-imagenes.jpg',
+    widths: [640, 1280],
+    note: 'carrusel: revisión de imágenes con el equipo',
+  },
+  {
+    file: 'fabio/fabio-junta-medica.jpg',
+    widths: [640, 1280],
+    note: 'carrusel: junta médica',
+  },
 ];
 
 /** Todo lo que el optimizador debe procesar. */

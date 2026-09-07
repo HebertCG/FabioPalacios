@@ -8,7 +8,9 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Icon } from '../../ui/icon/icon';
 import { DOCTOR, NAV_LINKS, whatsappLink } from '../../core/data/doctor.data';
 
@@ -52,6 +54,15 @@ export class Navbar {
   protected readonly activeSection = signal<string>('inicio');
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
+
+  /**
+   * En el tope de la portada la barra es transparente sobre el héroe, así que
+   * sus textos van en blanco. Las páginas de apoyo son blancas y no tienen
+   * héroe: ahí esa combinación deja la barra literalmente invisible, y por eso
+   * arranca ya contraída, que es el estado con tinta oscura.
+   */
+  private hasHero = true;
   private readonly sheet = viewChild.required<ElementRef<HTMLElement>>('sheet');
   private ticking = false;
   private menuFocusTimer: ReturnType<typeof setTimeout> | undefined;
@@ -60,9 +71,17 @@ export class Navbar {
 
   constructor() {
     afterNextRender(() => {
+      this.syncHeroPresence();
       this.watchScroll();
       this.watchSections();
     });
+
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => queueMicrotask(() => this.syncHeroPresence()));
 
     this.destroyRef.onDestroy(() => {
       if (this.menuFocusTimer) clearTimeout(this.menuFocusTimer);
@@ -120,12 +139,19 @@ export class Navbar {
 
   /* ---------------- scroll ---------------- */
 
+  /** Sin héroe no hay fondo oscuro que respetar: la barra se contrae ya. */
+  private syncHeroPresence(): void {
+    if (typeof document === 'undefined') return;
+    this.hasHero = document.getElementById('inicio') !== null;
+    this.morphed.set(!this.hasHero || window.scrollY > MORPH_THRESHOLD);
+  }
+
   private watchScroll(): void {
     const onScroll = (): void => {
       if (this.ticking) return;
       this.ticking = true;
       requestAnimationFrame(() => {
-        this.morphed.set(window.scrollY > MORPH_THRESHOLD);
+        this.morphed.set(!this.hasHero || window.scrollY > MORPH_THRESHOLD);
         this.ticking = false;
       });
     };

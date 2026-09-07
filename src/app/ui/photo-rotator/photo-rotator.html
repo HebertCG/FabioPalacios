@@ -1,0 +1,29 @@
+@for (slide of resolved(); track slide.file; let i = $index) {
+  <figure class="shot" [class.is-current]="current() === i" [attr.aria-hidden]="current() !== i">
+    <picture>
+      <source type="image/avif" [srcset]="slide.avif" sizes="(min-width: 1024px) 30vw, 92vw" />
+      <source type="image/webp" [srcset]="slide.webp" sizes="(min-width: 1024px) 30vw, 92vw" />
+      <img
+        [src]="slide.file"
+        [alt]="slide.alt"
+        [width]="slide.width"
+        [height]="slide.height"
+        [style.object-position]="slide.position ?? '50% 40%'"
+        [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+        [attr.fetchpriority]="i === 0 ? 'high' : null"
+      />
+    </picture>
+    <figcaption>{{ slide.caption }}</figcaption>
+  </figure>
+}
+
+@if (resolved().length > 1) {
+  <!-- Marcas de posición. No son botones: el carrusel avanza solo y añadir
+       controles a una pieza decorativa llena la página de objetivos de
+       tabulador que nadie va a usar. -->
+  <ol class="shot-dots" aria-hidden="true">
+    @for (slide of resolved(); track slide.file; let i = $index) {
+      <li [class.is-current]="current() === i"></li>
+    }
+  </ol>
+}

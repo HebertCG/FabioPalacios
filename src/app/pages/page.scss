@@ -27,17 +27,27 @@
 .page {
   display: grid;
   align-content: start;
+  justify-items: start;
   gap: clamp(1.25rem, 2.4vw, 1.9rem);
   width: min(100%, 46rem);
   margin-inline: auto;
   padding: calc(var(--nav-h) + clamp(2.5rem, 7vw, 5.5rem)) clamp(1.25rem, 5vw, 2.5rem)
     clamp(3.5rem, 8vw, 6rem);
+
+  /* Para páginas de un solo mensaje, que deben caber sin scroll. Sin sello
+     arriba, el aire de una portada solo empuja el texto fuera de la vista. */
+  &--tight {
+    padding-top: calc(var(--nav-h) + clamp(1.25rem, 3vw, 2.5rem));
+  }
 }
 
-/* El sello del doctor: identifica la página aunque el navbar no se vea */
+/* El sello del doctor: identifica la página aunque el navbar no se vea.
+   El alto va explícito y no por `aspect-ratio`: como item de un grid, la
+   imagen se estiraba a lo alto de su fila y salía convertida en una píldora. */
 .page__seal {
   width: clamp(3.25rem, 6vw, 4.25rem);
-  aspect-ratio: 1;
+  height: clamp(3.25rem, 6vw, 4.25rem);
+  justify-self: start;
   border-radius: 999px;
   object-fit: contain;
   background: #ffffff;
@@ -68,13 +78,16 @@
   color: var(--page-muted);
 }
 
-/* Código enorme del 404: cifra, no adorno */
+/* El código es la pieza que manda en la 404: se lee antes que nada y dice de
+   un vistazo que la dirección no existe. Va en gris para no competir con el
+   titular, pero a un tamaño que no deje dudas de qué página es esta. */
 .page__code {
+  margin-bottom: clamp(-1rem, -2vw, -2rem);
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 14vw, 9rem);
+  font-size: clamp(7rem, 26vw, 17rem);
   font-weight: 800;
-  line-height: 0.8;
-  letter-spacing: -0.06em;
+  line-height: 0.78;
+  letter-spacing: -0.07em;
   color: var(--page-line);
   font-variant-numeric: tabular-nums;
 }
@@ -145,6 +158,8 @@
 
 /* Rejilla de enlaces internos: de una página sin salida a una con salidas */
 .page__links {
+  align-self: start;
+  justify-self: stretch;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 1px;
@@ -234,6 +249,11 @@
 
 @media (max-width: 767.98px) {
   .page__btn {
+    width: 100%;
+  }
+
+  .page__actions {
+    align-self: stretch;
     width: 100%;
   }
 }

@@ -1,0 +1,43 @@
+<section class="marquee" aria-label="Sociedades científicas">
+  <p class="marquee__label">Miembro de</p>
+
+  <div class="marquee__viewport">
+    <ul class="marquee__track">
+      @for (society of memberships; track society.id) {
+        <li class="marquee__item">
+          @if (society.logo) {
+            <img
+              [src]="society.logo"
+              [alt]="society.name"
+              [width]="society.width"
+              [height]="society.height"
+              loading="lazy"
+            />
+          } @else {
+            <span>{{ society.name }}</span>
+          }
+        </li>
+      }
+    </ul>
+
+    <!-- Segunda vuelta: es la que hace que el bucle no tenga costura.
+         Oculta a lectores de pantalla, que si no oirían la lista dos veces. -->
+    <ul class="marquee__track" aria-hidden="true">
+      @for (society of memberships; track society.id) {
+        <li class="marquee__item">
+          @if (society.logo) {
+            <img
+              [src]="society.logo"
+              alt=""
+              [width]="society.width"
+              [height]="society.height"
+              loading="lazy"
+            />
+          } @else {
+            <span>{{ society.name }}</span>
+          }
+        </li>
+      }
+    </ul>
+  </div>
+</section>

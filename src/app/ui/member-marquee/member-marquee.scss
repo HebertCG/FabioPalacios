@@ -1,0 +1,108 @@
+/* ============================================================
+   PASARELA DE SOCIEDADES
+   ============================================================
+   Dos copias de la misma lista en fila. La tira recorre justo la mitad de su
+   ancho: al reiniciarse, el segundo juego está donde estaba el primero, así
+   que la vuelta no tiene costura y no hace falta medir nada por JavaScript. */
+
+:host {
+  --mq-ink: #172231;
+  --mq-muted: #56616e;
+  --mq-line: rgba(23, 34, 49, 0.16);
+
+  display: block;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(1.25rem, 2.4vw, 1.9rem);
+  border-top: 1px solid var(--mq-line);
+}
+
+.marquee__label {
+  margin-bottom: clamp(0.9rem, 1.8vw, 1.35rem);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mq-muted);
+}
+
+.marquee__viewport {
+  display: flex;
+  overflow: hidden;
+  /* Los extremos se desvanecen en lugar de cortarse en seco: sin esto, cada
+     pieza aparece y desaparece de golpe en el borde. */
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  padding-right: clamp(1.75rem, 4vw, 3.5rem);
+  animation: marquee-run 42s linear infinite;
+}
+
+.marquee__item {
+  flex: none;
+  display: grid;
+  place-items: center;
+
+  img {
+    /* Alto fijo y ancho libre: los logos llegan en proporciones distintas y
+       lo que tiene que coincidir entre ellos es la altura, no el ancho. */
+    height: clamp(2.25rem, 3.4vw, 3.25rem);
+    width: auto;
+    /* Siempre a color: son marcas oficiales de sociedades científicas y el
+       gris las volvía decorativas. Aquí acreditan, así que se muestran tal
+       como son. */
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  /* Mientras no lleguen los archivos oficiales, el nombre. Menos vistoso,
+     pero cierto. */
+  span {
+    font-family: var(--font-display);
+    font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: var(--mq-ink);
+  }
+}
+
+.marquee__viewport:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+/* Al detenerse la tira, el logo bajo el cursor crece un poco: confirma que la
+   pausa fue intencionada y no que la animación se atascó. */
+.marquee__item:hover img {
+  transform: scale(1.06);
+}
+
+@keyframes marquee-run {
+  to {
+    /* Exactamente el ancho de una copia, contando su relleno derecho. */
+    transform: translateX(-100%);
+  }
+}
+
+/* Una tira que no para nunca es justo lo que molesta a quien pide menos
+   movimiento. Se detiene y la lista queda legible, envuelta en varias filas. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__viewport {
+    mask-image: none;
+  }
+
+  .marquee__track {
+    flex-wrap: wrap;
+    animation: none;
+    gap: 0.75rem 1.75rem;
+
+    /* Sin movimiento, la segunda copia solo duplicaría lo que ya se lee. */
+    &[aria-hidden='true'] {
+      display: none;
+    }
+  }
+}

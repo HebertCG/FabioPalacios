@@ -1,0 +1,94 @@
+/* ============================================================
+   CARRUSEL DE FOTOGRAFÍAS
+   ============================================================
+   Todas las fotos se apilan en el mismo sitio y solo cambia cuál está
+   opaca. Así el contenedor no cambia de alto entre una y otra, que es lo
+   que produciría un salto de maquetación cada cinco segundos. */
+
+:host {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.shot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  /* Un fundido corto pero no instantáneo: el cambio se nota sin llamar la
+     atención por encima de lo que la foto está contando. */
+  transition: opacity 0.9s var(--ease-out);
+  pointer-events: none;
+
+  &.is-current {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.shot picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El velo solo cubre la franja donde va el texto. Oscurecer la foto entera
+   para poder leer dos palabras es tirar por la borda lo que se quería
+   enseñar. */
+.shot::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 55%;
+  background: linear-gradient(0deg, rgba(10, 17, 24, 0.82), transparent);
+  pointer-events: none;
+}
+
+.shot figcaption {
+  position: absolute;
+  z-index: 1;
+  /* Abajo y con margen lateral generoso: estos mosaicos tienen las esquinas
+     barridas, y un pie pegado al borde se lo come la curva. */
+  inset: auto clamp(1.15rem, 2.6vw, 2.25rem) clamp(1rem, 2.2vw, 1.6rem);
+  font-family: var(--font-display);
+  font-size: clamp(0.88rem, 1.05vw, 1.08rem);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: #ffffff;
+  text-shadow: 0 1px 12px rgba(10, 17, 24, 0.5);
+}
+
+/* Marcas de posición: dicen cuántas fotos hay y por cuál va, sin pedir nada
+   al lector. */
+.shot-dots {
+  position: absolute;
+  z-index: 2;
+  inset: clamp(0.9rem, 1.8vw, 1.4rem) clamp(1rem, 2vw, 1.5rem) auto auto;
+  display: flex;
+  gap: 0.3rem;
+
+  li {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.45);
+    transition:
+      width var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out);
+
+    &.is-current {
+      width: 14px;
+      background: #ffffff;
+    }
+  }
+}

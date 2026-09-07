@@ -38,15 +38,22 @@
     <div class="page-shell mission__grid">
       <div class="mission__body">
         <p class="mission__eyebrow" appReveal>Mi propósito</p>
-        <h2 id="titulo-proposito" appReveal>Ser cercano también es una forma de cuidar.</h2>
+        <h2 id="titulo-proposito" appReveal>
+          Desde mi trinchera, día a día lucho contra el cáncer.
+        </h2>
         <div class="mission__copy" appReveal [revealDelay]="90">
           <p>
-            Creo en escuchar antes de responder, hablar con honestidad y tratar a cada persona con
-            la misma atención que quisiera para mi familia.
+            La medicina me enseñó precisión, y a hablar con honestidad con cada persona en su
+            singularidad: cada uno tiene una historia diferente y una familia por la que luchar.
           </p>
           <p>
-            La medicina me enseñó precisión y responsabilidad. La vida me enseñó que la empatía, la
-            gratitud y el servicio son los valores que realmente dejan huella.
+            La vida me enseñó a luchar por un propósito y a conseguirlo con sudor y lágrimas, los
+            mismos que al final me demostraron la gloria.
+          </p>
+          <p>
+            Me enseñó también la responsabilidad de distinguir lo correcto de lo incorrecto, con
+            empatía y gratitud. Un servicio que deja huella en cada persona: creo que ese será mi
+            legado en esta vida.
           </p>
         </div>
         <div class="mission__actions" appReveal [revealDelay]="150">
@@ -163,9 +170,10 @@
   <section id="charlas" class="talks" aria-labelledby="titulo-charlas">
     <div class="page-shell">
       <header class="talks-heading" appReveal>
-        <h2 id="titulo-charlas">Compartir lo que sé también es cuidar.</h2>
+        <h2 id="titulo-charlas">Compartir mi conocimiento es una manera de cuidarte.</h2>
         <p>
-          Charlas, encuentros y conversaciones que acercan información útil a la vida cotidiana.
+          Estamos para vencer juntos: el mayor acto de amor es cuidar tu salud y la de tu familia.
+          Aquí te acompaño enseñando.
         </p>
       </header>
 
@@ -310,71 +318,37 @@
   <section id="medicina" class="medicine" aria-labelledby="titulo-medicina">
     <div class="page-shell">
       <header class="talks-heading" appReveal>
-        <h2 id="titulo-medicina">Mi lado de doctor.</h2>
+        <h2 id="titulo-medicina">Ser cirujano oncólogo.</h2>
         <p>
-          Es una parte importante de mi historia, no la única. La ejerzo con formación, criterio y
-          el mismo trato cercano que guía todo lo demás.
+          Aprendí que cada movimiento en mis cirugías es un acto de fe y un acto de vida. Pongo a
+          Dios como mi guía.
         </p>
       </header>
 
       <div class="med-mosaic">
-        <figure class="med med--portrait" appReveal>
-          <picture>
-            <source
-              type="image/avif"
-              [srcset]="photos.surgeryPortrait.avif"
-              sizes="(min-width: 1024px) 30vw, 92vw"
-            />
-            <source
-              type="image/webp"
-              [srcset]="photos.surgeryPortrait.webp"
-              sizes="(min-width: 1024px) 30vw, 92vw"
-            />
-            <img
-              [src]="photos.surgeryPortrait.src"
-              alt="Fabio Palacios operando con instrumental laparoscópico en sala de operaciones"
-              width="1086"
-              height="1600"
-              loading="lazy"
-            />
-          </picture>
-          <figcaption>En sala de operaciones</figcaption>
-        </figure>
+        <div class="med med--portrait" appReveal aria-label="Fabio Palacios en sala de operaciones">
+          <app-photo-rotator [slides]="surgeryShots" />
+        </div>
 
         <article class="med med--id" appReveal [revealDelay]="60">
-          <p class="med__eyebrow">Especialidad</p>
-          <h3>Cirugía oncológica general, con subespecialidad en cavidad abdominal.</h3>
+          <h3>Cirugía oncológica</h3>
           <p class="med__reg">CMP {{ doctor.cmp }} · RNE {{ doctor.rne }}</p>
         </article>
 
-        <figure class="med med--technique" appReveal [revealDelay]="90">
-          <picture>
-            <source
-              type="image/avif"
-              [srcset]="photos.laparoscopy.avif"
-              sizes="(min-width: 1024px) 24vw, 92vw"
-            />
-            <source
-              type="image/webp"
-              [srcset]="photos.laparoscopy.webp"
-              sizes="(min-width: 1024px) 24vw, 92vw"
-            />
-            <img
-              [src]="photos.laparoscopy.src"
-              alt="Fabio Palacios sosteniendo instrumental laparoscópico durante una intervención"
-              width="960"
-              height="1280"
-              loading="lazy"
-            />
-          </picture>
-          <figcaption>Técnica mínimamente invasiva</figcaption>
-        </figure>
+        <div
+          class="med med--technique"
+          appReveal
+          [revealDelay]="90"
+          aria-label="Técnica quirúrgica y equipo"
+        >
+          <app-photo-rotator [slides]="techniqueShots" />
+        </div>
 
         <article class="med med--areas" appReveal [revealDelay]="120">
-          <p class="med__eyebrow">Qué opero</p>
+          <p class="med__eyebrow">Focus</p>
           <ul>
             @for (area of surgicalAreas; track area.id) {
-              <li>
+              <li [class.is-focus]="area.featured">
                 <strong>{{ area.title }}</strong>
                 <span>{{ area.organs.join(' · ') }}</span>
               </li>
@@ -394,28 +368,14 @@
           </ol>
         </article>
 
-        <figure class="med med--explain" appReveal [revealDelay]="180">
-          <picture>
-            <source
-              type="image/avif"
-              [srcset]="photos.reviewingStudy.avif"
-              sizes="(min-width: 1024px) 30vw, 92vw"
-            />
-            <source
-              type="image/webp"
-              [srcset]="photos.reviewingStudy.webp"
-              sizes="(min-width: 1024px) 30vw, 92vw"
-            />
-            <img
-              [src]="photos.reviewingStudy.src"
-              alt="Fabio Palacios revisando un estudio de imágenes junto a un colega"
-              width="960"
-              height="1280"
-              loading="lazy"
-            />
-          </picture>
-          <figcaption>Revisar el caso antes de decidir</figcaption>
-        </figure>
+        <div
+          class="med med--explain"
+          appReveal
+          [revealDelay]="180"
+          aria-label="Revisión de casos antes de operar"
+        >
+          <app-photo-rotator [slides]="reviewShots" />
+        </div>
 
         <a
           class="med med--book"
@@ -433,22 +393,15 @@
         </a>
       </div>
 
-      <ul class="med-badges" aria-label="Formación y registros" appReveal [revealDelay]="120">
-        @for (item of accreditations; track item.id) {
-          <li>
-            <strong>{{ item.institution }}</strong>
-            <span>{{ item.role }}</span>
-          </li>
-        }
-      </ul>
+      <app-member-marquee appReveal [revealDelay]="120" />
     </div>
   </section>
 
   <section id="acompanamiento" class="coach" aria-labelledby="titulo-acompanamiento">
     <div class="page-shell coach__layout">
       <div class="coach__words">
-        <p class="coach__eyebrow" appReveal>Coach espiritual</p>
-        <h2 id="titulo-acompanamiento" appReveal>Un amigo en tu lucha.</h2>
+        <p class="coach__eyebrow coach__eyebrow--lead" appReveal>Coach espiritual</p>
+        <h2 id="titulo-acompanamiento" appReveal>Tu amigo, el Gurú.</h2>
         <div class="coach__copy" appReveal [revealDelay]="90">
           <p>
             Oncólogo y coach espiritual en el manejo del cáncer. La cirugía es una parte del camino;
@@ -940,20 +893,4 @@
       </p>
     </div>
   </footer>
-
-  <!-- CTA fijo en móvil. Solo aparece cuando el héroe ya salió de pantalla:
-       mientras se ve, sus propios botones cumplen la misma función y este
-       tapaba contenido sin aportar nada. -->
-  <div class="dock" [class.is-visible]="dockVisible()" aria-hidden="false">
-    <a
-      class="dock__cta"
-      [href]="medicalLink"
-      appContactCta
-      ctaReason="dock-movil"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Consultar por WhatsApp <span aria-hidden="true">↗</span>
-    </a>
-  </div>
 </article>

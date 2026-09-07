@@ -1,0 +1,212 @@
+@use '../../../styles/mixins' as m;
+
+/* ============================================================
+   BOTONES FLOTANTES DE CONTACTO Y REDES
+   ============================================================
+   Anclados abajo a la derecha, con WhatsApp en la posición más baja: la más
+   cercana al pulgar y la que menos recorrido exige desde cualquier punto de la
+   página. Los perfiles quedan encima, agrupados aparte, porque solo llevan a
+   mirar y no deben competir con la acción. */
+
+:host {
+  --rail-green: #0f7a52;
+  --rail-green-deep: #0b6240;
+  --rail-ink: #172231;
+  --rail-line: rgba(23, 34, 49, 0.16);
+}
+
+.rail {
+  position: fixed;
+  right: clamp(0.85rem, 1.6vw, 1.5rem);
+  bottom: clamp(0.85rem, 1.6vw, 1.5rem);
+  /* El gesto de inicio del iPhone se suma abajo, para que el botón no quede
+     debajo de la barra del sistema. */
+  bottom: calc(clamp(0.85rem, 1.6vw, 1.5rem) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-fab);
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+
+  /* Oculto sobre el héroe: allí sus dos botones ya hacen este trabajo y un
+     tercero flotando solo taparía la fotografía. `visibility` lo saca además
+     del recorrido del tabulador mientras no se ve. */
+  visibility: hidden;
+  transition: visibility 0s linear 0.65s;
+
+  &.is-visible {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
+
+/* ---------- Entrada ----------
+   Entran deslizándose desde fuera del borde derecho, no apareciendo en el
+   sitio: un elemento que se materializa encima del contenido se lee como un
+   sobresalto, mientras que uno que llega desde el margen se lee como algo que
+   estaba ahí al lado. Las dos piezas van escalonadas —primero la acción, la
+   cápsula detrás— para que el conjunto no entre de bloque. */
+.rail__profiles,
+.rail__wa {
+  opacity: 0;
+  /* `translate` y no `transform`: así el `scale` del hover no lo pisa. */
+  translate: 160% 0;
+  transition:
+    translate 0.62s var(--ease-out),
+    opacity 0.42s var(--ease-out);
+}
+
+.rail.is-visible .rail__wa,
+.rail.is-visible .rail__profiles {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.rail.is-visible .rail__profiles {
+  transition-delay: 0.09s;
+}
+
+/* ---------- WhatsApp: la acción ---------- */
+
+.rail__wa {
+  @include m.focus-ring(#ffffff);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(3.4rem, 3.8vw, 4rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--rail-green);
+  /* Sin desplazamiento vertical: una sombra caida bajo un halo circular
+     hace leer el conjunto como descentrado. */
+  box-shadow: 0 4px 18px rgba(15, 122, 82, 0.32);
+  transition:
+    transform var(--dur) var(--ease-spring),
+    background-color var(--dur) var(--ease-out);
+
+  &:hover {
+    transform: scale(1.07);
+    background: var(--rail-green-deep);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* La aureola expansiva. Detrás del botón y sin capturar el puntero, para que
+   el área de clic siga siendo el círculo y no el anillo. */
+.rail__halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: var(--rail-green);
+  opacity: 0;
+  pointer-events: none;
+  /* Centrado por `translate` y crecimiento por `scale`: son propiedades
+     independientes, así que la animación no puede pisar el centrado —que es
+     justo lo que ocurre al mezclarlas dentro de un solo `transform`. */
+  translate: -50% -50%;
+  animation: rail-halo 2.6s var(--ease-out) infinite;
+
+  &--late {
+    animation-delay: 1.3s;
+  }
+}
+
+@keyframes rail-halo {
+  0% {
+    scale: 1;
+    opacity: 0.5;
+  }
+
+  100% {
+    scale: 2.2;
+    opacity: 0;
+  }
+}
+
+/* ---------- Perfiles: solo llevan a mirar ---------- */
+
+.rail__profiles {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem;
+  border: 1px solid var(--rail-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(12, 20, 28, 0.1);
+
+  a {
+    @include m.focus-ring(#172231);
+    display: grid;
+    place-items: center;
+    width: clamp(2.1rem, 2.3vw, 2.4rem);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    color: var(--rail-ink);
+    transition:
+      color var(--dur) var(--ease-out),
+      background-color var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+
+    &:hover {
+      transform: scale(1.1);
+      color: #ffffff;
+      background: var(--rail-ink);
+    }
+  }
+}
+
+/* ---------- Centrado del glifo ----------
+   El SVG mide menos que su host. El host centra ese tamaño real sin alterar
+   las proporciones del logo. */
+.rail__wa app-icon,
+.rail__profiles app-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+}
+
+.rail__wa app-icon {
+  width: 50%;
+}
+
+.rail__profiles app-icon {
+  width: 54%;
+}
+
+/* ---------- Móvil ----------
+   No hay margen libre a los lados, así que cuatro círculos apilados taparían
+   contenido. Se queda solo la acción. */
+@media (max-width: 767.98px) {
+  .rail__profiles {
+    display: none;
+  }
+
+  .rail__wa {
+    width: 3.5rem;
+  }
+}
+
+/* Un latido perpetuo en el borde de la pantalla es justo lo que molesta a
+   quien pide menos movimiento. El botón se queda; solo se detiene la aureola. */
+@media (prefers-reduced-motion: reduce) {
+  .rail__halo {
+    animation: none;
+  }
+
+  .rail__profiles,
+  .rail__wa {
+    translate: 0 0;
+    transition-duration: 0.01ms;
+  }
+}

@@ -30,7 +30,7 @@ export const DOCTOR = {
   lastName: 'Palacios',
   /** Nombre de presentación en navbar, footer y metadatos */
   displayName: 'Fabio Palacios',
-  navDescriptor: 'Médico y conferencista',
+  navDescriptor: 'Oncólogo y aliado',
   specialty: 'Cirujano Oncólogo General',
   subSpecialty: 'Cavidad Abdominal',
   cmp: '066389',
@@ -152,7 +152,7 @@ export const CREDENTIALS: readonly Credential[] = [
 export const SPECIALTIES: readonly Specialty[] = [
   {
     id: 'digestive',
-    title: 'Cáncer digestivo',
+    title: 'Cáncer de tubo digestivo',
     organs: ['Esófago', 'Estómago', 'Hígado', 'Páncreas', 'Colon', 'Recto'],
     icon: 'digestive',
     image: 'specialties/cirugia-cancer-digestivo.jpg',
@@ -184,7 +184,6 @@ export const SPECIALTIES: readonly Specialty[] = [
     icon: 'breast',
     image: 'specialties/cirugia-cancer-mama-partes-blandas.jpg',
     imageAlt: 'Ilustración anatómica de la glándula mamaria y los tejidos blandos que la rodean',
-    featured: true,
   },
   {
     id: 'urologic',
@@ -201,6 +200,90 @@ export const SPECIALTIES: readonly Specialty[] = [
     icon: 'gynecologic',
     image: 'specialties/cirugia-cancer-ginecologico.jpg',
     imageAlt: 'Ilustración del aparato reproductor femenino: útero, cérvix y ovarios',
+  },
+];
+
+/* ============================================================
+   SOCIEDADES
+   ============================================================ */
+
+/**
+ * Sociedades científicas de las que el doctor es miembro.
+ *
+ * TODO PENDIENTE DE DOS COSAS, y ninguna se puede resolver desde el código:
+ *
+ * Las ocho las confirmó el doctor, y cada logo se descargó del sitio oficial
+ * de su sociedad —no son recreaciones—, con la excepción del de SPOQ, que su
+ * web sirve desde el paquete de la aplicación.
+ *
+ * Los nombres van completos y en su idioma original: son credenciales
+ * profesionales, y abreviarlas o traducirlas las vuelve más difíciles de
+ * verificar para quien quiera comprobarlas.
+ */
+export const MEMBERSHIPS: readonly {
+  readonly id: string;
+  readonly name: string;
+  readonly logo: string;
+  /** Dimensiones reales del archivo. Sin ellas el navegador no reserva el
+   *  hueco y la pasarela salta al cargar cada logo. */
+  readonly width: number;
+  readonly height: number;
+}[] = [
+  {
+    id: 'sages',
+    name: 'Society of American Gastrointestinal and Endoscopic Surgeons',
+    logo: 'sociedades/sages.png',
+    width: 200,
+    height: 70,
+  },
+  {
+    id: 'ssat',
+    name: 'The Society for Surgery of the Alimentary Tract',
+    logo: 'sociedades/ssat.jpg',
+    width: 800,
+    height: 222,
+  },
+  {
+    id: 'esgo',
+    name: 'European Society of Gynaecological Oncology',
+    logo: 'sociedades/esgo.svg',
+    width: 320,
+    height: 96,
+  },
+  {
+    id: 'spce',
+    name: 'Sociedad Peruana de Cirugía Endoscópica y Robótica',
+    logo: 'sociedades/spce.png',
+    width: 320,
+    height: 84,
+  },
+  {
+    id: 'scgp',
+    name: 'Sociedad de Cirujanos Generales del Perú',
+    logo: 'sociedades/scgp.png',
+    width: 495,
+    height: 135,
+  },
+  {
+    id: 'spoq',
+    name: 'Sociedad Peruana de Oncología Quirúrgica',
+    logo: 'sociedades/spoq.webp',
+    width: 293,
+    height: 88,
+  },
+  {
+    id: 'spog',
+    name: 'Sociedad Peruana de Obstetricia y Ginecología',
+    logo: 'sociedades/spog.png',
+    width: 272,
+    height: 86,
+  },
+  {
+    id: 'spc',
+    name: 'Sociedad Peruana de Cancerología',
+    logo: 'sociedades/spc.png',
+    width: 254,
+    height: 78,
   },
 ];
 

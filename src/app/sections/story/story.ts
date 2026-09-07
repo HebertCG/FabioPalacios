@@ -1,21 +1,13 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  HostListener,
-  afterNextRender,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
 import { ContactCta } from '../../core/directives/contact-cta';
 import { InViewPlay } from '../../core/directives/in-view-play';
 import { RouterLink } from '@angular/router';
+import { MemberMarquee } from '../../ui/member-marquee/member-marquee';
+import { PhotoRotator, type RotatorSlide } from '../../ui/photo-rotator/photo-rotator';
 import { Reveal } from '../../core/directives/reveal';
 import {
   COACH_VIDEO,
   CONTACT,
-  CREDENTIALS,
   DOCTOR,
   PREVENTION,
   REELS,
@@ -48,14 +40,12 @@ function media(src: string): StoryMedia {
 
 @Component({
   selector: 'app-story',
-  imports: [ContactCta, InViewPlay, Reveal, RouterLink],
+  imports: [ContactCta, InViewPlay, MemberMarquee, PhotoRotator, Reveal, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story.html',
   styleUrl: './story.scss',
 })
 export class Story {
-  private readonly destroyRef = inject(DestroyRef);
-
   protected readonly photos = {
     hero: media('fabio/fabio-comunidad-portada.jpg'),
     listening: media('fabio/fabio-escuchando-comunidad.jpg'),
@@ -76,7 +66,6 @@ export class Story {
      sale cada credencial. Aquí no se redacta ningún dato clínico nuevo. */
   protected readonly doctor = DOCTOR;
   protected readonly surgicalAreas = SPECIALTIES;
-  protected readonly accreditations = CREDENTIALS;
 
   /** Los tres hitos de formación, en orden cronológico. */
   protected readonly training = [
@@ -84,6 +73,93 @@ export class Story {
     { place: 'INEN', what: 'Residencia en Cirugía Oncológica' },
     { place: 'IRCAD América Latina', what: 'Cirugía mínimamente invasiva' },
   ] as const;
+
+  /* ---------- Carruseles del bloque médico ----------
+     Tres series, agrupadas por lo que cuentan y no por dónde caben: el
+     quirófano, el trabajo en equipo y la decisión previa a operar. Cada foto
+     lleva su propia frase, así que el pie cambia con la imagen en lugar de
+     poner un rótulo genérico sobre fotos distintas. */
+
+  protected readonly surgeryShots: readonly RotatorSlide[] = [
+    {
+      file: 'ImagenPrincipal_2.jpg',
+      width: 1086,
+      height: 1600,
+      alt: 'Fabio Palacios operando con instrumental laparoscópico',
+      caption: 'Cada movimiento es un acto de vida',
+      position: '50% 18%',
+    },
+    {
+      file: 'fabio/fabio-quirofano-espera.jpg',
+      width: 561,
+      height: 1024,
+      alt: 'Fabio Palacios preparado en sala de operaciones antes de intervenir',
+      caption: 'La calma antes del primer corte',
+      position: '50% 22%',
+    },
+    {
+      file: 'fabio/fabio-quirofano-lampara.jpg',
+      width: 960,
+      height: 1280,
+      alt: 'Fabio Palacios en sala de operaciones bajo la lámpara quirúrgica',
+      caption: 'Quince años en sala de operaciones',
+      position: '50% 14%',
+    },
+  ];
+
+  protected readonly techniqueShots: readonly RotatorSlide[] = [
+    {
+      file: 'fabio/fabio-cirugia-laparoscopica.jpg',
+      width: 960,
+      height: 1280,
+      alt: 'Fabio Palacios sosteniendo instrumental laparoscópico durante una intervención',
+      caption: 'Técnica mínimamente invasiva',
+      position: '50% 16%',
+    },
+    {
+      file: 'fabio/fabio-equipo-quirofano.jpg',
+      width: 1280,
+      height: 960,
+      alt: 'Fabio Palacios con su equipo quirúrgico al terminar una intervención',
+      caption: 'Ninguna cirugía se hace solo',
+      position: '50% 30%',
+    },
+    {
+      file: 'fabio/fabio-equipo-mesa.jpg',
+      width: 1280,
+      height: 960,
+      alt: 'El equipo quirúrgico de Fabio Palacios en la mesa de operaciones',
+      caption: 'Un equipo entrenado para lo complejo',
+      position: '50% 26%',
+    },
+  ];
+
+  protected readonly reviewShots: readonly RotatorSlide[] = [
+    {
+      file: 'fabio/fabio-explicando-estudio.jpg',
+      width: 960,
+      height: 1280,
+      alt: 'Fabio Palacios señalando una tomografía junto a un colega',
+      caption: 'Revisar el caso antes de decidir',
+      position: '50% 30%',
+    },
+    {
+      file: 'fabio/fabio-junta-imagenes.jpg',
+      width: 1280,
+      height: 960,
+      alt: 'Fabio Palacios revisando estudios de imágenes con otros médicos',
+      caption: 'Cada imagen se lee entre varios',
+      position: '50% 34%',
+    },
+    {
+      file: 'fabio/fabio-junta-medica.jpg',
+      width: 1280,
+      height: 960,
+      alt: 'Fabio Palacios en una junta médica con colegas',
+      caption: 'La junta decide, no una sola cabeza',
+      position: '50% 36%',
+    },
+  ];
 
   /* ---------- Acompañamiento, prevención y sobrevivientes ---------- */
 
@@ -164,35 +240,9 @@ export class Story {
     return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
   }
 
-  /* ---------- Pie y CTA fijo ---------- */
+  /* ---------- Pie ---------- */
 
   protected readonly navLinks = NAV_LINKS;
-
-  /**
-   * El CTA fijo aparece solo cuando el héroe ya salió de pantalla. Mientras se
-   * ve, sus propios botones hacen el mismo trabajo y esta barra solo taparía
-   * contenido.
-   */
-  protected readonly dockVisible = signal(false);
-
-  constructor() {
-    afterNextRender(() => this.watchHero());
-  }
-
-  private watchHero(): void {
-    const hero = document.getElementById('inicio');
-    if (!hero || typeof IntersectionObserver === 'undefined') {
-      this.dockVisible.set(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => this.dockVisible.set(!entry.isIntersecting),
-      { threshold: 0 },
-    );
-    observer.observe(hero);
-    this.destroyRef.onDestroy(() => observer.disconnect());
-  }
 
   /* ---------- Contacto ---------- */
 

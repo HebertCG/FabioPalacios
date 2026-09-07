@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Navbar } from './layout/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
+import { SocialRail } from './ui/social-rail/social-rail';
 
 /**
  * Shell de la landing.
@@ -17,7 +18,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Navbar, RouterOutlet],
+  imports: [Navbar, RouterOutlet, SocialRail],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
