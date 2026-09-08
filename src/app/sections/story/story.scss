@@ -827,6 +827,7 @@ h3 {
     gap: clamp(0.9rem, 1.6vw, 1.4rem);
     align-items: center;
     margin-top: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: clamp(1rem, 2vw, 1.6rem);
     padding: clamp(1rem, 1.7vw, 1.45rem);
     border-radius: var(--mcut-lg) var(--mcut) var(--mcut) var(--mcut-lg);
     background: var(--story-yellow);
@@ -875,30 +876,39 @@ h3 {
     transition: transform var(--dur) var(--ease-out);
   }
 
-  /* Se ancla al fondo de la columna. El video es más alto que el texto, y
-     `margin-top: auto` reparte esa diferencia en lugar de dejarla como un
-     vacío blanco debajo de la tarjeta amarilla. */
+  /* Segunda pieza de la columna, hermana de la amarilla: mismo relleno, mismo
+     canto barrido pero al lado contrario, y el celeste que llevaba la tarjeta
+     que había aquí antes de unificarlas. Así la columna vuelve a leerse como
+     dos piezas de la misma familia y no como una tarjeta y un texto suelto.
+
+     `margin-top: auto` la ancla al fondo: el video es más alto que el texto y
+     esto reparte la diferencia en lugar de dejarla como un vacío blanco. El
+     margen inferior de la tarjeta amarilla garantiza la separación mínima
+     cuando la columna viene justa y ese `auto` se resuelve en cero. */
   &__reach {
     display: flex;
     align-items: center;
     gap: clamp(1rem, 2vw, 1.75rem);
     flex-wrap: wrap;
     margin-top: auto;
-    padding-top: clamp(1.75rem, 3vw, 2.75rem);
+    padding: clamp(1.1rem, 1.8vw, 1.6rem) clamp(1.25rem, 2vw, 1.8rem);
+    border-radius: var(--mcut) var(--mcut-lg) var(--mcut-lg) var(--mcut);
+    background: var(--story-blue);
 
     p {
-      max-width: 22ch;
+      max-width: 20ch;
       font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.35vw, 1.35rem);
+      font-size: clamp(1.05rem, 1.3vw, 1.3rem);
       font-weight: 750;
-      line-height: 1.2;
+      line-height: 1.18;
       letter-spacing: -0.035em;
       text-wrap: balance;
     }
   }
 
   &__reach-cta {
-    @include m.focus-ring(#ffffff);
+    @include m.focus-ring(#172231);
+    margin-left: auto;
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
