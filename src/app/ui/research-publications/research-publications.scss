@@ -348,27 +348,39 @@
    sobre todo—, `appReveal` ya deja hechas las entradas escalonadas. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .research-card {
-      animation: research-rise linear both;
-      animation-timeline: view();
-    }
+    /* La entrada solo corre donde las cuatro tarjetas comparten fila.
+       Apiladas no hay cascada que hacer, y sí un problema: el tramo `cover`
+       mide alto del elemento MÁS alto de pantalla, así que con una tarjeta
+       que ocupa casi todo el móvil la opacidad tardaba cientos de píxeles en
+       llegar a 1 y la pieza se quedaba a medias — blanca sobre la losa
+       oscura, o sea gris translúcido. Por debajo de esto la entrada la hace
+       `appReveal`, que dura lo que dura y no depende del recorrido. */
+    @media (min-width: 1100px) {
+      .research-card {
+        animation: research-rise linear both;
+        animation-timeline: view();
+      }
 
-    /* Cada tarjeta termina de subir un poco más tarde que la anterior, así
-       la fila entra en cascada y no las cuatro de golpe. */
-    .research-card:nth-child(1) {
-      animation-range: entry 2% cover 20%;
-    }
+      /* Cada tarjeta termina de subir un poco más tarde que la anterior, así
+         la fila entra en cascada y no las cuatro de golpe. El tramo se mide
+         solo dentro de `entry`, que dura lo que mide la tarjeta: así la
+         entrada acaba siempre a la misma altura, la pantalla sea alta o
+         baja. */
+      .research-card:nth-child(1) {
+        animation-range: entry 0% entry 55%;
+      }
 
-    .research-card:nth-child(2) {
-      animation-range: entry 4% cover 25%;
-    }
+      .research-card:nth-child(2) {
+        animation-range: entry 5% entry 65%;
+      }
 
-    .research-card:nth-child(3) {
-      animation-range: entry 6% cover 30%;
-    }
+      .research-card:nth-child(3) {
+        animation-range: entry 10% entry 75%;
+      }
 
-    .research-card:nth-child(4) {
-      animation-range: entry 8% cover 35%;
+      .research-card:nth-child(4) {
+        animation-range: entry 15% entry 85%;
+      }
     }
 
     /* Cada foto deriva dentro de su marco mientras la fila pasa. El 1,14 de
@@ -391,7 +403,7 @@
     .research__heading::after {
       animation: research-rule linear both;
       animation-timeline: view();
-      animation-range: entry 8% cover 18%;
+      animation-range: entry 10% entry 90%;
     }
   }
 }
