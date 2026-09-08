@@ -765,6 +765,13 @@ h3 {
    nuevo hable el idioma del bloque médico es justo lo que lo hace sistema
    en vez de colección. */
 .coach {
+  /* Las dos tarjetas de la columna se miden con lo mismo. Si el retrato de la
+     amarilla cambia de tamaño, la celeste lo sigue sola en lugar de quedarse
+     con un alto copiado a mano que ya no coincide. */
+  --coach-figure: clamp(5rem, 8vw, 7.5rem);
+  --coach-pad: clamp(1rem, 1.7vw, 1.45rem);
+  --coach-gap: clamp(0.85rem, 1.6vw, 1.25rem);
+
   padding-block: clamp(4.5rem, 8vw, 7rem);
   border-bottom: 1px solid var(--story-line);
 
@@ -827,8 +834,7 @@ h3 {
     gap: clamp(0.9rem, 1.6vw, 1.4rem);
     align-items: center;
     margin-top: clamp(1.75rem, 3vw, 2.5rem);
-    margin-bottom: clamp(1rem, 2vw, 1.6rem);
-    padding: clamp(1rem, 1.7vw, 1.45rem);
+    padding: var(--coach-pad);
     border-radius: var(--mcut-lg) var(--mcut) var(--mcut) var(--mcut-lg);
     background: var(--story-yellow);
     transition: transform var(--dur) var(--ease-out);
@@ -836,7 +842,7 @@ h3 {
     figure {
       /* Al quedarse sola, el retrato crece: es la única foto de esta columna
          y a 4,5rem se leía como un icono. */
-      width: clamp(5rem, 8vw, 7.5rem);
+      width: var(--coach-figure);
       aspect-ratio: 1;
       overflow: hidden;
       border-radius: 999px;
@@ -876,23 +882,22 @@ h3 {
     transition: transform var(--dur) var(--ease-out);
   }
 
-  /* Segunda pieza de la columna, hermana de la amarilla: mismo relleno, mismo
-     canto barrido pero al lado contrario, y el celeste que llevaba la tarjeta
-     que había aquí antes de unificarlas. Así la columna vuelve a leerse como
-     dos piezas de la misma familia y no como una tarjeta y un texto suelto.
+  /* Segunda pieza de la columna, gemela de la amarilla: mismo relleno, mismo
+     canto barrido y el mismo alto mínimo, que sale del tamaño del retrato de
+     al lado. Solo cambian el color y lo que lleva dentro.
 
-     `margin-top: auto` la ancla al fondo: el video es más alto que el texto y
-     esto reparte la diferencia en lugar de dejarla como un vacío blanco. El
-     margen inferior de la tarjeta amarilla garantiza la separación mínima
-     cuando la columna viene justa y ese `auto` se resuelve en cero. */
+     Va pegada debajo y no anclada al fondo: con dos tarjetas la columna ya es
+     más alta que el mínimo del video, así que el vacío que había antes lo
+     llena contenido y no un margen automático. */
   &__reach {
     display: flex;
     align-items: center;
     gap: clamp(1rem, 2vw, 1.75rem);
     flex-wrap: wrap;
-    margin-top: auto;
-    padding: clamp(1.1rem, 1.8vw, 1.6rem) clamp(1.25rem, 2vw, 1.8rem);
-    border-radius: var(--mcut) var(--mcut-lg) var(--mcut-lg) var(--mcut);
+    min-block-size: calc(var(--coach-figure) + var(--coach-pad) * 2);
+    margin-top: var(--coach-gap);
+    padding: var(--coach-pad);
+    border-radius: var(--mcut-lg) var(--mcut) var(--mcut) var(--mcut-lg);
     background: var(--story-blue);
 
     p {
