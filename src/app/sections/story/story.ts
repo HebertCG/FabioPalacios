@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { ContactCta } from '../../core/directives/contact-cta';
+import { Icon } from '../../ui/icon/icon';
 import { InViewPlay } from '../../core/directives/in-view-play';
 import { RouterLink } from '@angular/router';
 import { MemberMarquee } from '../../ui/member-marquee/member-marquee';
@@ -50,6 +51,7 @@ function media(src: string): StoryMedia {
   selector: 'app-story',
   imports: [
     ContactCta,
+    Icon,
     InViewPlay,
     MemberMarquee,
     PhotoRotator,
@@ -195,6 +197,15 @@ export class Story {
     ...programme,
     link: whatsappLink(programme.message),
   }));
+
+  /**
+   * El bloque del coach no tenía ninguna acción propia: la tarjeta amarilla
+   * lleva a los programas y nada más. Quien llega convencido después del
+   * video tenía que seguir bajando para encontrar por dónde escribir.
+   */
+  protected readonly coachLink = whatsappLink(
+    'Hola doctor, vengo de su página web. Vi su video y quisiera que me acompañe en este proceso.',
+  );
 
   /** Para quien no sabe cuál le toca. Es la mitad de los casos. */
   protected readonly survivorLink = whatsappLink(

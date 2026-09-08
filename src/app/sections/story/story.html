@@ -452,6 +452,24 @@
           </div>
           <i class="coach__card-arrow" aria-hidden="true">&#8594;</i>
         </a>
+
+        <!-- Se ancla al fondo de la columna: es lo que reparte el alto y
+             cierra el vacío que dejaba el video, que es más alto que el
+             texto. Y de paso el bloque gana la acción que no tenía. -->
+        <div class="coach__reach" appReveal [revealDelay]="190">
+          <p>El acompañamiento empieza con un mensaje.</p>
+          <a
+            class="coach__reach-cta"
+            [href]="coachLink"
+            appContactCta
+            ctaReason="coach"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <app-icon name="whatsapp" />
+            Escríbeme
+          </a>
+        </div>
       </div>
 
       <div class="coach__stage" appReveal [revealDelay]="60">
@@ -513,31 +531,41 @@
         </a>
       </div>
 
-      <ul class="survive__list" appReveal [revealDelay]="90">
-        @for (programme of programmes; track programme.id; let i = $index) {
-          <li>
-            <a
-              class="programme"
-              [class.programme--lead]="programme.featured"
-              [href]="programme.link"
-              appContactCta
-              [ctaReason]="'programa-' + programme.id"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="programme__index" aria-hidden="true">{{ i + 1 }}</span>
-              <span class="programme__text">
-                @if (programme.featured) {
-                  <span class="programme__tag">El principal</span>
-                }
-                <strong>{{ programme.label }}</strong>
-                <span class="programme__body">{{ programme.body }}</span>
-              </span>
-              <i class="programme__arrow" aria-hidden="true">↗</i>
-            </a>
-          </li>
-        }
-      </ul>
+      <div class="survive__choose">
+        <!-- Sin este rótulo las cuatro piezas se leían como una lista de
+             temas. Dice las dos cosas que faltaban: que se eligen, y adónde
+             llevan. -->
+        <p class="survive__pick" id="rotulo-programas" appReveal [revealDelay]="60">
+          <app-icon name="whatsapp" />
+          Elige el tuyo y escríbeme por WhatsApp
+        </p>
+
+        <ul class="survive__list" aria-labelledby="rotulo-programas" appReveal [revealDelay]="90">
+          @for (programme of programmes; track programme.id; let i = $index) {
+            <li>
+              <a
+                class="programme"
+                [class.programme--lead]="programme.featured"
+                [href]="programme.link"
+                appContactCta
+                [ctaReason]="'programa-' + programme.id"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="programme__index" aria-hidden="true">{{ i + 1 }}</span>
+                <span class="programme__text">
+                  @if (programme.featured) {
+                    <span class="programme__tag">El principal</span>
+                  }
+                  <strong>{{ programme.label }}</strong>
+                  <span class="programme__body">{{ programme.body }}</span>
+                </span>
+                <i class="programme__arrow" aria-hidden="true">↗</i>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
