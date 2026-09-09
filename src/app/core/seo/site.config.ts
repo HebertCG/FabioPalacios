@@ -48,15 +48,23 @@ export function absoluteUrl(path: string): string {
 /**
  * TÍTULO — se muestra en la pestaña y como titular azul en Google.
  *
- * Especialidad y nombre, sin ciudad: el doctor no quiere que su posicionamiento
- * quede atado a Piura. Ocupa 32 caracteres de los ~60 que Google muestra.
+ * Especialidad, país y nombre. El doctor no quiere el posicionamiento atado a
+ * Piura: apunta a «cirujano oncólogo Perú». Ocupa 42 de los ~60 caracteres
+ * que Google muestra, así que entra entero.
  *
- * La contrapartida es real y conviene tenerla presente: sin la ciudad en el
- * título, «oncólogo Piura» y sus variantes locales quedan más difíciles. Ese
- * terreno lo cubre sobre todo el Perfil de Empresa de Google, que es lo que
- * alimenta el bloque de mapa, y no este campo.
+ * Se dice «en Perú» y no «en Lima» a propósito. Lo primero es cierto —está
+ * colegiado y ejerce en Perú— y lo segundo prometería un consultorio que no
+ * existe. La única dirección es la de Castilla.
+ *
+ * Dos contrapartidas que conviene tener presentes:
+ *
+ * · Sin ciudad en el título, «oncólogo Piura» queda más difícil. Ese terreno
+ *   lo cubre sobre todo el Perfil de Empresa de Google, que es lo que alimenta
+ *   el bloque de mapa, y no este campo.
+ * · «Oncólogo Perú» compite con redes de clínicas, EsSalud y hospitales
+ *   nacionales. Es alcanzable, pero a años, no a meses.
  */
-export const SEO_TITLE = `Cirujano oncólogo ${DOCTOR.displayName}`;
+export const SEO_TITLE = `Cirujano oncólogo en Perú | ${DOCTOR.displayName}`;
 
 /**
  * DESCRIPCIÓN — el párrafo gris bajo el título en Google.
@@ -67,8 +75,8 @@ export const SEO_TITLE = `Cirujano oncólogo ${DOCTOR.displayName}`;
  * necesita saber dónde se atiende.
  */
 export const SEO_DESCRIPTION =
-  `Cirugía oncológica de alta complejidad: cáncer digestivo, de mama, cabeza y cuello, urológico ` +
-  `y ginecológico. Segunda opinión y consulta en ${DOCTOR.city}.`;
+  `Cirujano oncólogo en Perú. Cirugía de alta complejidad: cáncer digestivo, de mama, cabeza y ` +
+  `cuello, urológico y ginecológico. Segunda opinión y consulta.`;
 
 /**
  * Descripción corta para tarjetas de redes, donde hay menos espacio y
@@ -85,6 +93,12 @@ export const SEO_SOCIAL_DESCRIPTION =
  */
 export const SEO_KEYWORDS = [
   'Fabio Palacios',
+  /* Objetivo principal, por decisión del doctor. Es cierto —ejerce en Perú—
+     a diferencia de «oncólogo Lima», que prometería consultorio allí. */
+  'cirujano oncólogo Perú',
+  'oncólogo Perú',
+  'oncología Perú',
+  'cirugía oncológica Perú',
   `conferencista ${DOCTOR.city}`,
   `charlas de salud ${DOCTOR.city}`,
   `cirujano oncólogo ${DOCTOR.city}`,
@@ -99,14 +113,10 @@ export const SEO_KEYWORDS = [
   'oncólogo Sullana',
   'oncólogo Talara',
   'oncólogo Tumbes',
-  /* Teleconsulta: son las que puede sostener sin consultorio en esas
-     ciudades. Nada de «oncólogo Lima» a secas, que prometería presencia. */
+  /* La teleconsulta se queda como servicio real, pero deja de encabezar la
+     estrategia: el objetivo es el término amplio, no el cualificado. */
   'teleconsulta oncológica',
-  'teleconsulta oncológica Perú',
-  'segunda opinión oncológica online',
-  'oncólogo online Perú',
-  'teleconsulta oncológica Lima',
-  'teleconsulta oncológica Chiclayo',
+  'segunda opinión oncológica',
 ].join(', ');
 
 /** Idioma y región. `es-PE` le dice a Google que el público es peruano. */
@@ -226,7 +236,7 @@ export const SITE_SAME_AS: readonly string[] = [
 
 /** Zonas de captación. Se declaran en `areaServed` del JSON-LD. */
 export const SITE_AREA_SERVED: readonly {
-  readonly type: 'City' | 'State';
+  readonly type: 'City' | 'State' | 'Country';
   readonly name: string;
 }[] = [
   { type: 'City', name: 'Piura' },
@@ -242,6 +252,9 @@ export const SITE_AREA_SERVED: readonly {
      sigue siendo una sola, en Castilla. */
   { type: 'City', name: 'Lima' },
   { type: 'City', name: 'Chiclayo' },
+  /* El país entero. Lo sostiene la teleconsulta, que es lo que permite
+     atender fuera de Piura sin consultorio en cada ciudad. */
+  { type: 'Country', name: 'Perú' },
 ];
 
 /** Dirección postal ya partida en los campos que pide Schema.org. */
