@@ -69,9 +69,17 @@ function absolute(path) {
  * exactamente el tipo de visibilidad que busca. Si el doctor prefiere
  * lo contrario, aquí es donde se les bloquea.
  *
- * `Disallow: /*?` evita que las URLs con parámetros de campaña
- * (`?fbclid=`, `?utm_source=`) se rastreen como páginas distintas. La
- * etiqueta canonical ya lo cubre, pero esto ahorra rastreo.
+ * NO se bloquean las URLs con parámetros de campaña. Aquí hubo un
+ * `Disallow: /*?` con el argumento de ahorrar rastreo, y era un error:
+ * bloquear el rastreo impide leer la etiqueta canonical, que es
+ * justamente lo que consolida esas direcciones en la limpia. Google lo
+ * dice explícitamente — para contenido duplicado se usa canonical, no
+ * robots.txt.
+ *
+ * Y en esta página en concreto pesaba el doble, porque el tráfico llega
+ * de Instagram, Facebook y TikTok, y las tres añaden `?fbclid=` o
+ * equivalente a cada enlace compartido. La regla estaba bloqueando la
+ * versión de las URLs que de verdad recibe visitas.
  */
 function buildRobots() {
   return [
@@ -80,9 +88,6 @@ function buildRobots() {
     '',
     'User-agent: *',
     'Allow: /',
-    '',
-    '# URLs con parámetros de campaña: mismo contenido, otra dirección.',
-    'Disallow: /*?',
     '',
     '# Los videos pesan; que el rastreador no los descargue completos.',
     'Disallow: /*.mp4$',

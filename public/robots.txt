@@ -4,9 +4,6 @@
 User-agent: *
 Allow: /
 
-# URLs con parámetros de campaña: mismo contenido, otra dirección.
-Disallow: /*?
-
 # Los videos pesan; que el rastreador no los descargue completos.
 Disallow: /*.mp4$
 
