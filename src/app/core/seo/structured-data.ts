@@ -36,6 +36,7 @@ import {
   SITE_LOCALE,
   SITE_OPENING_HOURS,
   SITE_ORIGIN,
+  SITE_PUBLISHED,
   SITE_SAME_AS,
 } from './site.config';
 
@@ -293,10 +294,23 @@ function webPageNode(): JsonLdNode {
     description: SEO_DESCRIPTION,
     inLanguage: SITE_LOCALE,
     isPartOf: { '@id': ID.website },
+
+    /**
+     * De quién es el perfil. Google lo pide en `ProfilePage` y es lo que le
+     * permite entender que la página va sobre una persona concreta; sin esto
+     * la valida igual, pero avisa de que le falta lo principal.
+     *
+     * `about` y `author` apuntan al mismo nodo a propósito: la página trata
+     * sobre el doctor y además la firma él. Ninguna de las dos sustituye a
+     * `mainEntity`.
+     */
+    mainEntity: { '@id': ID.person },
+
     about: { '@id': ID.person },
     primaryImageOfPage: { '@id': ID.primaryImage },
     breadcrumb: { '@id': ID.breadcrumb },
     author: { '@id': ID.person },
+    dateCreated: SITE_PUBLISHED,
     dateModified: CONTENT_LAST_REVIEWED,
 
     /**

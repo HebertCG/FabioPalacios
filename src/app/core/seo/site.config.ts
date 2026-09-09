@@ -121,6 +121,19 @@ export const SEO_KEYWORDS = [
 
 /** Idioma y región. `es-PE` le dice a Google que el público es peruano. */
 export const SITE_LOCALE = 'es-PE';
+
+/**
+ * FECHA DE PUBLICACIÓN EN EL DOMINIO (AAAA-MM-DD).
+ *
+ * Va al JSON-LD como `dateCreated` de la página de perfil, que Google
+ * recomienda. Es el día real en que el sitio empezó a servirse desde
+ * fabiopalacios.org.pe, no la del build: el dominio se delegó el 8 de
+ * septiembre de 2026 y la página quedó publicada al día siguiente.
+ *
+ * No moverla nunca. Una fecha de creación que avanza sola es una señal
+ * contradictoria: dice que la página se creó hoy cada vez que se compila.
+ */
+export const SITE_PUBLISHED = '2026-09-09';
 export const SITE_LOCALE_OG = 'es_PE';
 
 /**
