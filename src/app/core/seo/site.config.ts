@@ -99,6 +99,14 @@ export const SEO_KEYWORDS = [
   'oncólogo Sullana',
   'oncólogo Talara',
   'oncólogo Tumbes',
+  /* Teleconsulta: son las que puede sostener sin consultorio en esas
+     ciudades. Nada de «oncólogo Lima» a secas, que prometería presencia. */
+  'teleconsulta oncológica',
+  'teleconsulta oncológica Perú',
+  'segunda opinión oncológica online',
+  'oncólogo online Perú',
+  'teleconsulta oncológica Lima',
+  'teleconsulta oncológica Chiclayo',
 ].join(', ');
 
 /** Idioma y región. `es-PE` le dice a Google que el público es peruano. */
@@ -227,6 +235,13 @@ export const SITE_AREA_SERVED: readonly {
   { type: 'City', name: 'Talara' },
   { type: 'City', name: 'Paita' },
   { type: 'State', name: 'Tumbes' },
+  /* Lima y Chiclayo entran por teleconsulta, no por consultorio. El doctor
+     atiende a distancia a pacientes de esas ciudades —segunda opinión,
+     revisión de estudios y seguimiento— y `areaServed` describe justamente
+     eso: la zona a la que se sirve, no dónde hay sede. La dirección postal
+     sigue siendo una sola, en Castilla. */
+  { type: 'City', name: 'Lima' },
+  { type: 'City', name: 'Chiclayo' },
 ];
 
 /** Dirección postal ya partida en los campos que pide Schema.org. */

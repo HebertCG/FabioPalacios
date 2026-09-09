@@ -2230,6 +2230,25 @@ h3 {
     color: var(--story-muted);
   }
 
+  /* La teleconsulta va escrita y a la vista, no solo declarada en el JSON-LD:
+     quien vive fuera de Piura no tiene por qué suponer que puede escribir, y
+     los buscadores pesan el texto que se lee. Filete turquesa a la izquierda
+     para que se separe del párrafo anterior sin pedir otro titular. */
+  &__reach {
+    max-width: 46ch;
+    margin-top: clamp(1rem, 1.8vw, 1.5rem);
+    padding-left: clamp(0.85rem, 1.4vw, 1.15rem);
+    border-left: 3px solid var(--story-accent);
+    font-size: clamp(0.92rem, 1.02vw, 1rem);
+    line-height: 1.55;
+    color: var(--story-muted);
+
+    strong {
+      font-weight: 750;
+      color: var(--story-accent-deep);
+    }
+  }
+
   &__facts {
     display: flex;
     flex-wrap: wrap;

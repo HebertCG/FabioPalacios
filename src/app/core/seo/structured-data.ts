@@ -217,21 +217,45 @@ function practiceNode(): JsonLdNode {
      * cubre. Es lo que permite que Google asocie esta página a
      * "cirugía de cáncer de estómago en Piura" y no solo a "oncólogo".
      */
-    availableService: SPECIALTIES.map((specialty) => ({
-      '@type': 'MedicalProcedure',
-      name: `Cirugía oncológica: ${specialty.title.toLowerCase()}`,
-      procedureType: 'https://schema.org/SurgicalProcedure',
-      bodyLocation: [...specialty.organs],
-      howPerformed:
-        'Cirugía oncológica especializada, con abordaje mínimamente invasivo ' +
-        'cuando el caso lo permite.',
-    })),
+    availableService: [
+      ...SPECIALTIES.map((specialty) => ({
+        '@type': 'MedicalProcedure',
+        name: `Cirugía oncológica: ${specialty.title.toLowerCase()}`,
+        procedureType: 'https://schema.org/SurgicalProcedure',
+        bodyLocation: [...specialty.organs],
+        howPerformed:
+          'Cirugía oncológica especializada, con abordaje mínimamente invasivo ' +
+          'cuando el caso lo permite.',
+      })),
+
+      /**
+       * La teleconsulta es lo que hace honesto declarar Lima y Chiclayo en
+       * `areaServed`: no hay consultorio allí, hay atención a distancia. Se
+       * describe como procedimiento no invasivo porque eso es —revisar
+       * estudios y orientar—, no una intervención.
+       */
+      {
+        '@type': 'MedicalProcedure',
+        name: 'Teleconsulta oncológica',
+        procedureType: 'https://schema.org/NoninvasiveProcedure',
+        howPerformed:
+          'Consulta a distancia para pacientes que no están en Piura: segunda ' +
+          'opinión, revisión de estudios y seguimiento del tratamiento.',
+      },
+    ],
 
     /** Canales por los que un paciente puede iniciar contacto. */
     contactPoint: [
       {
         '@type': 'ContactPoint',
         contactType: 'Agendar consulta',
+        telephone: CONTACT.whatsapp,
+        availableLanguage: ['Spanish'],
+        areaServed: 'PE',
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'Teleconsulta',
         telephone: CONTACT.whatsapp,
         availableLanguage: ['Spanish'],
         areaServed: 'PE',

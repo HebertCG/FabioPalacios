@@ -324,6 +324,13 @@ export class Story {
         'quisiera orientación.',
     },
     {
+      id: 'teleconsulta',
+      label: 'Vivo en otra ciudad',
+      message:
+        'Hola doctor, vengo de su página web. Vivo fuera de Piura y quisiera una ' +
+        'teleconsulta oncológica.',
+    },
+    {
       id: 'familiar',
       label: 'Acompaño a un familiar',
       message:
