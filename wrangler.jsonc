@@ -39,6 +39,19 @@
     // `scripts/finalize-build.mjs` copiando el prerender de `/404`.
     //
     // Las cabeceras siguen en `public/_headers`.
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+
+    // Sin esto, Cloudflare sirve las rutas con barra final y redirige
+    // `/privacidad` -> `/privacidad/` con un 307. El problema no es el
+    // redirect en si, es que deja tres versiones de la misma direccion en
+    // desacuerdo: el sitemap declara `/privacidad`, la etiqueta canonica de
+    // la pagina declara `/privacidad`, y la unica que sirve contenido es
+    // `/privacidad/`. O sea que la URL que decimos que es la buena redirige,
+    // y la que responde apunta a la que redirige.
+    //
+    // `drop-trailing-slash` invierte la direccion: `/privacidad` responde
+    // 200 directamente y es `/privacidad/` la que redirige hacia ella. Asi
+    // las tres coinciden.
+    "html_handling": "drop-trailing-slash"
   }
 }
