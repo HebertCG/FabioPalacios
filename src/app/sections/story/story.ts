@@ -99,6 +99,26 @@ export class Story {
      poner un rótulo genérico sobre fotos distintas. */
 
   protected readonly surgeryShots: readonly RotatorSlide[] = [
+    /* Las dos de IRCAD abren la serie por decisión del doctor: es la primera
+       imagen que se ve del bloque médico. Van horizontales (4:3) en una pieza
+       casi cuadrada, así que el encuadre se fija a mano para que su cara no
+       quede bajo el arco del canto superior. */
+    {
+      file: 'fabio/fabio-ircad-auditorio.jpg',
+      width: 1280,
+      height: 960,
+      alt: 'Fabio Palacios en el auditorio de IRCAD América Latina, centro de formación en cirugía mínimamente invasiva',
+      caption: 'Formación continua en IRCAD',
+      position: '56% 46%',
+    },
+    {
+      file: 'fabio/fabio-ircad-entrenamiento.jpg',
+      width: 1280,
+      height: 960,
+      alt: 'Fabio Palacios durante una sesión de entrenamiento en cirugía laparoscópica',
+      caption: 'Entrenamiento en cirugía mínimamente invasiva',
+      position: '40% 40%',
+    },
     {
       file: 'ImagenPrincipal_2.jpg',
       width: 1086,
@@ -217,7 +237,7 @@ export class Story {
 
   protected readonly clips = REELS;
   protected readonly tiktokLink =
-    SOCIALS.find((s) => s.id === 'tiktok')?.url ?? 'https://www.tiktok.com/@dr..fabio.palacio';
+    SOCIALS.find((s) => s.id === 'tiktok')?.url ?? 'https://www.tiktok.com/@oncologoenpiura';
 
   /**
    * Solo se monta el <video> de la tarjeta abierta. Así los siete MP4

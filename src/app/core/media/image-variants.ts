@@ -107,6 +107,16 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
     note: 'revisión de un estudio de imágenes con un colega',
   },
   {
+    file: 'fabio/fabio-ircad-auditorio.jpg',
+    widths: [640, 1280],
+    note: 'carrusel: auditorio de IRCAD América Latina',
+  },
+  {
+    file: 'fabio/fabio-ircad-entrenamiento.jpg',
+    widths: [640, 1280],
+    note: 'carrusel: entrenamiento en cirugía mínimamente invasiva',
+  },
+  {
     file: 'fabio/fabio-quirofano-lampara.jpg',
     widths: [480, 960],
     note: 'carrusel: en quirófano bajo la lámpara',

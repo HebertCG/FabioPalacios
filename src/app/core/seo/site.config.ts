@@ -241,7 +241,7 @@ export const SITE_OPENING_HOURS: readonly OpeningHours[] | null = null;
  */
 export const SITE_SAME_AS: readonly string[] = [
   'https://www.facebook.com/DrFabioPalacios/',
-  'https://www.tiktok.com/@dr..fabio.palacio',
+  'https://www.tiktok.com/@oncologoenpiura',
   'https://www.instagram.com/fabio_oncologo/',
   // TODO: añadir el perfil de Doctoralia cuando el doctor confirme que
   // la ficha le pertenece y está actualizada.

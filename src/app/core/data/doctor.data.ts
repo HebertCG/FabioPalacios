@@ -497,7 +497,7 @@ export const SOCIALS: readonly SocialLink[] = [
   {
     id: 'tiktok',
     label: 'TikTok del Dr. Fabio Palacios',
-    url: 'https://www.tiktok.com/@dr..fabio.palacio',
+    url: 'https://www.tiktok.com/@oncologoenpiura',
     enabled: true,
     keepOnMobile: false,
   },
