@@ -41,7 +41,7 @@ import {
 } from './site.config';
 
 /** `id` del script de datos estructurados, para poder reemplazarlo. */
-const JSON_LD_ID = 'schema-org-graph';
+export const JSON_LD_ID = 'schema-org-graph';
 
 @Injectable({ providedIn: 'root' })
 export class Seo {

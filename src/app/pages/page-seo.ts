@@ -1,6 +1,8 @@
 import { DOCUMENT, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { absoluteUrl } from '../core/seo/site.config';
+import { serializeSupportPageData } from '../core/seo/structured-data';
+import { JSON_LD_ID } from '../core/seo/seo';
 
 /** Lo que cada página de apoyo declara sobre sí misma. */
 export interface PageSeoConfig {
@@ -52,5 +54,29 @@ export abstract class PageSeo {
 
     const canonical = doc.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', url);
+
+    /**
+     * Los datos estructurados, por el mismo motivo que el canonical.
+     *
+     * `core/seo/seo.ts` escribe el grafo de la portada al arrancar, y ahí va
+     * un nodo `ProfilePage` que declara `url: /` con el título de la portada.
+     * Heredado tal cual, el marcado de esta página describiría otra distinta.
+     *
+     * En las páginas que no deben indexarse se quita entero: no tiene sentido
+     * describirle a Google una página que le estamos pidiendo que ignore.
+     */
+    const graph = doc.head.querySelector(`#${JSON_LD_ID}`);
+    if (!graph) return;
+
+    if (config.noindex) {
+      graph.remove();
+      return;
+    }
+
+    graph.textContent = serializeSupportPageData({
+      url,
+      name: config.title,
+      description: config.description,
+    });
   }
 }

@@ -375,6 +375,47 @@ export function buildStructuredData(): JsonLdNode {
   };
 }
 
+/** Lo que una página de apoyo declara sobre sí misma. */
+export interface SupportPageInfo {
+  readonly url: string;
+  readonly name: string;
+  readonly description: string;
+}
+
+/**
+ * Grafo para las páginas que no son la portada.
+ *
+ * Sin esto heredaban el grafo entero, y con él un nodo `ProfilePage` que
+ * declaraba `url: /` con el título y la descripción de la portada. O sea que
+ * el marcado de /privacidad describía una página distinta de aquella en la
+ * que estaba, y tres URLs reclamaban el mismo `@id`. Es el mismo problema que
+ * `page-seo.ts` ya resolvía para el canonical; al JSON-LD nunca se le aplicó.
+ *
+ * Se conservan el consultorio y el sitio —son entidades del sitio entero, no
+ * de una página— y la página se describe a sí misma como `WebPage` a secas.
+ * `ProfilePage` se queda solo en la portada, que es de quien habla.
+ */
+export function serializeSupportPageData(page: SupportPageInfo): string {
+  const graph: JsonLdNode = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      practiceNode(),
+      websiteNode(),
+      {
+        '@type': 'WebPage',
+        '@id': `${page.url}#pagina`,
+        url: page.url,
+        name: page.name,
+        description: page.description,
+        inLanguage: SITE_LOCALE,
+        isPartOf: { '@id': ID.website },
+        about: { '@id': ID.practice },
+      },
+    ],
+  };
+  return JSON.stringify(graph).replace(/</g, '\u003c');
+}
+
 /**
  * Serializa el grafo listo para inyectar.
  *
