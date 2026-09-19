@@ -1,9 +1,13 @@
-<a class="skip-link" href="#proposito">Saltar al contenido</a>
+@if (paymentBlockEnabled) {
+  <app-payment-block />
+} @else {
+  <a class="skip-link" href="#proposito">Saltar al contenido</a>
 
-<app-navbar />
+  <app-navbar />
 
-<main id="contenido">
-  <router-outlet />
-</main>
+  <main id="contenido">
+    <router-outlet />
+  </main>
 
-<app-social-rail />
+  <app-social-rail />
+}
