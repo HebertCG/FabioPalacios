@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@an
 import { Navbar } from './layout/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
 import { SmoothScroll } from './core/scroll/smooth-scroll';
-import { PaymentBlock } from './payment-block/payment-block';
-import { PAYMENT_BLOCK_ENABLED } from './payment-block/payment-block.config';
 import { SocialRail } from './ui/social-rail/social-rail';
 
 /**
@@ -21,13 +19,11 @@ import { SocialRail } from './ui/social-rail/social-rail';
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Navbar, RouterOutlet, SocialRail, PaymentBlock],
+  imports: [Navbar, RouterOutlet, SocialRail],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly paymentBlockEnabled = PAYMENT_BLOCK_ENABLED;
-
   private readonly smoothScroll = inject(SmoothScroll);
 
   constructor() {
