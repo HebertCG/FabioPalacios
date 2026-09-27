@@ -405,6 +405,68 @@
   }
 }
 
+/* ---------- Animación ligada al scroll ----------
+   La misma entrada que los mosaicos de Charlas y Medicina: cada pieza sube
+   y se asienta mientras cruza la pantalla. La foto no se amplía (el doctor
+   la quiere con su encuadre natural); lo que se mueve es el círculo entero
+   y la mancha amarilla, que va un poco a destiempo para dar profundidad. */
+
+@keyframes bio-enter {
+  from {
+    opacity: 0;
+    transform: translateY(46px) scale(0.955);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bio-portrait-in {
+  from {
+    opacity: 0;
+    transform: translateY(60px) rotate(-6deg) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bio-blob-drift {
+  from {
+    transform: translate(-6%, -8%);
+  }
+
+  to {
+    transform: translate(3%, 4%);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bio__portrait {
+      animation: bio-portrait-in linear both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 30%;
+
+      &::before {
+        animation: bio-blob-drift linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+    }
+
+    .bio__reader {
+      animation: bio-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 34%;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bio__chapter,
   .bio__chapter.is-active,
