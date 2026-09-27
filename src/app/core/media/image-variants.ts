@@ -146,6 +146,11 @@ export const STORY_IMAGES: readonly ImageVariant[] = [
     widths: [640, 1280],
     note: 'carrusel: junta médica',
   },
+  {
+    file: 'fabio/fabio-biografia-ircad.jpg',
+    widths: [640, 1239],
+    note: 'foto circular de la biografía (IRCAD, encuadre completo)',
+  },
 ];
 
 /** Todo lo que el optimizador debe procesar. */

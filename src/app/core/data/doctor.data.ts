@@ -525,6 +525,7 @@ export const NAV_LINKS: readonly NavLink[] = [
   { id: 'inicio', label: 'Inicio', href: '#inicio' },
   { id: 'proposito', label: 'Propósito', href: '#proposito' },
   { id: 'charlas', label: 'Charlas', href: '#charlas' },
+  { id: 'biografia', label: 'Biografía', href: '#biografia' },
   { id: 'medicina', label: 'Medicina', href: '#medicina' },
   { id: 'acompanamiento', label: 'Coach', href: '#acompanamiento' },
   { id: 'sobrevivientes', label: 'Programa', href: '#sobrevivientes' },

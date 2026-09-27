@@ -1,0 +1,128 @@
+<div class="bio">
+  <figure class="bio__portrait">
+    <!-- El anillo avanza con la historia: une la foto con el texto. -->
+    <svg class="bio__ring" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="bio__ring-track" cx="50" cy="50" r="48" />
+      <circle
+        class="bio__ring-fill"
+        cx="50"
+        cy="50"
+        r="48"
+        [attr.stroke-dasharray]="ringLength"
+        [attr.stroke-dashoffset]="ringOffset()"
+      />
+    </svg>
+    <div class="bio__photo">
+      <picture>
+        <source
+          type="image/avif"
+          [srcset]="photo.avif"
+          sizes="(min-width: 1024px) 38vw, 90vw"
+        />
+        <source
+          type="image/webp"
+          [srcset]="photo.webp"
+          sizes="(min-width: 1024px) 38vw, 90vw"
+        />
+        <img
+          [src]="photo.src"
+          alt="Fabio Palacios junto a otros cirujanos durante un entrenamiento en IRCAD América Latina"
+          width="1239"
+          height="860"
+          loading="lazy"
+        />
+      </picture>
+    </div>
+    <span class="bio__badge" aria-hidden="true">
+      <strong>{{ pad(current() + 1) }}</strong>
+      <span>/ {{ pad(total) }}</span>
+    </span>
+  </figure>
+
+  <div
+    class="bio__reader"
+    role="region"
+    aria-roledescription="relato"
+    aria-label="Biografía de Fabio Palacios"
+    tabindex="0"
+    (keydown)="onKey($event)"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
+  >
+    <div class="bio__stack" aria-live="polite">
+      @for (chapter of chapters; track chapter.id; let i = $index) {
+        <article
+          class="bio__chapter"
+          [class.is-active]="i === current()"
+          [class.is-past]="i < current()"
+          [attr.aria-hidden]="i === current() ? null : 'true'"
+          [attr.inert]="i === current() ? null : ''"
+          aria-roledescription="capítulo"
+          [attr.aria-label]="'Capítulo ' + (i + 1) + ' de ' + total"
+        >
+          <p class="bio__eyebrow">Capítulo {{ pad(i + 1) }}</p>
+          <h3>{{ chapter.title }}</h3>
+
+          <div class="bio__body">
+            @for (block of chapter.blocks; track $index) {
+              @switch (block.kind) {
+                @case ('p') {
+                  <!-- En una sola línea a propósito: los saltos entre bloques
+                       dejan un espacio antes de la coma que sigue a una negrita. -->
+                  <!-- prettier-ignore -->
+                  <p>@for (part of block.parts; track $index) {@if (part.strong) {<strong>{{ part.text }}</strong>} @else {<ng-container>{{ part.text }}</ng-container>}}</p>
+                }
+                @case ('quote') {
+                  <blockquote class="bio__quote">
+                    @for (line of block.lines; track $index) {
+                      <span>{{ line }}</span>
+                    }
+                  </blockquote>
+                }
+                @case ('list') {
+                  <ul class="bio__moments">
+                    @for (item of block.items; track $index) {
+                      <li>{{ item }}</li>
+                    }
+                  </ul>
+                }
+              }
+            }
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="bio__controls">
+      <button
+        class="bio__arrow bio__arrow--prev"
+        type="button"
+        (click)="prev()"
+        [disabled]="isFirst()"
+      >
+        <span class="sr-only">Capítulo anterior</span>
+        <span aria-hidden="true">←</span>
+      </button>
+
+      <ol class="bio__progress" aria-label="Capítulos">
+        @for (chapter of chapters; track chapter.id; let i = $index) {
+          <li>
+            <button
+              type="button"
+              [class.is-done]="i <= current()"
+              [attr.aria-current]="i === current() ? 'step' : null"
+              (click)="goTo(i)"
+            >
+              <span class="sr-only">Ir al capítulo {{ i + 1 }}: {{ chapter.title }}</span>
+            </button>
+          </li>
+        }
+      </ol>
+
+      <button class="bio__arrow bio__arrow--next" type="button" (click)="next()">
+        <span class="bio__next-label">{{ isLast() ? 'Volver al inicio' : 'Siguiente' }}</span>
+        <span aria-hidden="true">{{ isLast() ? '↺' : '→' }}</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -795,22 +795,19 @@ h3 {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--story-muted);
-
-    /* El de la cabecera no es un rótulo más: nombra el papel que da título a
-       toda la sección, así que se lee casi como un subtítulo. */
-    &--lead {
-      font-size: clamp(0.95rem, 1.5vw, 1.35rem);
-      letter-spacing: 0.06em;
-      color: var(--story-accent-deep);
-    }
   }
 
   h2 {
     max-width: 12ch;
-    margin-top: 1.15rem;
     font-size: clamp(2.6rem, 5vw, 4.9rem);
     line-height: 0.92;
     letter-spacing: -0.06em;
+  }
+
+  /* Hereda el turquesa del antiguo rótulo «Coach espiritual»: la sección
+     conserva su segundo color aunque el rótulo ya no esté. */
+  &__title-accent {
+    color: var(--story-accent-deep);
   }
 
   &__copy {
@@ -956,6 +953,16 @@ h3 {
     overflow: hidden;
     border-radius: var(--mcut) var(--mcut) var(--mcut-lg) var(--mcut-lg);
     background: var(--story-text);
+
+    /* En escritorio el video mide exactamente lo que la columna de texto:
+       `contain: size` le quita su alto propio, así que no empuja la fila y
+       solo copia el alto que le da el texto (del título a la tarjeta azul). */
+    @include m.up(lg) {
+      contain: size;
+      align-self: stretch;
+      block-size: auto;
+      min-block-size: 0;
+    }
   }
 
   &__video {
@@ -1534,6 +1541,11 @@ h3 {
    apuntando al centro. Aquí el corte trabaja por CANTOS: las dos esquinas
    de un mismo lado se barren juntas, y en las dos fotos ese barrido llega
    hasta el medio punto. Los tres bloques encajan sin confundirse. */
+.biography {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  border-bottom: 1px solid var(--story-line);
+}
+
 .medicine {
   padding-block: clamp(4.5rem, 8vw, 7rem);
   border-bottom: 1px solid var(--story-line);

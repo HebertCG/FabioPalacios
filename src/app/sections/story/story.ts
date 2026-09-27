@@ -6,6 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { BiographyStory } from '../../ui/biography-story/biography-story';
 import { ContactCta } from '../../core/directives/contact-cta';
 import { Icon } from '../../ui/icon/icon';
 import { InViewPlay } from '../../core/directives/in-view-play';
@@ -50,6 +51,7 @@ function media(src: string): StoryMedia {
 @Component({
   selector: 'app-story',
   imports: [
+    BiographyStory,
     ContactCta,
     Icon,
     InViewPlay,

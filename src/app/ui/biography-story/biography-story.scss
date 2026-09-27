@@ -1,0 +1,415 @@
+@use '../../../styles/mixins' as m;
+
+/* ============================================================
+   BIOGRAFÍA
+   ============================================================
+   La foto en círculo a un lado y el relato al otro, un capítulo a la vez.
+   Hereda la paleta de la historia (--story-*) desde la sección que lo
+   contiene. El círculo muestra la foto con su encuadre natural: se ve el
+   ambiente de IRCAD y a los colegas, no un retrato recortado. */
+
+:host {
+  display: block;
+}
+
+.bio {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+/* ---------- Foto circular ---------- */
+
+.bio__portrait {
+  position: relative;
+  width: min(100%, 34rem);
+  aspect-ratio: 1;
+  margin: 0 auto;
+
+  /* Mancha amarilla detrás, como los nodos de la órbita familiar */
+  &::before {
+    content: '';
+    position: absolute;
+    /* Asoma ~40% menos que en la primera versión: acompaña, no compite */
+    inset: 11.2% -0.8% -2% 10%;
+    z-index: 0;
+    border-radius: 50%;
+    background: var(--story-yellow);
+  }
+}
+
+.bio__ring {
+  position: absolute;
+  inset: -3%;
+  z-index: 2;
+  width: 106%;
+  height: 106%;
+  transform: rotate(-90deg);
+  overflow: visible;
+  pointer-events: none;
+
+  circle {
+    fill: none;
+    stroke-width: 1.1;
+  }
+}
+
+.bio__ring-track {
+  stroke: var(--story-line);
+}
+
+.bio__ring-fill {
+  stroke: var(--story-accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--dur-slow) var(--ease-out);
+}
+
+.bio__photo {
+  position: absolute;
+  inset: 4%;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--story-blue);
+  box-shadow: 0 24px 60px rgba(23, 34, 49, 0.18);
+
+  picture,
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Cubre el círculo sin ampliar: la foto es apaisada, así que solo se
+     recortan los laterales que el círculo no puede mostrar. */
+  img {
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+}
+
+.bio__badge {
+  position: absolute;
+  right: 4%;
+  bottom: 8%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.7rem 1.05rem;
+  border-radius: var(--r-pill);
+  color: #ffffff;
+  background: var(--story-text);
+  font-family: var(--font-display);
+  box-shadow: 0 10px 24px rgba(23, 34, 49, 0.25);
+
+  strong {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    opacity: 0.7;
+  }
+}
+
+/* ---------- Relato ---------- */
+
+.bio__reader {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  min-width: 0;
+  border-radius: var(--story-radius);
+  outline: none;
+
+  &:focus-visible {
+    outline: 3px solid var(--story-accent);
+    outline-offset: 8px;
+  }
+}
+
+/* Todos los capítulos en la misma celda: el alto lo fija el más largo y
+   cambiar de capítulo no desplaza el resto de la página. */
+.bio__stack {
+  display: grid;
+}
+
+.bio__chapter {
+  grid-area: 1 / 1;
+  /* La celda mide lo que el capítulo más largo; los cortos se centran en
+     ella en lugar de dejar un hueco encima de los controles. */
+  align-self: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(2.5rem);
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out),
+    visibility 0s linear var(--dur-slow);
+
+  &.is-past {
+    transform: translateX(-2.5rem);
+  }
+
+  &.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity var(--dur-slow) var(--ease-out) 120ms,
+      transform var(--dur-slow) var(--ease-out) 120ms,
+      visibility 0s;
+  }
+
+  h3 {
+    max-width: 20ch;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1.75rem, 3.2vw, 2.9rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
+  }
+}
+
+.bio__eyebrow {
+  margin-bottom: 0.85rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--story-accent);
+}
+
+.bio__body {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 58ch;
+
+  p {
+    font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+    line-height: 1.62;
+    color: var(--story-muted);
+  }
+
+  strong {
+    font-weight: 700;
+    color: var(--story-text);
+  }
+}
+
+.bio__quote {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0.35rem 0;
+  padding: 0.35rem 0 0.35rem 1.15rem;
+  border-left: 4px solid var(--story-accent);
+
+  span {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+    font-weight: 750;
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    color: var(--story-text);
+    text-wrap: balance;
+  }
+}
+
+.bio__moments {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: clamp(0.95rem, 1.05vw, 1.04rem);
+    line-height: 1.45;
+    color: var(--story-text);
+
+    /* Un punto por momento: «todos esos puntos se unen» */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.5em;
+      left: 0.2rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--story-accent);
+    }
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: calc(0.5em + 0.55rem);
+      bottom: -0.6rem;
+      left: calc(0.45rem - 1px);
+      width: 2px;
+      background: var(--story-line);
+    }
+  }
+}
+
+/* ---------- Controles ---------- */
+
+.bio__controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--story-line);
+}
+
+.bio__arrow {
+  @include m.focus-ring(var(--story-accent));
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 3.1rem;
+  height: 3.1rem;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    opacity var(--dur) var(--ease-out);
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    border-radius: var(--r-pill);
+  }
+
+  &--prev {
+    border: 1.5px solid var(--story-text);
+    color: var(--story-text);
+    background: transparent;
+
+    &:hover:not(:disabled) {
+      background: var(--story-blue);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+
+  &--next {
+    padding-inline: 1.35rem 1.2rem;
+    border: 0;
+    color: #ffffff;
+    background: var(--story-text);
+
+    > span:last-child {
+      transition: transform var(--dur) var(--ease-out);
+    }
+
+    &:hover {
+      background: var(--story-accent-deep);
+
+      > span:last-child {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+.bio__next-label {
+  font-size: 0.88rem;
+}
+
+.bio__progress {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    flex: 1;
+    min-width: 0;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    /* Área táctil más alta que la barra visible */
+    height: 1.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      display: block;
+      height: 4px;
+      border-radius: var(--r-pill);
+      background: var(--story-line);
+      transition:
+        background-color var(--dur) var(--ease-out),
+        transform var(--dur) var(--ease-out);
+    }
+
+    &.is-done::before {
+      background: var(--story-accent);
+    }
+
+    &:hover::before {
+      transform: scaleY(1.8);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--story-accent);
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* ---------- Tablet y móvil ---------- */
+
+@include m.down(lg) {
+  .bio {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bio__portrait {
+    width: min(78%, 24rem);
+  }
+}
+
+@include m.down(sm) {
+  .bio__next-label {
+    display: none;
+  }
+
+  .bio__arrow--next {
+    padding-inline: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bio__chapter,
+  .bio__chapter.is-active,
+  .bio__ring-fill {
+    transform: none;
+    transition: none;
+  }
+}

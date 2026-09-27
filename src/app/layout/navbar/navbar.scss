@@ -71,7 +71,9 @@
     --bar-fg: var(--ink-900);
 
     height: var(--nav-h-scrolled);
-    max-width: var(--shell);
+    /* Algo más ancha que el contenido: con diez secciones en el menú,
+       la cápsula al ancho del shell apretaba la marca contra «Inicio». */
+    max-width: min(100%, calc(var(--shell) + 7rem));
     padding-inline: clamp(0.9rem, 2vw, 1.5rem);
     border-radius: var(--r-pill);
     border-color: rgba(255, 255, 255, 0.55);
@@ -97,6 +99,7 @@
   @include m.focus-ring(var(--brand-400));
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 0.65rem;
   margin-right: auto;
   color: var(--bar-fg);
@@ -283,14 +286,26 @@
     }
   }
 
+  .links {
+    margin-left: 0.75rem;
+  }
+
   .links a {
-    padding-inline: 0.48rem;
-    font-size: 0.76rem;
+    padding-inline: 0.4rem;
+    font-size: 0.75rem;
   }
 
   .cta {
     padding-inline: 0.82rem;
     font-size: 0.76rem;
+  }
+}
+
+/* Escritorio medio: los diez enlaces caben con aire sin achicar la marca. */
+@media (min-width: 1280px) and (max-width: 1535.98px) {
+  .links a {
+    padding-inline: 0.62rem;
+    font-size: 0.86rem;
   }
 }
 
